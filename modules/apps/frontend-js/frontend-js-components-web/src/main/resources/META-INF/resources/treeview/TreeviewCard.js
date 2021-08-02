@@ -47,11 +47,13 @@ export default function TreeviewCard({node}) {
 			<div className="card card-horizontal">
 				<div className="card-body">
 					<ClayCard.Row className="autofit-row-center">
-						<div className="autofit-col">
-							<ClaySticker displayType="secondary" inline>
-								<ClayIcon symbol={node.icon} />
-							</ClaySticker>
-						</div>
+						{node.icon && (
+							<div className="autofit-col">
+								<ClaySticker displayType="secondary" inline>
+									<ClayIcon symbol={node.icon} />
+								</ClaySticker>
+							</div>
+						)}
 
 						<div className="autofit-col autofit-col-expand autofit-col-gutters">
 							<ClayCard.Description displayType="title">
