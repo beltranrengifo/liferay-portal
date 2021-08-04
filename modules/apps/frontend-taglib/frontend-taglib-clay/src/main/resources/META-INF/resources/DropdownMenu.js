@@ -69,6 +69,7 @@ export default function DropdownMenu({
 						<ClayButtonWithIcon
 							className="component-action quick-action-item"
 							displayType="unstyled"
+							key={data.action}
 							small={true}
 							symbol={icon}
 							{...rest}
@@ -80,6 +81,7 @@ export default function DropdownMenu({
 							<ClayLink
 								className="component-action quick-action-item"
 								href={href}
+								key={href}
 								{...rest}
 							>
 								<ClayIcon symbol={icon} />
