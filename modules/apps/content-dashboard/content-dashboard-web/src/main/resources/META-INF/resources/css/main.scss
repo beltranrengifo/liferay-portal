@@ -3,6 +3,9 @@
 
 .audit-graph {
 	position: relative;
+	&-loading {
+		min-height: 304px;
+	}
 }
 
 .content-dashboard-management-toolbar {

@@ -73,7 +73,7 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 			</h2>
 
 			<div class="audit-graph">
-				<div class="c-my-5 c-p-5 inline-item w-100">
+				<div class="audit-graph-loading c-my-5 c-p-5 inline-item w-100">
 					<span aria-hidden="true" class="loading-animation"></span>
 				</div>
 
