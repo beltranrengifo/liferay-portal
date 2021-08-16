@@ -24,6 +24,7 @@ import {
 	CartesianGrid,
 	Cell,
 	Legend,
+	ResponsiveContainer,
 	Text,
 	Tooltip,
 	XAxis,
@@ -133,16 +134,16 @@ export default function AuditBarChart({namespace, rtl, vocabularies}) {
 			style.textContent = Object.entries(colors).reduce(
 				(acc, [dataKey, color]) => {
 					return acc.concat(`
-						.custom-control-color-${dataKey}.custom-control-input:checked ~ 
-							.custom-control-label::before {
-								background-color: ${color};
-								border-color: ${color};
-						}
-						.custom-control-color-${dataKey}.custom-control-input:not(:checked) ~ 
-							.custom-control-label::before {
-								border-color: ${color};
-						}
-					`);
+						 .custom-control-color-${dataKey}.custom-control-input:checked ~
+							 .custom-control-label::before {
+								 background-color: ${color};
+								 border-color: ${color};
+						 }
+						 .custom-control-color-${dataKey}.custom-control-input:not(:checked) ~
+							 .custom-control-label::before {
+								 border-color: ${color};
+						 }
+					 `);
 				},
 				''
 			);
@@ -270,139 +271,139 @@ export default function AuditBarChart({namespace, rtl, vocabularies}) {
 				/>
 			)}
 			<div className="mb-3 overflow-auto">
-				<BarChart
-					data={data}
-					height={BAR_CHART.height}
-					width={BAR_CHART.width}
-				>
-					{showLegend && (
-						<Legend
-							align={rtl ? 'right' : 'left'}
-							content={renderLegend}
-							verticalAlign="top"
-							wrapperStyle={{paddingBottom: 24}}
-							yAxisName={axisNames.y}
+				<ResponsiveContainer height={BAR_CHART.height} width="100%">
+					<BarChart data={data}>
+						{showLegend && (
+							<Legend
+								align={rtl ? 'right' : 'left'}
+								content={renderLegend}
+								verticalAlign="top"
+								wrapperStyle={{paddingBottom: 24}}
+								yAxisName={axisNames.y}
+							/>
+						)}
+						<CartesianGrid stroke={BAR_CHART.stroke} />
+						<XAxis
+							axisLine={{
+								stroke: BAR_CHART.stroke,
+							}}
+							dataKey="name"
+							height={90}
+							interval={0}
+							label={{
+								className: 'small',
+								offset: 18,
+								position: 'insideBottom',
+								value: axisNames.x,
+							}}
+							reversed={rtl}
+							tick={<CustomXAxisTick />}
+							tickLine={false}
 						/>
-					)}
-					<CartesianGrid stroke={BAR_CHART.stroke} />
-					<XAxis
-						axisLine={{
-							stroke: BAR_CHART.stroke,
-						}}
-						dataKey="name"
-						height={90}
-						interval={0}
-						label={{
-							className: 'small',
-							offset: 18,
-							position: 'insideBottom',
-							value: axisNames.x,
-						}}
-						reversed={rtl}
-						tick={<CustomXAxisTick />}
-						tickLine={false}
-					/>
-					<YAxis
-						allowDataOverflow={true}
-						allowDecimals={false}
-						axisLine={{
-							stroke: BAR_CHART.stroke,
-						}}
-						domain={[0, maxValue]}
-						orientation={rtl ? 'right' : 'left'}
-						tick={<CustomYAxisTick rtl={rtl} />}
-						tickLine={false}
-						width={45}
-					/>
-					<Tooltip
-						animationDuration={0}
-						content={<CustomTooltip />}
-						cursor={{fill: 'transparent'}}
-						tooltip={tooltip}
-					/>
-					{bars.length &&
-						bars.map((bar, index) => {
-							return (
-								<Bar
-									barSize={
-										checkboxes[bar.dataKey] === true
-											? BAR_CHART.barHeight
-											: 0
-									}
-									dataKey={bar.dataKey}
-									hide={checkboxes[bar.dataKey] !== true}
-									key={index}
-									legendType="square"
-									name={bar.name}
-									onClick={(props) =>
-										onBarClick([
-											props.payload.key,
-											bar.dataKey,
-										])
-									}
-									onMouseOut={() => {
-										setTooltip(null);
-									}}
-									onMouseOver={(props) => {
-										setTooltip({
-											dataKey: bar.dataKey,
-											name: props.name,
-										});
-									}}
-									style={{cursor: 'pointer'}}
-								>
-									{data.map((entry, index) => (
-										<Cell
-											fill={colors[bar.dataKey]}
-											key={`cell-${index}`}
-											opacity={
-												!tooltip
-													? 1
-													: tooltip.dataKey ===
-															bar.dataKey &&
-													  entry.name ===
-															tooltip.name
-													? 1
-													: 0.4
-											}
-										/>
-									))}
-								</Bar>
-							);
-						})}
-					{!bars.length && (
-						<Bar
-							barSize={BAR_CHART.barHeight}
-							dataKey="value"
-							onClick={(props) => onBarClick([props.payload.key])}
-							onMouseOut={() => {
-								setTooltip(null);
+						<YAxis
+							allowDataOverflow={true}
+							allowDecimals={false}
+							axisLine={{
+								stroke: BAR_CHART.stroke,
 							}}
-							onMouseOver={(props) => {
-								setTooltip({
-									dataKey: 'value',
-									name: props.name,
-								});
-							}}
-							style={{cursor: 'pointer'}}
-						>
-							{data.map((entry, index) => (
-								<Cell
-									fill={COLORS[0]}
-									key={`cell-${index}`}
-									opacity={
-										!tooltip
-											? 1
-											: tooltip.dataKey === 'value' &&
-											  entry.name === tooltip.name
-											? 1
-											: 0.4
-									}
-								/>
-							))}
-						</Bar>
-					)}
-				</BarChart>
+							domain={[0, maxValue]}
+							orientation={rtl ? 'right' : 'left'}
+							tick={<CustomYAxisTick rtl={rtl} />}
+							tickLine={false}
+							width={45}
+						/>
+						<Tooltip
+							animationDuration={0}
+							content={<CustomTooltip />}
+							cursor={{fill: 'transparent'}}
+							tooltip={tooltip}
+						/>
+						{bars.length &&
+							bars.map((bar, index) => {
+								return (
+									<Bar
+										barSize={
+											checkboxes[bar.dataKey] === true
+												? BAR_CHART.barHeight
+												: 0
+										}
+										dataKey={bar.dataKey}
+										hide={checkboxes[bar.dataKey] !== true}
+										key={index}
+										legendType="square"
+										name={bar.name}
+										onClick={(props) =>
+											onBarClick([
+												props.payload.key,
+												bar.dataKey,
+											])
+										}
+										onMouseOut={() => {
+											setTooltip(null);
+										}}
+										onMouseOver={(props) => {
+											setTooltip({
+												dataKey: bar.dataKey,
+												name: props.name,
+											});
+										}}
+										style={{cursor: 'pointer'}}
+									>
+										{data.map((entry, index) => (
+											<Cell
+												fill={colors[bar.dataKey]}
+												key={`cell-${index}`}
+												opacity={
+													!tooltip
+														? 1
+														: tooltip.dataKey ===
+																bar.dataKey &&
+														  entry.name ===
+																tooltip.name
+														? 1
+														: 0.4
+												}
+											/>
+										))}
+									</Bar>
+								);
+							})}
+						{!bars.length && (
+							<Bar
+								barSize={BAR_CHART.barHeight}
+								dataKey="value"
+								onClick={(props) =>
+									onBarClick([props.payload.key])
+								}
+								onMouseOut={() => {
+									setTooltip(null);
+								}}
+								onMouseOver={(props) => {
+									setTooltip({
+										dataKey: 'value',
+										name: props.name,
+									});
+								}}
+								style={{cursor: 'pointer'}}
+							>
+								{data.map((entry, index) => (
+									<Cell
+										fill={COLORS[0]}
+										key={`cell-${index}`}
+										opacity={
+											!tooltip
+												? 1
+												: tooltip.dataKey === 'value' &&
+												  entry.name === tooltip.name
+												? 1
+												: 0.4
+										}
+									/>
+								))}
+							</Bar>
+						)}
+					</BarChart>
+				</ResponsiveContainer>
 			</div>
 		</>
 	);
