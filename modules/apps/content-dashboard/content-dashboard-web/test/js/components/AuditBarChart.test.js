@@ -20,6 +20,22 @@ import AuditBarChart from '../../../src/main/resources/META-INF/resources/js/com
 
 import '@testing-library/jest-dom/extend-expect';
 
+// Mock needed due to a bug in ResponsiveContainer Recharts component
+// See https://github.com/recharts/recharts/issues/2268
+
+jest.mock('recharts', () => {
+	const OriginalModule = jest.requireActual('recharts');
+
+	return {
+		...OriginalModule,
+		ResponsiveContainer: ({children, height}) => (
+			<OriginalModule.ResponsiveContainer height={height} width={800}>
+				{children}
+			</OriginalModule.ResponsiveContainer>
+		),
+	};
+});
+
 const mockOneVocabulary = [
 	{
 		key: 'business-decision-maker',
