@@ -283,9 +283,9 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 
 			jspWriter.write(
 				StringBundler.concat(
-					"d-print-none lfr-admin-panel lfr-product-menu-panel ",
-					"lfr-analytics-reports-panel sidenav-fixed ",
-					"sidenav-menu-slider sidenav-right\" id=\""));
+					"cadmin d-print-none lfr-admin-panel ",
+					"lfr-product-menu-panel lfr-analytics-reports-panel ",
+					"sidenav-fixed sidenav-menu-slider sidenav-right\" id=\""));
 
 			jspWriter.write(_portletNamespace);
 
