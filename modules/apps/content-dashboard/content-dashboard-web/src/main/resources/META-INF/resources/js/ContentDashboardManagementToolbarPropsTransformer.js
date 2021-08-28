@@ -96,7 +96,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const selectContentDashboardItemSubtype = (itemData) => {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('select'),
-			height: '720px',
+			height: '70vh',
 			multiple: true,
 			onSelect: (selectedItems) => {
 				let redirectURL = itemData?.redirectURL;
@@ -122,7 +122,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const selectFileExtension = (itemData) => {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('select'),
-			height: '720px',
+			height: '70vh',
 			multiple: true,
 			onSelect: (selectedItems) => {
 				let redirectURL = itemData?.redirectURL;
