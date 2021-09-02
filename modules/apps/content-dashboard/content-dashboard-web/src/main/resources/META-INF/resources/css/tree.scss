@@ -1,4 +1,4 @@
-@import 'atlas-variables';
+@import 'cadmin-variables';
 
 .tree-filter {
 	&-clear {
@@ -7,7 +7,7 @@
 
 	&-count-feedback {
 		align-items: center;
-		background: $primary-l2;
+		background: $cadmin-primary-l2;
 		display: flex;
 		min-height: 40px;
 		padding: 0 24px;

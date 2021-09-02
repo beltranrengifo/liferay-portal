@@ -20,7 +20,7 @@
 ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (ContentDashboardAdminDisplayContext)request.getAttribute(ContentDashboardWebKeys.CONTENT_DASHBOARD_ADMIN_DISPLAY_CONTEXT);
 %>
 
-<div class="sidebar-wrapper">
+<div class="cadmin sidebar-wrapper">
 	<clay:container-fluid
 		cssClass="container-form-lg"
 	>
