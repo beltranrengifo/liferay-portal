@@ -110,12 +110,12 @@ const SidebarPanelInfoView = ({
 			<Sidebar.Header title={title} />
 
 			<Sidebar.Body>
-				<div className="sidebar-section">
+				<div className="mb-2 sidebar-section">
 					{documentIsAFile && (
-						<p className="mb-2 text-secondary">{fileName}</p>
+						<p className="mb-1 text-secondary">{fileName}</p>
 					)}
 
-					<p className="text-secondary">{subType}</p>
+					<p className="mb-1 text-secondary">{subType}</p>
 
 					{versions.map((version) => (
 						<div key={version.version}>
@@ -131,7 +131,7 @@ const SidebarPanelInfoView = ({
 					))}
 				</div>
 
-				<div className="sidebar-dl sidebar-section sidebar-section--spaced">
+				<div className="sidebar-dl sidebar-section">
 					<ClaySticker
 						className={classnames('sticker-user-icon', {
 							[`user-icon-color-${stickerColor}`]: !user.url,
