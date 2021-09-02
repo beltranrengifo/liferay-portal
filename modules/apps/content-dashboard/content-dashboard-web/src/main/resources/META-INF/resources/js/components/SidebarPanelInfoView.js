@@ -187,6 +187,7 @@ const SidebarPanelInfoView = ({
 								<ClayLabel
 									displayType="secondary"
 									key={category}
+									large
 								>
 									{category}
 								</ClayLabel>
@@ -203,7 +204,11 @@ const SidebarPanelInfoView = ({
 
 						<p>
 							{tags.map((tag) => (
-								<ClayLabel displayType="secondary" key={tag}>
+								<ClayLabel
+									displayType="secondary"
+									key={tag}
+									large
+								>
 									{tag}
 								</ClayLabel>
 							))}
