@@ -12,8 +12,10 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
+import classNames from 'classnames';
 import {FieldArray, withFormik} from 'formik';
 import {debounce, fetch, openModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -93,7 +95,9 @@ class SegmentEdit extends Component {
 
 		this.state = {
 			contributors,
-			disabledSave: this._isQueryEmpty(contributors),
+			disabledSave:
+				this._queryHasEmptyValues(contributors) ||
+				this._isQueryEmpty(contributors),
 			editing: showInEditMode,
 			hasChanged: false,
 			membersCount: initialMembersCount,
@@ -160,7 +164,9 @@ class SegmentEdit extends Component {
 
 			return {
 				contributors,
-				disabledSave: this._isQueryEmpty(contributors),
+				disabledSave:
+					this._queryHasEmptyValues(contributors) ||
+					this._isQueryEmpty(contributors),
 				hasChanged: true,
 				membersCountLoading: true,
 			};
@@ -194,6 +200,48 @@ class SegmentEdit extends Component {
 	 */
 	_isQueryEmpty = (contributors) =>
 		contributors.every((contributor) => !contributor.query);
+
+	/**
+	 * Checks if every item inside criteriaMap > items array has empry/falsy value in its value property.
+	 * @return {boolean} True if a non trythy values is found.
+	 */
+	_queryHasEmptyValues = (contributors) => {
+		const _getEmptyValuesFromItems = (items) => {
+			return items.some((item) => {
+				const {items, value} = item;
+
+				if (Object.prototype.hasOwnProperty.call(item, 'items')) {
+					return _getEmptyValuesFromItems(items);
+				}
+
+				if (Object.prototype.hasOwnProperty.call(item, 'value')) {
+					return !value.trim();
+				}
+
+				return false;
+			});
+		};
+
+		/* get all items form each contributor object, generating a plain array */
+		const items = contributors.reduce(
+			(acc, contributor) => [
+				...acc,
+				...(contributor.criteriaMap?.items || []),
+			],
+			[]
+		);
+
+		const queryHasEmptyValues = _getEmptyValuesFromItems(items);
+
+		this.setState((prevState) => {
+			return {
+				...prevState,
+				queryHasEmptyValues,
+			};
+		});
+
+		return queryHasEmptyValues;
+	};
 
 	_renderContributors = () => {
 		const {
@@ -376,14 +424,24 @@ class SegmentEdit extends Component {
 			values,
 		} = this.props;
 
-		const {contributors, disabledSave, editing, validTitle} = this.state;
+		const {
+			contributors,
+			disabledSave,
+			editing,
+			queryHasEmptyValues,
+			validTitle,
+		} = this.state;
 
 		const disabledSaveButton = disabledSave || !validTitle;
 
 		const placeholder = Liferay.Language.get('untitled-segment');
 
 		return (
-			<div className="segment-edit-page-root">
+			<div
+				className={classNames('segment-edit-page-root', {
+					'segment-edit-page-root--has-alert': queryHasEmptyValues,
+				})}
+			>
 				<input
 					name={`${portletNamespace}active`}
 					type="hidden"
@@ -456,6 +514,13 @@ class SegmentEdit extends Component {
 				</div>
 
 				<div className="form-body">
+					{queryHasEmptyValues && (
+						<ClayAlert displayType="danger" variant="stripe">
+							{Liferay.Language.get(
+								'include-a-value-in-empty-inputs'
+							)}
+						</ClayAlert>
+					)}
 					<FieldArray
 						name="contributors"
 						render={this._renderContributors}
