@@ -13,6 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import classNames from 'classnames';
 import {openSelectionModal} from 'frontend-js-web';
 import propTypes from 'prop-types';
 import React from 'react';
@@ -90,7 +91,9 @@ class SelectEntityInput extends React.Component {
 					/>
 
 					<input
-						className="form-control"
+						className={classNames('form-control', {
+							'criterion-input--error': !value,
+						})}
 						disabled={disabled}
 						readOnly
 						value={displayValue}
@@ -99,6 +102,12 @@ class SelectEntityInput extends React.Component {
 
 				<span className="input-group-append input-group-item input-group-item-shrink">
 					<ClayButton
+						className={classNames(
+							'input-group-append input-group-item input-group-item-shrink',
+							{
+								'criterion-input--error': !value,
+							}
+						)}
 						disabled={disabled}
 						displayType="secondary"
 						onClick={this._handleSelectEntity}

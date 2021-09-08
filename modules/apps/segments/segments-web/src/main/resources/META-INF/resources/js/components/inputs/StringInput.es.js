@@ -13,6 +13,7 @@
  */
 
 import {ClaySelectWithOption} from '@clayui/form';
+import classNames from 'classnames';
 import propTypes from 'prop-types';
 import React from 'react';
 
@@ -37,7 +38,9 @@ class StringInput extends React.Component {
 
 		return options.length === 0 ? (
 			<input
-				className="criterion-input form-control"
+				className={classNames('criterion-input form-control', {
+					'criterion-input--error': !value,
+				})}
 				data-testid="simple-string"
 				disabled={disabled}
 				onChange={this._handleChange}
@@ -46,7 +49,9 @@ class StringInput extends React.Component {
 			/>
 		) : (
 			<ClaySelectWithOption
-				className="criterion-input form-control"
+				className={classNames('criterion-input form-control', {
+					'criterion-input--error': !value,
+				})}
 				data-testid="options-string"
 				disabled={disabled}
 				onChange={this._handleChange}
