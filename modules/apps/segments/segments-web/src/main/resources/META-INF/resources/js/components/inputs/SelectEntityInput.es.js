@@ -23,6 +23,7 @@ class SelectEntityInput extends React.Component {
 		disabled: propTypes.bool,
 		displayValue: propTypes.oneOfType([propTypes.string, propTypes.number]),
 		onChange: propTypes.func.isRequired,
+		renderEmptyValueErrors: propTypes.bool,
 		selectEntity: propTypes.shape({
 			id: propTypes.string,
 			multiple: propTypes.bool,
@@ -78,7 +79,12 @@ class SelectEntityInput extends React.Component {
 	};
 
 	render() {
-		const {disabled, displayValue, value} = this.props;
+		const {
+			disabled,
+			displayValue,
+			renderEmptyValueErrors,
+			value,
+		} = this.props;
 
 		return (
 			<div className="criterion-input input-group select-entity-input">
@@ -92,7 +98,8 @@ class SelectEntityInput extends React.Component {
 
 					<input
 						className={classNames('form-control', {
-							'criterion-input--error': !value,
+							'criterion-input--error':
+								!value && renderEmptyValueErrors,
 						})}
 						disabled={disabled}
 						readOnly
@@ -105,7 +112,8 @@ class SelectEntityInput extends React.Component {
 						className={classNames(
 							'input-group-append input-group-item input-group-item-shrink',
 							{
-								'criterion-input--error': !value,
+								'criterion-input--error':
+									!value && renderEmptyValueErrors,
 							}
 						)}
 						disabled={disabled}

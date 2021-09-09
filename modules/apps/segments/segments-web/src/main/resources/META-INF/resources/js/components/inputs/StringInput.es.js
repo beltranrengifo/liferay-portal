@@ -22,6 +22,7 @@ class StringInput extends React.Component {
 		disabled: propTypes.bool,
 		onChange: propTypes.func.isRequired,
 		options: propTypes.array,
+		renderEmptyValueErrors: propTypes.bool,
 		value: propTypes.oneOfType([propTypes.string, propTypes.number]),
 	};
 
@@ -34,12 +35,12 @@ class StringInput extends React.Component {
 	};
 
 	render() {
-		const {disabled, options, value} = this.props;
+		const {disabled, options, renderEmptyValueErrors, value} = this.props;
 
 		return options.length === 0 ? (
 			<input
 				className={classNames('criterion-input form-control', {
-					'criterion-input--error': !value,
+					'criterion-input--error': !value && renderEmptyValueErrors,
 				})}
 				data-testid="simple-string"
 				disabled={disabled}
