@@ -202,13 +202,13 @@ class SegmentEdit extends Component {
 	 * Checks if every item inside criteriaMap > items array has empry/falsy value in its value property.
 	 * @return {boolean} True if a non trythy values is found.
 	 */
-	_handleQueryEmptyValues = (contributors) => {
-		const _getEmptyValuesFromItems = (items) => {
+	_queryHasEmptyValues = (contributors) => {
+		const _checkForEmptyValuesInItems = (items) => {
 			return items.some((item) => {
 				const {items, value} = item;
 
 				if (Object.prototype.hasOwnProperty.call(item, 'items')) {
-					return _getEmptyValuesFromItems(items);
+					return _checkForEmptyValuesInItems(items);
 				}
 
 				if (Object.prototype.hasOwnProperty.call(item, 'value')) {
@@ -228,9 +228,7 @@ class SegmentEdit extends Component {
 			[]
 		);
 
-		const queryHasEmptyValues = _getEmptyValuesFromItems(items);
-
-		return queryHasEmptyValues;
+		return _checkForEmptyValuesInItems(items);
 	};
 
 	_handleAlertClose = () => {
@@ -346,8 +344,9 @@ class SegmentEdit extends Component {
 	 * from being called.
 	 * @param {Class} event Event to prevent a form submission from occurring.
 	 */
-	_handleValidate = ({contributors, event}) => {
-		const queryHasEmptyValues = this._handleQueryEmptyValues(contributors);
+	_handleValidate = (event) => {
+		const {contributors} = this.state;
+		const queryHasEmptyValues = this._queryHasEmptyValues(contributors);
 
 		this.setState((prevState) => {
 			return {
@@ -518,10 +517,7 @@ class SegmentEdit extends Component {
 											disabled={disabledSaveButton}
 											displayType="primary"
 											onClick={(event) =>
-												this._handleValidate({
-													contributors,
-													event,
-												})
+												this._handleValidate(event)
 											}
 											small={true}
 											type="submit"
