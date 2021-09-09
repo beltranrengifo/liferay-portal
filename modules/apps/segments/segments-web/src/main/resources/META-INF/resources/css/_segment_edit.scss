@@ -1,13 +1,9 @@
 .segment-edit-page-root {
 	display: flex;
 	flex-direction: column;
-	height: calc(100vh - 56px);
+	height: calc(100vh - #{$topHeaderHeight});
 	margin-bottom: -35px;
 	width: 100%;
-
-	&--has-alert {
-		height: calc(100vh - 112px);
-	}
 
 	.contributor-conjunction {
 		margin: 0 auto;
