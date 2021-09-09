@@ -129,7 +129,7 @@ class CriteriaGroup extends Component {
 		} = this.props;
 
 		const {
-			defaultValue,
+			defaultValue = '',
 			operatorName,
 			propertyName,
 			type,
