@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -18,7 +19,14 @@ import classNames from 'classnames';
 import {Treeview} from 'frontend-js-components-web';
 import {cancelDebounce, debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {
+	Profiler,
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react';
 
 import {
 	filterNodes,
@@ -153,6 +161,18 @@ const TreeFilter = ({
 		};
 	}, [debouncedSetFilterQuery]);
 
+	const onRenderCallback = (
+		_id, // the "id" prop of the Profiler tree that has just committed
+		_phase, // either "mount" (if the tree just mounted) or "update" (if it re-rendered)
+		actualDuration, // time spent rendering the committed update
+		_baseDuration, // estimated time to render the entire subtree without memoization
+		_startTime, // when React began rendering this update
+		_commitTime, // when React committed this update
+		_interactions // the Set of interactions belonging to this update
+	) => {
+		console.log(actualDuration);
+	};
+
 	return (
 		<div className="tree-filter">
 			<form
@@ -210,14 +230,16 @@ const TreeFilter = ({
 						className="tree-filter-type-tree"
 						id={`${portletNamespace}typeContainer`}
 					>
-						<Treeview
-							NodeComponent={Treeview.Card}
-							inheritSelection
-							initialSelectedNodeIds={initialSelectedNodeIds}
-							multiSelection
-							nodes={computedNodes()}
-							onSelectedNodesChange={handleSelectionChange}
-						/>
+						<Profiler id="Treeview" onRender={onRenderCallback}>
+							<Treeview
+								NodeComponent={Treeview.Card}
+								inheritSelection
+								initialSelectedNodeIds={initialSelectedNodeIds}
+								multiSelection
+								nodes={computedNodes()}
+								onSelectedNodesChange={handleSelectionChange}
+							/>
+						</Profiler>
 
 						{!computedNodes().length && (
 							<div className="border-0 pt-0 sheet taglib-empty-result-message">
