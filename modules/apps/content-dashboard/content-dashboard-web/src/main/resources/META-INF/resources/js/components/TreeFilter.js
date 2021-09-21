@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -17,7 +18,7 @@ import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import {Treeview} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useMemo, useRef, useState} from 'react';
+import React, {Profiler, useCallback, useMemo, useRef, useState} from 'react';
 
 import {
 	filterNodes,
@@ -130,6 +131,18 @@ const TreeFilter = ({
 		setFilterQuery('');
 	};
 
+	const onRenderCallback = (
+		id, // the "id" prop of the Profiler tree that has just committed
+		phase, // either "mount" (if the tree just mounted) or "update" (if it re-rendered)
+		actualDuration, // time spent rendering the committed update
+		baseDuration, // estimated time to render the entire subtree without memoization
+		startTime, // when React began rendering this update
+		commitTime, // when React committed this update
+		interactions // the Set of interactions belonging to this update
+	) => {
+		console.log(actualDuration);
+	};
+
 	return (
 		<div className="tree-filter">
 			<form
@@ -189,14 +202,16 @@ const TreeFilter = ({
 						className="tree-filter-type-tree"
 						id={`${portletNamespace}typeContainer`}
 					>
-						<Treeview
-							NodeComponent={Treeview.Card}
-							inheritSelection
-							initialSelectedNodeIds={initialSelectedNodeIds}
-							multiSelection
-							nodes={computedNodes()}
-							onSelectedNodesChange={handleSelectionChange}
-						/>
+						<Profiler id="Treeview" onRender={onRenderCallback}>
+							<Treeview
+								NodeComponent={Treeview.Card}
+								inheritSelection
+								initialSelectedNodeIds={initialSelectedNodeIds}
+								multiSelection
+								nodes={computedNodes()}
+								onSelectedNodesChange={handleSelectionChange}
+							/>
+						</Profiler>
 
 						{!computedNodes().length && (
 							<div className="border-0 pt-0 sheet taglib-empty-result-message">

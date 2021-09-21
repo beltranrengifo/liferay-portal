@@ -1,3 +1,5 @@
+/* eslint-disable @liferay/liferay/no-abbreviations */
+/* eslint-disable sort-keys */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -13,7 +15,7 @@
  */
 
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import TreeFilter from './components/TreeFilter';
 import {nodeTreeArrayMapper} from './utils/tree-utils';
@@ -23,11 +25,82 @@ const SelectTypeAndSubtype = ({
 	itemSelectorSaveEvent,
 	portletNamespace,
 }) => {
+
+	/** ******************************
+	 * =========================== *
+		TESTING WITH FAKE DATA CODE
+	* =========================== *
+	********************************/
+	const [mockData, setMockData] = useState([]);
+
+	const mocks = {
+		xs:
+			'http://localhost:8080/documents/20123/0/contentDashboardItemTypes_xs_25-25.json',
+		sm:
+			'http://localhost:8080/documents/20123/0/contentDashboardItemTypes_sm_25-150.json',
+		md:
+			'http://localhost:8080/documents/20123/0/contentDashboardItemTypes_md_65-95.json',
+		lg:
+			'http://localhost:8080/documents/20123/0/contentDashboardItemTypes_lg_25-500.json',
+		xl:
+			'http://localhost:8080/documents/20123/0/contentDashboardItemTypes_xl_250-125.json',
+		xxl:
+			'http://localhost:8080/documents/20123/0/contentDashboardItemTypes_xxl_550-400.json',
+	};
+
+	const SELECTED_MOCK = 'lg';
+
+	const fetchMockData = async () => {
+		// eslint-disable-next-line @liferay/portal/no-global-fetch
+		let response = await fetch(mocks[SELECTED_MOCK]);
+
+		response = await response.json();
+
+		const concatData = contentDashboardItemTypes.concat(
+
+			// this map aims to prevent duplicated keys errors
+
+			response.map((parent) => {
+				return {
+					...parent,
+					itemSubtypes: parent.itemSubtypes.map((child) => {
+						return {
+							...child,
+							label:
+								child.label +
+								' ' +
+								(Math.random() + 1).toString(36).substring(7),
+						};
+					}),
+				};
+			})
+		);
+
+		setMockData(concatData);
+	};
+
+	useEffect(() => {
+		fetchMockData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	/** ******************************
+	 * =========================== *
+		/END TESTING WITH FAKE DATA CODE
+	* =========================== *
+	********************************/
+
 	const nodes = nodeTreeArrayMapper({
 		childrenPropertyKey: 'itemSubtypes',
 		namePropertyKey: 'label',
-		nodeArray: contentDashboardItemTypes,
+		nodeArray: mockData,
 	});
+
+	// prevent the component to render during the mock data fetching
+
+	if (!nodes.length) {
+		return null;
+	}
 
 	return (
 		<TreeFilter
