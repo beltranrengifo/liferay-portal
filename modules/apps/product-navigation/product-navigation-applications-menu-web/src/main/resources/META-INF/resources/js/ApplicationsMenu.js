@@ -23,7 +23,7 @@ import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {fetch, navigate, openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import ReactDOMServer from 'react-dom/server';
 
 import '../css/ApplicationsMenu.scss';
@@ -456,6 +456,17 @@ const ApplicationsMenu = ({
 		true,
 		window
 	);
+
+	useEffect(() => {
+		const closeEventBusHandler = Liferay.on(
+			'closeApplicationsMenu',
+			onClose
+		);
+
+		return () => {
+			closeEventBusHandler.detach();
+		};
+	}, [onClose]);
 
 	return (
 		<>
