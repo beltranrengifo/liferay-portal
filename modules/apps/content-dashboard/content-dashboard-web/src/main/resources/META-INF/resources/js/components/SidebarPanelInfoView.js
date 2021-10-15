@@ -19,6 +19,7 @@ import classnames from 'classnames';
 import React from 'react';
 
 import DocumentPreview from './DocumentPreview';
+import FileUrlCopyButton from './FileUrlCopyButton';
 import ItemLanguages from './ItemLanguages';
 import Sidebar from './Sidebar';
 
@@ -113,13 +114,20 @@ const SidebarPanelInfoView = ({
 			<Sidebar.Body>
 				<div className="mb-2 sidebar-section">
 					{documentIsAFile && (
-						<p className="mb-1 text-secondary">{fileName}</p>
+						<>
+							<div className="c-mt-1">
+								<FileUrlCopyButton url={previewURL} />
+							</div>
+							<p className="c-mb-1 text-secondary">{fileName}</p>
+						</>
 					)}
 
 					<p className="mb-1 text-secondary">{subType}</p>
 
+					{documentIsAFile && <FileUrlCopyButton url={previewURL} />}
+
 					{versions.map((version) => (
-						<div key={version.version}>
+						<div className="c-mt-3" key={version.version}>
 							<ClayLabel displayType="info">
 								{Liferay.Language.get('version')}{' '}
 								{version.version}
@@ -223,11 +231,6 @@ const SidebarPanelInfoView = ({
 
 				{documentIsAFile && (
 					<div className="sidebar-section">
-						<h5 className="font-weight-semi-bold mb-1">
-							{Liferay.Language.get('url')}
-						</h5>
-						<p className="text-secondary">{previewURL}</p>
-
 						<h5 className="font-weight-semi-bold mb-1">
 							{Liferay.Language.get('extension')}
 						</h5>
