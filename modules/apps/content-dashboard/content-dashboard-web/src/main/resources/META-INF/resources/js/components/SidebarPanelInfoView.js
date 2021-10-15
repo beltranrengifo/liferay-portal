@@ -112,7 +112,7 @@ const SidebarPanelInfoView = ({
 			<Sidebar.Header title={title} />
 
 			<Sidebar.Body>
-				<div className="mb-2 sidebar-section">
+				<div className="c-mb-2 sidebar-section">
 					{documentIsAFile && (
 						<>
 							<div className="c-mt-1">
@@ -122,9 +122,7 @@ const SidebarPanelInfoView = ({
 						</>
 					)}
 
-					<p className="mb-1 text-secondary">{subType}</p>
-
-					{documentIsAFile && <FileUrlCopyButton url={previewURL} />}
+					<p className="c-mb-1 text-secondary">{subType}</p>
 
 					{versions.map((version) => (
 						<div className="c-mt-3" key={version.version}>
@@ -157,7 +155,7 @@ const SidebarPanelInfoView = ({
 							<ClayIcon symbol="user" />
 						)}
 					</ClaySticker>
-					<span className="ml-2 text-secondary">{user.name}</span>
+					<span className="c-ml-2 text-secondary">{user.name}</span>
 				</div>
 
 				{documentUsesPreview && (
@@ -172,7 +170,7 @@ const SidebarPanelInfoView = ({
 
 				{description && (
 					<div className="sidebar-section">
-						<h5 className="font-weight-semi-bold mb-1">
+						<h5 className="c-mb-1 font-weight-semi-bold">
 							{Liferay.Language.get('description')}
 						</h5>
 						<p className="text-secondary">{description}</p>
@@ -187,7 +185,7 @@ const SidebarPanelInfoView = ({
 
 				{!!categories.length && (
 					<div className="c-mb-4 sidebar-dl sidebar-section">
-						<h5 className="font-weight-semi-bold mb-1">
+						<h5 className="c-mb-1 font-weight-semi-bold">
 							{Liferay.Language.get('categories')}
 						</h5>
 
@@ -207,7 +205,7 @@ const SidebarPanelInfoView = ({
 
 				{!!tags.length && (
 					<div className="c-mb-4 sidebar-dl sidebar-section">
-						<h5 className="font-weight-semi-bold mb-1">
+						<h5 className="c-mb-1 font-weight-semi-bold">
 							{Liferay.Language.get('tags')}
 						</h5>
 
@@ -231,12 +229,12 @@ const SidebarPanelInfoView = ({
 
 				{documentIsAFile && (
 					<div className="sidebar-section">
-						<h5 className="font-weight-semi-bold mb-1">
+						<h5 className="c-mb-1 font-weight-semi-bold">
 							{Liferay.Language.get('extension')}
 						</h5>
 						<p className="text-secondary">{extension}</p>
 
-						<h5 className="font-weight-semi-bold mb-1">
+						<h5 className="c-mb-1 font-weight-semi-bold">
 							{Liferay.Language.get('size')}
 						</h5>
 						<p className="text-secondary">{size}</p>
@@ -252,7 +250,7 @@ const SidebarPanelInfoView = ({
 									className="c-mb-4 sidebar-dl sidebar-section"
 									key={title}
 								>
-									<h5 className="font-weight-semi-bold mb-1">
+									<h5 className="c-mb-1 font-weight-semi-bold">
 										{title}
 									</h5>
 
