@@ -40,6 +40,12 @@ describe('FileUrlCopyButton', () => {
 		cleanup();
 	});
 
+	it('matches the snapshot', () => {
+		const {asFragment} = render(<FileUrlCopyButton url={demoFileUrl} />);
+
+		expect(asFragment()).toMatchSnapshot();
+	});
+
 	it('renders an input and a button with the proper value and the initial UI', () => {
 		const {getByDisplayValue, getByRole} = render(
 			<FileUrlCopyButton url={demoFileUrl} />
@@ -67,7 +73,7 @@ describe('FileUrlCopyButton', () => {
 		);
 
 		let icon = button.getElementsByTagName('svg')[0];
-		expect(icon.classList).toContain('lexicon-icon-check-small');
+		expect(icon.classList).toContain('lexicon-icon-check');
 
 		act(() => {
 			jest.runAllTimers();

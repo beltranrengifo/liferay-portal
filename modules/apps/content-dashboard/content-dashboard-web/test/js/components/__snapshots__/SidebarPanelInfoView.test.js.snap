@@ -44,14 +44,16 @@ exports[`SidebarPanelInfoView renders 1`] = `
       class="sidebar-body"
     >
       <div
-        class="c-mb-2 sidebar-section"
+        class="sidebar-section sidebar-section--compress"
       >
         <p
           class="c-mb-1 text-secondary"
         >
           Basic Web Content
         </p>
-        <div>
+        <div
+          class="c-mt-2"
+        >
           <span
             class="label label-info"
           >
@@ -71,7 +73,9 @@ exports[`SidebarPanelInfoView renders 1`] = `
             </span>
           </span>
         </div>
-        <div>
+        <div
+          class="c-mt-2"
+        >
           <span
             class="label label-info"
           >
