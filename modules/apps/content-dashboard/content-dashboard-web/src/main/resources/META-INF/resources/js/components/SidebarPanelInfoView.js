@@ -112,7 +112,7 @@ const SidebarPanelInfoView = ({
 			<Sidebar.Header title={title} />
 
 			<Sidebar.Body>
-				<div className="c-mb-2 sidebar-section">
+				<div className="sidebar-section sidebar-section--compress">
 					{documentIsAFile && (
 						<>
 							<div className="c-mt-1">
@@ -125,7 +125,7 @@ const SidebarPanelInfoView = ({
 					<p className="c-mb-1 text-secondary">{subType}</p>
 
 					{versions.map((version) => (
-						<div className="c-mt-3" key={version.version}>
+						<div className="c-mt-2" key={version.version}>
 							<ClayLabel displayType="info">
 								{Liferay.Language.get('version')}{' '}
 								{version.version}

@@ -53,26 +53,28 @@ const FileUrlCopyButton = ({url}) => {
 	};
 
 	return (
-		<ClayForm.Group>
-			<ClayInput.Group>
-				<ClayInput.GroupItem prepend>
-					<ClayInput readOnly type="text" value={url} />
-				</ClayInput.GroupItem>
-				<ClayInput.GroupItem append shrink>
-					<ClayButtonWithIcon
-						displayType="secondary"
-						onClick={clipboardHandler}
-						symbol={
-							showFeedback
-								? 'check-small'
-								: error
-								? 'exclamation-circle'
-								: 'copy'
-						}
-					/>
-				</ClayInput.GroupItem>
-			</ClayInput.Group>
-		</ClayForm.Group>
+		<div className="file-url-copy-button">
+			<ClayForm.Group>
+				<ClayInput.Group>
+					<ClayInput.GroupItem prepend>
+						<ClayInput readOnly type="text" value={url} />
+					</ClayInput.GroupItem>
+					<ClayInput.GroupItem append shrink>
+						<ClayButtonWithIcon
+							displayType="secondary"
+							onClick={clipboardHandler}
+							symbol={
+								showFeedback
+									? 'check'
+									: error
+									? 'exclamation-circle'
+									: 'copy'
+							}
+						/>
+					</ClayInput.GroupItem>
+				</ClayInput.Group>
+			</ClayForm.Group>
+		</div>
 	);
 };
 
