@@ -94,6 +94,7 @@ import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -1232,7 +1233,8 @@ public class EditAssetListDisplayContext {
 			PortalUtil.getLiferayPortletResponse(_portletResponse);
 
 		return JSONUtil.putAll(
-			stream.map(
+			stream.sorted(Comparator.comparingInt(AssetListEntrySegmentsEntryRel::getPriority))
+				.map(
 				assetListEntrySegmentsEntryRel -> JSONUtil.put(
 					"active",
 					getSegmentsEntryId() ==
