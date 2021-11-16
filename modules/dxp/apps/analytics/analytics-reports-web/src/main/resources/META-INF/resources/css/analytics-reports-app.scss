@@ -127,6 +127,10 @@ html#{$cadmin-selector} {
 			.recharts-legend-item {
 				padding-bottom: 8px;
 
+				svg {
+					width: 0;
+				}
+
 				&:last-child {
 					padding-bottom: 16px;
 				}
