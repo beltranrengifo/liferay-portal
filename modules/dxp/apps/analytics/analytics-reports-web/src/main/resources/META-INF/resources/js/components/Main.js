@@ -93,6 +93,7 @@ export default function Main({
 
 			{totalReadsDataProvider && (
 				<TotalCount
+					className="mb-2"
 					dataProvider={totalReadsDataProvider}
 					label={Liferay.Util.sub(
 						Liferay.Language.get('total-reads')

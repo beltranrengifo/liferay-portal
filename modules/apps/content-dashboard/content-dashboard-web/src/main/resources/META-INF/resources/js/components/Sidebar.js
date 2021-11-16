@@ -34,7 +34,10 @@ const SidebarHeader = ({title}) => {
 	return (
 		<section className="sidebar-header">
 			<ClayLayout.ContentRow className="sidebar-section">
-				<ClayLayout.ContentCol expand>
+				<ClayLayout.ContentCol
+					className="justify-content-center"
+					expand
+				>
 					<p className="font-weight-bold mb-0 pr-2">{title}</p>
 				</ClayLayout.ContentCol>
 
