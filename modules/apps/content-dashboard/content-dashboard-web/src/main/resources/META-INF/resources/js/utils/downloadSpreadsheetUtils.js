@@ -14,7 +14,7 @@
 
 import {fetch} from 'frontend-js-web';
 
-export const fetchFile = async ({controller, url}) => {
+const fetchFile = async ({controller, url}) => {
 	const response = await fetch(url, {
 		method: 'GET',
 		signal: controller.signal,
@@ -25,7 +25,7 @@ export const fetchFile = async ({controller, url}) => {
 	return blob;
 };
 
-export const downloadFileFromBlob = (blob) => {
+const downloadFileFromBlob = (blob) => {
 	const file = URL.createObjectURL(blob);
 
 	var fileLink = document.createElement('a');
@@ -42,3 +42,5 @@ export const downloadFileFromBlob = (blob) => {
 
 	URL.revokeObjectURL(file);
 };
+
+export {downloadFileFromBlob, fetchFile};
