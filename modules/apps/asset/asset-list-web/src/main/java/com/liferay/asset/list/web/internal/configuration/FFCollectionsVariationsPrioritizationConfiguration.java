@@ -26,5 +26,5 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface FFCollectionsVariationsPrioritizationConfiguration {
 	@Meta.AD(deflt = "false", required = false)
-	public boolean prioritizationEnabled();
+	public boolean enabled();
 }

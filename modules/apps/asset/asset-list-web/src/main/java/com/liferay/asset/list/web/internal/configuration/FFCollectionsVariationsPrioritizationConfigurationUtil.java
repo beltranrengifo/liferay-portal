@@ -32,7 +32,7 @@ import java.util.Map;
 public class FFCollectionsVariationsPrioritizationConfigurationUtil {
 
 	public static boolean prioritizationEnabled() {
-		return _ffCollectionsVariationsPrioritizationConfiguration.prioritizationEnabled();
+		return _ffCollectionsVariationsPrioritizationConfiguration.enabled();
 	}
 
 	@Activate
