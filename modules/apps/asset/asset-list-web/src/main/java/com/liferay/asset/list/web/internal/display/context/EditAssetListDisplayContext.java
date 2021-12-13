@@ -603,7 +603,10 @@ public class EditAssetListDisplayContext {
 			_getAssetListEntrySegmentsEntryRelJSONArray()
 		).put(
 			"assetListEntryValid",
-			Validator.isNotNull(getAssetListEntry().getAssetEntryType())
+			() -> {
+				AssetListEntry assetListEntry = getAssetListEntry();
+				return Validator.isNotNull(assetListEntry.getAssetEntryType());
+			}
 		).put(
 			"createNewSegmentURL",
 			() -> PortletURLBuilder.createRenderURL(
