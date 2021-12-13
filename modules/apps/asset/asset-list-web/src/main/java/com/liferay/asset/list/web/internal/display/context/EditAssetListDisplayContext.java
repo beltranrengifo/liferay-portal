@@ -1237,11 +1237,11 @@ public class EditAssetListDisplayContext {
 
 	private JSONArray _getAssetListEntrySegmentsEntryRelJSONArray() {
 		List<AssetListEntrySegmentsEntryRel>
-			assetListEntrySegmentsEntryRelList =
+			assetListEntrySegmentsEntryRels =
 				getAssetListEntrySegmentsEntryRels();
 
 		Stream<AssetListEntrySegmentsEntryRel> stream =
-			assetListEntrySegmentsEntryRelList.stream();
+			assetListEntrySegmentsEntryRels.stream();
 
 		LiferayPortletResponse liferayPortletResponse =
 			PortalUtil.getLiferayPortletResponse(_portletResponse);
