@@ -231,8 +231,16 @@ public class SegmentsExperimentDisplayContext {
 		layoutFullURL = HttpUtil.setParameter(
 			layoutFullURL, "p_l_mode", Constants.EDIT);
 
+		long segmentsExperienceId = _getSegmentsExperienceId();
+		String layoutURL = _portal.getLayoutURL(_themeDisplay);
+
+		if (segmentsExperienceId != -1) {
+			layoutURL = HttpUtil.setParameter(
+				layoutURL, "segmentsExperienceId", segmentsExperienceId);
+		}
+
 		return HttpUtil.setParameter(
-			layoutFullURL, "p_l_back_url", _portal.getLayoutURL(_themeDisplay));
+			layoutFullURL, "p_l_back_url", layoutURL);
 	}
 
 	private String _getEditSegmentsVariantURL() {
