@@ -239,8 +239,7 @@ public class SegmentsExperimentDisplayContext {
 				layoutURL, "segmentsExperienceId", segmentsExperienceId);
 		}
 
-		return HttpUtil.setParameter(
-			layoutFullURL, "p_l_back_url", layoutURL);
+		return HttpUtil.setParameter(layoutFullURL, "p_l_back_url", layoutURL);
 	}
 
 	private String _getEditSegmentsVariantURL() {
