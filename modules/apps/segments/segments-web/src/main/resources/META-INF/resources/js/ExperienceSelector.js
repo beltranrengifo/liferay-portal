@@ -18,8 +18,8 @@ export default function ({namespace}) {
 		`${namespace}dropdownToggle`
 	);
 
-	let openSimulationPanelEvent = null;
 	let closeSimulationPanelEvent = null;
+	let openSimulationPanelEvent = null;
 
 	const handleClick = () => {
 		if (dropdownToggle.getAttribute('aria-expanded') === 'false') {
