@@ -552,7 +552,7 @@ public class AssetListEntryLocalServiceImpl
 		long defaultAssetType = GetterUtil.getLong(anyAssetTypeString);
 
 		if (defaultAssetType <= 0) {
-			return AssetEntry.class.getName();
+			return StringPool.BLANK;
 		}
 
 		return _portal.getClassName(defaultAssetType);
