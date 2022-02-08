@@ -16,37 +16,62 @@ import ClayLabel from '@clayui/label';
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
 
-const RenderItemVocabularies = ({cssClassNames = '', title, vocabularies}) => (
-	<div className={`c-mb-4 sidebar-dl sidebar-section ${cssClassNames}`}>
-		<h6 className="font-weight-semi-bold sidebar-section-subtitle-sm text-secondary text-uppercase">
-			{title}
-		</h6>
+import {groupVocabulariesBy, sortByStrings} from './utils/renderVocabularies';
 
-		<div>
-			{vocabularies.map(({categories, groupName, vocabularyName}) => (
-				<Fragment key={vocabularyName}>
-					<h5 className="c-mb-2 font-weight-semi-bold">
-						{vocabularyName} {groupName ? `(${groupName})` : ''}
-					</h5>
+const RenderItemVocabularies = ({cssClassNames = '', title, vocabularies}) => {
+	const [global, nonGlobal] = groupVocabulariesBy({
+		array: vocabularies,
+		key: 'groupName',
+		value: 'global',
+	});
 
-					<p>
-						{categories.map((category) => (
-							<ClayLabel
-								className="c-mb-2 c-mr-2"
-								displayType="secondary"
-								key={category}
-								large
-							>
-								{category}
-							</ClayLabel>
-						))}
-					</p>
-				</Fragment>
-			))}
+	const globalSorted = sortByStrings({array: global, key: 'vocabularyName'});
+	const nonGlobalSorted = sortByStrings({
+		array: nonGlobal,
+		key: 'vocabularyName',
+	});
+
+	const groupedAndSortedVocabularies = globalSorted.concat(nonGlobalSorted);
+
+	return (
+		<div
+			className={`c-mb-4 item-vocabularies sidebar-dl sidebar-section ${cssClassNames}`}
+		>
+			<h6 className="font-weight-semi-bold sidebar-section-subtitle-sm text-secondary text-uppercase">
+				{title}
+			</h6>
+
+			<div>
+				{groupedAndSortedVocabularies.map(
+					({categories, groupName, vocabularyName}) => (
+						<Fragment key={vocabularyName}>
+							<h5 className="c-mb-2 font-weight-semi-bold">
+								{vocabularyName}
+
+								{groupName ? ` (${groupName})` : ''}
+							</h5>
+
+							<p>
+								{sortByStrings({array: categories}).map(
+									(category) => (
+										<ClayLabel
+											className="c-mb-2 c-mr-2"
+											displayType="secondary"
+											key={category}
+											large
+										>
+											{category}
+										</ClayLabel>
+									)
+								)}
+							</p>
+						</Fragment>
+					)
+				)}
+			</div>
 		</div>
-	</div>
-);
-
+	);
+};
 RenderItemVocabularies.defaultProps = {
 	cssClassNames: '',
 };

@@ -27,7 +27,7 @@ import ItemLanguages from './ItemLanguages';
 import RenderItemVocabularies from './RenderItemVocabularies';
 import {
 	getCategoriesCountFromVocabularies,
-	getVocabulariesByVisibility,
+	groupVocabulariesBy,
 } from './utils/renderVocabularies';
 
 const formatDate = (date, languageTag) => {
@@ -63,10 +63,11 @@ const SidebarPanelInfoView = ({
 }) => {
 	const stickerColor = parseInt(user.userId, 10) % 10;
 
-	const [
-		internalVocabularies,
-		publicVocabularies,
-	] = getVocabulariesByVisibility(vocabularies);
+	const [publicVocabularies, internalVocabularies] = groupVocabulariesBy({
+		array: Object.values(vocabularies),
+		key: 'isPublic',
+		value: true,
+	});
 
 	const internalCategoriesCount = getCategoriesCountFromVocabularies(
 		internalVocabularies
