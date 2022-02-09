@@ -16,9 +16,9 @@ import ClayLabel from '@clayui/label';
 import PropTypes from 'prop-types';
 import React, {Fragment} from 'react';
 
-import {groupVocabulariesBy, sortByStrings} from './utils/renderVocabularies';
+import {groupVocabulariesBy, sortByStrings} from './utils/taxonomiesUtils';
 
-const RenderItemVocabularies = ({cssClassNames = '', title, vocabularies}) => {
+const ItemVocabularies = ({cssClassNames = '', title, vocabularies}) => {
 	const [global, nonGlobal] = groupVocabulariesBy({
 		array: vocabularies,
 		key: 'groupName',
@@ -72,14 +72,14 @@ const RenderItemVocabularies = ({cssClassNames = '', title, vocabularies}) => {
 		</div>
 	);
 };
-RenderItemVocabularies.defaultProps = {
+ItemVocabularies.defaultProps = {
 	cssClassNames: '',
 };
 
-RenderItemVocabularies.propTypes = {
+ItemVocabularies.propTypes = {
 	cssClassNames: PropTypes.string,
 	title: PropTypes.string.isRequired,
 	vocabularies: PropTypes.array.isRequired,
 };
 
-export default RenderItemVocabularies;
+export default ItemVocabularies;

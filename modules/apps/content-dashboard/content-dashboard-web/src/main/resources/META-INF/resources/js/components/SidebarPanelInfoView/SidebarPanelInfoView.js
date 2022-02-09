@@ -24,11 +24,11 @@ import CollapsibleSection from './CollapsibleSection';
 import DocumentPreview from './DocumentPreview';
 import FileUrlCopyButton from './FileUrlCopyButton';
 import ItemLanguages from './ItemLanguages';
-import RenderItemVocabularies from './RenderItemVocabularies';
+import ItemVocabularies from './ItemVocabularies';
 import {
 	getCategoriesCountFromVocabularies,
 	groupVocabulariesBy,
-} from './utils/renderVocabularies';
+} from './utils/taxonomiesUtils';
 
 const formatDate = (date, languageTag) => {
 	return (
@@ -209,7 +209,7 @@ const SidebarPanelInfoView = ({
 							title={Liferay.Language.get('categorization')}
 						>
 							{!!publicCategoriesCount && (
-								<RenderItemVocabularies
+								<ItemVocabularies
 									title={Liferay.Language.get(
 										'public-categories'
 									)}
@@ -218,7 +218,7 @@ const SidebarPanelInfoView = ({
 							)}
 
 							{!!internalCategoriesCount && (
-								<RenderItemVocabularies
+								<ItemVocabularies
 									cssClassNames="c-mt-4"
 									title={Liferay.Language.get(
 										'internal-categories'
