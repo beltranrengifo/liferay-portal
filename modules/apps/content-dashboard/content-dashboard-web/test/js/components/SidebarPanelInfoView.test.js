@@ -185,22 +185,24 @@ describe('SidebarPanelInfoView', () => {
 		);
 
 		expect(vocabularies[0].textContent).toBe(
-			'AA Another Global Random Vocabulary (Global)'
-		);
-		expect(vocabularies[1].textContent).toBe('Foods (Global)');
-		expect(vocabularies[2].textContent).toBe('Topic (Global)');
-		expect(vocabularies[3].textContent).toBe(
-			'ZZ Global Random Vocabulary (Global)'
-		);
-		expect(vocabularies[4].textContent).toBe(
 			'AA Another Fake vocabulary (Liferay)'
 		);
-		expect(vocabularies[5].textContent).toBe('Clothes (Demo Site)');
-		expect(vocabularies[6].textContent).toBe('Developers (Liferay)');
-		expect(vocabularies[7].textContent).toBe('Travel (Demo Site)');
-		expect(vocabularies[8].textContent).toBe(
+		expect(vocabularies[1].textContent).toBe('Clothes (Demo Site)');
+		expect(vocabularies[2].textContent).toBe('Developers (Liferay)');
+		expect(vocabularies[3].textContent).toBe('Travel (Demo Site)');
+		expect(vocabularies[4].textContent).toBe(
 			'ZZ Fake vocabulary (Liferay)'
 		);
+
+		expect(vocabularies[5].textContent).toBe(
+			'AA Another Global Random Vocabulary (Global)'
+		);
+		expect(vocabularies[6].textContent).toBe('Foods (Global)');
+		expect(vocabularies[7].textContent).toBe('Topic (Global)');
+		expect(vocabularies[8].textContent).toBe(
+			'ZZ Global Random Vocabulary (Global)'
+		);
+
 		expect(vocabularies[9].textContent).toBe(
 			'Internal categorization (Liferay)'
 		);

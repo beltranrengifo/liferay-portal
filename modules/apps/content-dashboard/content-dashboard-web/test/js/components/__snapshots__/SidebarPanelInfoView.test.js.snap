@@ -199,259 +199,6 @@ exports[`SidebarPanelInfoView renders 1`] = `
                     <h5
                       class="c-mb-2 font-weight-semi-bold"
                     >
-                      AA Another Global Random Vocabulary (Global)
-                    </h5>
-                    <p>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Another Global Random 1
-                        </span>
-                      </span>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Another Global Random 2
-                        </span>
-                      </span>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Another Global Random 3
-                        </span>
-                      </span>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Another Global Random 4
-                        </span>
-                      </span>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Another Global Random 5
-                        </span>
-                      </span>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Another Global Random 6
-                        </span>
-                      </span>
-                    </p>
-                    <h5
-                      class="c-mb-2 font-weight-semi-bold"
-                    >
-                      Foods (Global)
-                    </h5>
-                    <p>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Chinese
-                        </span>
-                      </span>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Indian
-                        </span>
-                      </span>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Italian
-                        </span>
-                      </span>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Mexican
-                        </span>
-                      </span>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Spanish
-                        </span>
-                      </span>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Thai
-                        </span>
-                      </span>
-                    </p>
-                    <h5
-                      class="c-mb-2 font-weight-semi-bold"
-                    >
-                      Topic (Global)
-                    </h5>
-                    <p>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Topic 1
-                        </span>
-                      </span>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Topic 2
-                        </span>
-                      </span>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Topic 3
-                        </span>
-                      </span>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Topic 4
-                        </span>
-                      </span>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Topic 5
-                        </span>
-                      </span>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Topic 6
-                        </span>
-                      </span>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Topic 7
-                        </span>
-                      </span>
-                    </p>
-                    <h5
-                      class="c-mb-2 font-weight-semi-bold"
-                    >
-                      ZZ Global Random Vocabulary (Global)
-                    </h5>
-                    <p>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Global Random 1
-                        </span>
-                      </span>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Global Random 2
-                        </span>
-                      </span>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Global Random 3
-                        </span>
-                      </span>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Global Random 4
-                        </span>
-                      </span>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Global Random 5
-                        </span>
-                      </span>
-                      <span
-                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
-                      >
-                        <span
-                          class="label-item label-item-expand"
-                        >
-                          Global Random 6
-                        </span>
-                      </span>
-                    </p>
-                    <h5
-                      class="c-mb-2 font-weight-semi-bold"
-                    >
                       AA Another Fake vocabulary (Liferay)
                     </h5>
                     <p>
@@ -769,6 +516,259 @@ exports[`SidebarPanelInfoView renders 1`] = `
                           class="label-item label-item-expand"
                         >
                           Fake 6
+                        </span>
+                      </span>
+                    </p>
+                    <h5
+                      class="c-mb-2 font-weight-semi-bold"
+                    >
+                      AA Another Global Random Vocabulary (Global)
+                    </h5>
+                    <p>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Another Global Random 1
+                        </span>
+                      </span>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Another Global Random 2
+                        </span>
+                      </span>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Another Global Random 3
+                        </span>
+                      </span>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Another Global Random 4
+                        </span>
+                      </span>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Another Global Random 5
+                        </span>
+                      </span>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Another Global Random 6
+                        </span>
+                      </span>
+                    </p>
+                    <h5
+                      class="c-mb-2 font-weight-semi-bold"
+                    >
+                      Foods (Global)
+                    </h5>
+                    <p>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Chinese
+                        </span>
+                      </span>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Indian
+                        </span>
+                      </span>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Italian
+                        </span>
+                      </span>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Mexican
+                        </span>
+                      </span>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Spanish
+                        </span>
+                      </span>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Thai
+                        </span>
+                      </span>
+                    </p>
+                    <h5
+                      class="c-mb-2 font-weight-semi-bold"
+                    >
+                      Topic (Global)
+                    </h5>
+                    <p>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Topic 1
+                        </span>
+                      </span>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Topic 2
+                        </span>
+                      </span>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Topic 3
+                        </span>
+                      </span>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Topic 4
+                        </span>
+                      </span>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Topic 5
+                        </span>
+                      </span>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Topic 6
+                        </span>
+                      </span>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Topic 7
+                        </span>
+                      </span>
+                    </p>
+                    <h5
+                      class="c-mb-2 font-weight-semi-bold"
+                    >
+                      ZZ Global Random Vocabulary (Global)
+                    </h5>
+                    <p>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Global Random 1
+                        </span>
+                      </span>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Global Random 2
+                        </span>
+                      </span>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Global Random 3
+                        </span>
+                      </span>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Global Random 4
+                        </span>
+                      </span>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Global Random 5
+                        </span>
+                      </span>
+                      <span
+                        class="label c-mb-2 c-mr-2 label-lg label-secondary"
+                      >
+                        <span
+                          class="label-item label-item-expand"
+                        >
+                          Global Random 6
                         </span>
                       </span>
                     </p>
