@@ -31,7 +31,7 @@ const ItemVocabularies = ({cssClassNames = '', title, vocabularies}) => {
 		key: 'vocabularyName',
 	});
 
-	const groupedAndSortedVocabularies = globalSorted.concat(nonGlobalSorted);
+	const groupedAndSortedVocabularies = nonGlobalSorted.concat(globalSorted);
 
 	return (
 		<div
