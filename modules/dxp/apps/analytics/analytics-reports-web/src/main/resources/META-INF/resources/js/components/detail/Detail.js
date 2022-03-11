@@ -14,11 +14,11 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import {ChartDispatchContext} from '../context/ChartStateContext';
-import {StoreDispatchContext} from '../context/StoreContext';
-import KeywordsDetail from './detail/KeywordsDetail';
-import ReferralDetail from './detail/ReferralDetail';
-import SocialDetail from './detail/SocialDetail';
+import {ChartDispatchContext} from '../../context/ChartStateContext';
+import {StoreDispatchContext} from '../../context/StoreContext';
+import KeywordsDetail from './KeywordsDetail';
+import ReferralDetail from './ReferralDetail';
+import SocialDetail from './SocialDetail';
 
 const TRAFFIC_CHANNELS = {
 	DIRECT: 'direct',

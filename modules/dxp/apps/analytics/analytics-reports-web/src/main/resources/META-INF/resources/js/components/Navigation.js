@@ -17,8 +17,9 @@ import {ChartStateContext} from '../context/ChartStateContext';
 import ConnectionContext from '../context/ConnectionContext';
 import {StoreStateContext} from '../context/StoreContext';
 import APIService from '../utils/APIService';
-import Detail from './Detail';
 import Main from './Main';
+import Detail from './detail/Detail';
+import Drawer from './detail/Drawer';
 
 const noop = () => {};
 
@@ -138,6 +139,8 @@ export default function Navigation({
 		return Promise.resolve(trafficSource?.value ?? '-');
 	}, [trafficSourceName, trafficSources]);
 
+	const showDetail = currentPage.view !== 'main';
+
 	return (
 		<>
 			{!validAnalyticsConnection && (
@@ -173,47 +176,42 @@ export default function Navigation({
 				</ClayAlert>
 			)}
 
-			{currentPage.view === 'main' && (
-				<div>
-					<Main
-						author={author}
-						canonicalURL={canonicalURL}
-						chartDataProviders={
-							endpoints.analyticsReportsHistoricalReadsURL
-								? [handleHistoricalViews, handleHistoricalReads]
-								: [handleHistoricalViews]
-						}
-						onSelectedLanguageClick={onSelectedLanguageClick}
-						onTrafficSourceClick={
+			<Main
+				author={author}
+				canonicalURL={canonicalURL}
+				chartDataProviders={
+					endpoints.analyticsReportsHistoricalReadsURL
+						? [handleHistoricalViews, handleHistoricalReads]
+						: [handleHistoricalViews]
+				}
+				onSelectedLanguageClick={onSelectedLanguageClick}
+				onTrafficSourceClick={updateTrafficSourcesAndCurrentPage}
+				pagePublishDate={pagePublishDate}
+				pageTitle={pageTitle}
+				timeSpanOptions={timeSpanOptions}
+				totalReadsDataProvider={
+					endpoints.analyticsReportsTotalReadsURL && handleTotalReads
+				}
+				totalViewsDataProvider={handleTotalViews}
+				trafficSourcesDataProvider={handleTrafficSources}
+				viewURLs={viewURLs}
+			/>
+
+			{showDetail && (
+				<Drawer>
+					<Detail
+						currentPage={currentPage}
+						handleDetailPeriodChange={
 							updateTrafficSourcesAndCurrentPage
 						}
-						pagePublishDate={pagePublishDate}
-						pageTitle={pageTitle}
+						onCurrentPageChange={handleCurrentPage}
+						onTrafficSourceNameChange={handleTrafficSourceName}
 						timeSpanOptions={timeSpanOptions}
-						totalReadsDataProvider={
-							endpoints.analyticsReportsTotalReadsURL &&
-							handleTotalReads
-						}
-						totalViewsDataProvider={handleTotalViews}
+						trafficShareDataProvider={handleTrafficShare}
 						trafficSourcesDataProvider={handleTrafficSources}
-						viewURLs={viewURLs}
+						trafficVolumeDataProvider={handleTrafficVolume}
 					/>
-				</div>
-			)}
-
-			{currentPage.view !== 'main' && (
-				<Detail
-					currentPage={currentPage}
-					handleDetailPeriodChange={
-						updateTrafficSourcesAndCurrentPage
-					}
-					onCurrentPageChange={handleCurrentPage}
-					onTrafficSourceNameChange={handleTrafficSourceName}
-					timeSpanOptions={timeSpanOptions}
-					trafficShareDataProvider={handleTrafficShare}
-					trafficSourcesDataProvider={handleTrafficSources}
-					trafficVolumeDataProvider={handleTrafficVolume}
-				/>
+				</Drawer>
 			)}
 		</>
 	);
