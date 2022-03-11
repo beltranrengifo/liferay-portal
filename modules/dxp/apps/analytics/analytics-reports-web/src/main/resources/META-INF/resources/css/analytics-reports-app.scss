@@ -163,12 +163,12 @@ html#{$cadmin-selector} {
 			}
 
 			.traffic-source-detail-drawer {
+				background: white;
+				height: 100%;
+				left: 0;
 				position: absolute;
 				top: 0;
-				left: 0;
 				width: 100%;
-				height: 100%;
-				background: white;
 				z-index: 99;
 			}
 		}
