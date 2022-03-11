@@ -29,6 +29,12 @@ html#{$cadmin-selector} {
 				}
 			}
 
+			@include media-breakpoint-down(sm) {
+				&.lfr-admin-panel.sidenav-menu-slider {
+					top: 56px;
+				}
+			}
+
 			.sidebar-body {
 				bottom: 0;
 				left: 0;
