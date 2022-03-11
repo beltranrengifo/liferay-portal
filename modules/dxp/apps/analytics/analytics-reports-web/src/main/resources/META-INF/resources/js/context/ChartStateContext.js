@@ -28,7 +28,7 @@ const INITIAL_STATE = {
 	timeSpanOffset: 0,
 };
 
-/** 
+/**
  * Example state
  * {
 		"lineChartloading": false,
@@ -197,6 +197,13 @@ function reducer(state, action) {
  * Declares the state as loading and resets the dataSet histogram values
  */
 function setLineChartLoadingState(state) {
+
+	/**
+	 * The dataSet is already formatted
+	 */
+	if (state.dataSet.histogram.length) {
+		return {...state, lineChartLoading: false};
+	}
 
 	/**
 	 * The dataSet does not need to be reset
