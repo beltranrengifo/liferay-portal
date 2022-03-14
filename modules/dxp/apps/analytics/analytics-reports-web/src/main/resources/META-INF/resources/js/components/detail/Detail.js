@@ -33,6 +33,7 @@ export default function Detail({
 	handleDetailPeriodChange,
 	onCurrentPageChange,
 	onTrafficSourceNameChange,
+	refProp,
 	timeSpanOptions,
 	trafficShareDataProvider,
 	trafficSourcesDataProvider,
@@ -44,7 +45,7 @@ export default function Detail({
 
 	return (
 		<>
-			<div className="c-pt-3 c-px-3 d-flex">
+			<div className="c-pt-3 c-px-3 d-flex" ref={refProp}>
 				<ClayButton
 					displayType="unstyled"
 					onClick={() => {
@@ -105,6 +106,9 @@ Detail.propTypes = {
 	currentPage: PropTypes.object.isRequired,
 	onCurrentPageChange: PropTypes.func.isRequired,
 	onTrafficSourceNameChange: PropTypes.func.isRequired,
+	refProp: PropTypes.oneOfType([
+		PropTypes.shape({current: PropTypes.instanceOf(Element)}),
+	]),
 	timeSpanOptions: PropTypes.arrayOf(
 		PropTypes.shape({
 			key: PropTypes.string,

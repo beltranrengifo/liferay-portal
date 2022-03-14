@@ -171,6 +171,12 @@ html#{$cadmin-selector} {
 				width: 100%;
 				z-index: 99;
 			}
+			&-main {
+				visibility: visible;
+				&--hide {
+					visibility: hidden;
+				}
+			}
 		}
 	}
 }

@@ -10,8 +10,15 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useCallback, useContext, useState} from 'react';
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 
 import {ChartStateContext} from '../context/ChartStateContext';
 import ConnectionContext from '../context/ConnectionContext';
@@ -45,6 +52,8 @@ export default function Navigation({
 	const [trafficSourceName, setTrafficSourceName] = useState('');
 
 	const {timeSpanKey, timeSpanOffset} = useContext(ChartStateContext);
+
+	const detailRef = useRef(null);
 
 	const handleCurrentPage = useCallback((currentPage) => {
 		setCurrentPage({view: currentPage.view});
@@ -141,6 +150,12 @@ export default function Navigation({
 
 	const showDetail = currentPage.view !== 'main';
 
+	useEffect(() => {
+		if (showDetail) {
+			detailRef.current.scrollIntoView();
+		}
+	}, [showDetail]);
+
 	return (
 		<>
 			{!validAnalyticsConnection && (
@@ -184,6 +199,9 @@ export default function Navigation({
 						? [handleHistoricalViews, handleHistoricalReads]
 						: [handleHistoricalViews]
 				}
+				className={classnames({
+					'analytics-reports-app-main--hide': showDetail,
+				})}
 				onSelectedLanguageClick={onSelectedLanguageClick}
 				onTrafficSourceClick={updateTrafficSourcesAndCurrentPage}
 				pagePublishDate={pagePublishDate}
@@ -206,6 +224,7 @@ export default function Navigation({
 						}
 						onCurrentPageChange={handleCurrentPage}
 						onTrafficSourceNameChange={handleTrafficSourceName}
+						refProp={detailRef}
 						timeSpanOptions={timeSpanOptions}
 						trafficShareDataProvider={handleTrafficShare}
 						trafficSourcesDataProvider={handleTrafficSources}
