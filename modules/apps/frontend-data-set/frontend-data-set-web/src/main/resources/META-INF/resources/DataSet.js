@@ -98,7 +98,7 @@ const DataSet = ({
 	);
 	const [filters, setFilters] = useState(filtersProp);
 	const [highlightedItemsValue, setHighlightedItemsValue] = useState([]);
-	const [items, setItems] = useState(itemsProp);
+	const [items, setItems] = useState(itemsProp || []);
 	const [itemsChanges, setItemsChanges] = useState({});
 	const [pageNumber, setPageNumber] = useState(1);
 	const [searchParam, setSearchParam] = useState('');
@@ -175,8 +175,8 @@ const DataSet = ({
 	const isMounted = useIsMounted();
 
 	function updateDataSetItems(dataSetData) {
-		setTotal(dataSetData.totalCount);
-		setItems(dataSetData.items);
+		setTotal(dataSetData?.totalCount || 0);
+		setItems(dataSetData?.items || []);
 	}
 
 	useEffect(() => {
@@ -387,7 +387,7 @@ const DataSet = ({
 		formId || formName ? view : <form ref={formRef}>{view}</form>;
 
 	const paginationComponent =
-		showPagination && pagination && items?.length ? (
+		showPagination && pagination && items?.length && total ? (
 			<div className="data-set-pagination-wrapper">
 				<ClayPaginationBarWithBasicItems
 					activeDelta={delta}
