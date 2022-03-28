@@ -349,7 +349,7 @@ export default class SidePanel extends React.Component {
 				<Modal id={this.state.iframeHandlerModalId} />
 				<div
 					className={classNames(
-						'side-panel-nav-cover navigation-bar border-bottom',
+						'fds-side-panel-nav-cover side-panel-nav-cover navigation-bar border-bottom',
 						visibility
 					)}
 					style={{top: this.state.menuCoverTopDistance}}
@@ -371,7 +371,7 @@ export default class SidePanel extends React.Component {
 				</div>
 				<div
 					className={classNames(
-						'side-panel',
+						'fds-side-panel side-panel',
 						`side-panel-${this.state.size}`,
 						visibility,
 						loading

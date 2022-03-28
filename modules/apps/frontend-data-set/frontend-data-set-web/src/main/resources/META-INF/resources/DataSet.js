@@ -631,47 +631,49 @@ const DataSet = ({
 				updateSorting: setSorting,
 			}}
 		>
-			<Modal id={dataSetSupportModalId} onClose={refreshData} />
+			<div className="fds">
+				<Modal id={dataSetSupportModalId} onClose={refreshData} />
 
-			{!sidePanelId && (
-				<SidePanel
-					id={dataSetSupportSidePanelId}
-					onAfterSubmit={refreshData}
-				/>
-			)}
-
-			<div className="data-set-wrapper" ref={wrapperRef}>
-				{style === 'default' && (
-					<div className="data-set data-set-inline">
-						{managementBar}
-
-						{wrappedView}
-
-						{paginationComponent}
-					</div>
+				{!sidePanelId && (
+					<SidePanel
+						id={dataSetSupportSidePanelId}
+						onAfterSubmit={refreshData}
+					/>
 				)}
 
-				{style === 'stacked' && (
-					<div className="data-set data-set-stacked">
-						{managementBar}
+				<div className="data-set-wrapper" ref={wrapperRef}>
+					{style === 'default' && (
+						<div className="data-set data-set-inline">
+							{managementBar}
 
-						{wrappedView}
-
-						{paginationComponent}
-					</div>
-				)}
-
-				{style === 'fluid' && (
-					<div className="data-set data-set-fluid">
-						{managementBar}
-
-						<div className="container-fluid container-xl mt-3">
 							{wrappedView}
 
 							{paginationComponent}
 						</div>
-					</div>
-				)}
+					)}
+
+					{style === 'stacked' && (
+						<div className="data-set data-set-stacked">
+							{managementBar}
+
+							{wrappedView}
+
+							{paginationComponent}
+						</div>
+					)}
+
+					{style === 'fluid' && (
+						<div className="data-set data-set-fluid">
+							{managementBar}
+
+							<div className="container-fluid container-xl mt-3">
+								{wrappedView}
+
+								{paginationComponent}
+							</div>
+						</div>
+					)}
+				</div>
 			</div>
 		</DataSetContext.Provider>
 	);

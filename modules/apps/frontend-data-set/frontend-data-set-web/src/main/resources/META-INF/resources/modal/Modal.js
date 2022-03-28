@@ -145,7 +145,7 @@ function Modal({
 					{title && <ClayModal.Header>{title}</ClayModal.Header>}
 
 					<div
-						className="modal-body modal-body-iframe"
+						className="fds-modal-body modal-body modal-body-iframe"
 						style={{
 							height: resolveModalHeight(size),
 							maxHeight: '100%',

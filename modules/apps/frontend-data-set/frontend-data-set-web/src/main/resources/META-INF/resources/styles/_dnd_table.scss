@@ -1,17 +1,9 @@
 .dnd-thead {
 	display: table-header-group;
-
-	.fixed & {
-		display: block;
-	}
 }
 
 .dnd-tbody {
 	display: table-row-group;
-
-	.fixed & {
-		display: block;
-	}
 }
 
 .dnd-td,
@@ -23,10 +15,6 @@
 	padding: $table-cell-padding;
 	transition: opacity 0.1s ease-in;
 	white-space: normal;
-
-	.fixed & {
-		opacity: 1;
-	}
 
 	&:last-child {
 		border-right: none;
@@ -40,12 +28,6 @@
 	&.expand {
 		min-width: 150px;
 		width: 20%;
-	}
-
-	.fixed & {
-		align-items: center;
-		display: flex;
-		min-width: auto;
 	}
 }
 
@@ -82,11 +64,6 @@
 
 	&.active::before {
 		transform: scaleX(1);
-	}
-
-	.fixed & {
-		display: flex;
-		width: fit-content;
 	}
 
 	&.nested + &.dnd-tr:not(.nested) {
@@ -126,6 +103,26 @@
 			transform: scale(0.8);
 			transform-origin: left;
 		}
+	}
+}
+
+.fixed {
+	.dnd-td,
+	.dnd-th {
+		opacity: 1;
+		align-items: center;
+		display: flex;
+		min-width: auto;
+	}
+
+	.dnd-tr {
+		display: flex;
+		width: fit-content;
+	}
+
+	.dnd-thead,
+	.dnd-tbody {
+		display: block;
 	}
 }
 
@@ -175,6 +172,62 @@
 
 		&.is-allowed {
 			background: $primary;
+		}
+	}
+}
+
+.table-style-fluid,
+.table-style-stacked {
+	border: 1px solid $border-color;
+	border-radius: 4px;
+	overflow: hidden;
+
+	.table {
+		margin-bottom: -1px;
+	}
+}
+
+.dnd-table .content-renderer-image {
+	width: 1%;
+}
+
+.tooltip-table {
+	color: white;
+	font-weight: 600;
+	width: 100%;
+
+	td {
+		border: none;
+
+		&:first-child {
+			color: darken(white, 10%);
+			text-align: left;
+		}
+
+		&:last-child {
+			text-align: right;
+		}
+	}
+
+	tr.with-divider td {
+		padding-top: map-get($spacers, 2);
+		position: relative;
+
+		&::after {
+			border-top: 1px solid rgba(255, 255, 255, 0.1);
+			content: '';
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: map-get($spacers, 1);
+		}
+	}
+
+	tr.highlighted td {
+		font-size: 1rem;
+
+		&:last-child {
+			color: $error-l1;
 		}
 	}
 }
