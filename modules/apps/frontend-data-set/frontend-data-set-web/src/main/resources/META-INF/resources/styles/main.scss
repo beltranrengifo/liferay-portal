@@ -1,10 +1,10 @@
-@import './variables';
+@import 'variables';
 
-@import '../data_set_display';
-@import '../dnd_table';
-@import '../modal/modal';
-@import '../quantity_selector/quantity_selector';
-@import '../side_panel/side_panel';
+@import 'data_set_display';
+@import 'dnd_table';
+@import 'modal';
+@import 'quantity_selector';
+@import 'side_panel';
 
 .cell-comment {
 	cursor: pointer;
