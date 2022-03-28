@@ -1,13 +1,13 @@
 @import 'variables';
 
 @import 'global';
-@import 'side_panel';
 @import 'modal';
+@import 'side_panel';
 
 .fds {
 	@import 'data_set_display';
-	@import 'filtering';
 	@import 'dnd_table';
+	@import 'filtering';
 	@import 'quantity_selector';
 
 	.cell-comment {
