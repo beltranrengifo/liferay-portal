@@ -8,15 +8,9 @@
 	@import 'data_set_display';
 	@import 'dnd_table';
 	@import 'filtering';
-	@import 'quantity_selector';
 
-	.cell-comment {
-		cursor: pointer;
-
-		svg {
-			pointer-events: none;
-		}
-	}
+	@import 'data_renderers/quantity_selector';
+	@import 'data_renderers/_comment_renderer';
 
 	.clay-admin-header {
 		position: sticky;
