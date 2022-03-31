@@ -147,6 +147,10 @@
 		touch-action: none;
 		user-select: none;
 	}
+
+	.content-renderer-image {
+		width: 1%;
+	}
 }
 
 .dnd-th-resizer {
@@ -187,10 +191,6 @@
 	}
 }
 
-.dnd-table .content-renderer-image {
-	width: 1%;
-}
-
 .tooltip-table {
 	color: white;
 	font-weight: 600;
@@ -228,6 +228,19 @@
 
 		&:last-child {
 			color: $error-l1;
+		}
+	}
+}
+
+.sorting-icons-wrapper {
+	.sorting-icon {
+		&:nth-child(2) {
+			left: -6px;
+			position: relative;
+		}
+
+		&:not(.active) {
+			opacity: 0.5;
 		}
 	}
 }
