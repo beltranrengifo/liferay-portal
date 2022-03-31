@@ -1,13 +1,13 @@
 @import 'variables';
 
-@import 'global';
-@import 'modal';
-@import 'side_panel';
+@import 'global/modal';
+@import 'global/side_panel';
+@import 'global/tooltip';
 
 .fds {
 	@import 'data_set_display';
 	@import 'dnd_table';
-	@import 'filtering';
+	@import 'filters';
 
 	@import 'data_renderers/quantity_selector';
 	@import 'data_renderers/_comment_renderer';
