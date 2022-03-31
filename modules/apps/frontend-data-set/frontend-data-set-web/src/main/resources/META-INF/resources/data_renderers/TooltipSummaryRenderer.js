@@ -86,7 +86,7 @@ function TooltipSummaryRenderer({itemData, options, value}) {
 			{value}
 			{!!tooltipTableRows.length && (
 				<span
-					className="tooltip-provider"
+					className="fds-tooltip-provider"
 					data-title-set-as-html
 					data-tooltip-delay="0"
 					title={ReactDOMServer.renderToString(
