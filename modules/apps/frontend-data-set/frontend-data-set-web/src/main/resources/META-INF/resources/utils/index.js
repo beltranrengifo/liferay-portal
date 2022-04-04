@@ -165,17 +165,6 @@ export function formatItemChanges(itemChanges) {
 	return formattedChanges;
 }
 
-export function executeAsyncAction(url, method = 'GET') {
-	return fetch(url, {
-		headers: {
-			'Accept': 'application/json',
-			'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-			'Content-Type': 'application/json',
-		},
-		method,
-	});
-}
-
 export function formatActionURL(url, item) {
 	const replacedURL = url.replace(new RegExp('{(.*?)}', 'mg'), (matched) =>
 		getValueFromItem(
@@ -266,7 +255,14 @@ export async function loadData(
 		);
 	}
 
-	const response = await executeAsyncAction(url, 'GET');
+	const response = await fetch(url, {
+		headers: {
+			'Accept': 'application/json',
+			'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+			'Content-Type': 'application/json',
+		},
+		method: 'GET',
+	});
 	const responseJSON = await response.json();
 
 	return {

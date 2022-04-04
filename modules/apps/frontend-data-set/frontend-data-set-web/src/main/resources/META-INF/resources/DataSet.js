@@ -44,7 +44,6 @@ import {
 } from './utils/eventsDefinitions';
 import {
 	delay,
-	executeAsyncAction,
 	formatItemChanges,
 	getCurrentItemUpdates,
 	getRandomId,
@@ -420,8 +419,15 @@ const DataSet = ({
 			</div>
 		) : null;
 
-	function executeAsyncItemAction(url, method) {
-		return executeAsyncAction(url, method)
+	function executeAsyncItemAction(url, method = 'GET') {
+		return fetch(url, {
+			headers: {
+				'Accept': 'application/json',
+				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+				'Content-Type': 'application/json',
+			},
+			method,
+		})
 			.then((_) => {
 				return delay(500).then(() => {
 					if (isMounted()) {
