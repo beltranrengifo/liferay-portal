@@ -137,7 +137,7 @@ function Modal({
 		<>
 			{visible && (
 				<ClayModal
-					className="clay-modal"
+					className="clay-modal fds-modal"
 					observer={observer}
 					size={size}
 					status={status}
