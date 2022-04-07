@@ -27,12 +27,12 @@ FDSSampleDisplayContext fdsSampleDisplayContext = (FDSSampleDisplayContext)reque
 		<ul class="nav nav-underline" role="tablist">
 			<li class="nav-item">
 				<a aria-controls="navUnderlineMultiple" aria-selected="true" class="active nav-link" data-toggle="tab" href="#navUnderlineMultiple" id="navUnderlineMultipleTab" role="tab">
-					Multiple selection
+					<%= LanguageUtil.get(request, "checkbox-multiple-field-type-label") %>
 				</a>
 			</li>
 			<li class="nav-item">
 				<a aria-controls="navUnderlineSingle" aria-selected="false" class="nav-link" data-toggle="tab" href="#navUnderlineSingle" id="navUnderlineSingleTab" role="tab">
-					Single selection
+					<%= LanguageUtil.get(request, "radio-field-type-label") %>
 				</a>
 			</li>
 		</ul>
