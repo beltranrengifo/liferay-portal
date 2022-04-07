@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.liferay.portal.kernel.util.Constants" %><%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -20,21 +20,31 @@
 FDSSampleDisplayContext fdsSampleDisplayContext = (FDSSampleDisplayContext)request.getAttribute(FDSSampleWebKeys.FDS_SAMPLE_DISPLAY_CONTEXT);
 %>
 
-<frontend-data-set:headless-display
-	additionalProps='<%=
-		HashMapBuilder.<String, Object>put(
-			"greeting", "Hello"
-		).build()
-	%>'
-	apiURL="<%= fdsSampleDisplayContext.getAPIURL() %>"
-	customViewsEnabled="<%= true %>"
-	fdsActionDropdownItems="<%= fdsSampleDisplayContext.getFDSActionDropdownItems() %>"
-	formId="fm"
-	id="<%= FDSSampleFDSNames.FDS_SAMPLES %>"
-	itemsPerPage="<%= 20 %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
-	pageNumber="<%= 1 %>"
-	portletURL="<%= liferayPortletResponse.createRenderURL() %>"
-	propsTransformer="js/SampleFDSPropsTransformer"
-	style="fluid"
-/>
+<section id="<portlet:namespace />fdsSample">
+	<form action="<%= fdsSampleDisplayContext.getPortletURL() %>" method="post" name="fm">
+		<input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
+		<input name="redirect" type="hidden" value="<%= String.valueOf(fdsSampleDisplayContext.getPortletURL()) %>" />
+
+		<frontend-data-set:headless-display
+			additionalProps='<%=
+			HashMapBuilder.<String, Object>put(
+				"greeting", "Hello"
+			).build()
+		%>'
+			apiURL="<%= fdsSampleDisplayContext.getAPIURL() %>"
+			bulkActionDropdownItems="<%= fdsSampleDisplayContext.getBulkActionDropdownItems() %>"
+			customViewsEnabled="<%= true %>"
+			fdsActionDropdownItems="<%= fdsSampleDisplayContext.getFDSActionDropdownItems() %>"
+			formId="fm"
+			id="<%= FDSSampleFDSNames.FDS_SAMPLES %>"
+			itemsPerPage="<%= 20 %>"
+			namespace="<%= liferayPortletResponse.getNamespace() %>"
+			pageNumber="<%= 1 %>"
+			portletURL="<%= liferayPortletResponse.createRenderURL() %>"
+			propsTransformer="js/SampleFDSPropsTransformer"
+			selectedItemsKey="id"
+			selectionType="multiple"
+			style="fluid"
+		/>
+	</form>
+</section>
