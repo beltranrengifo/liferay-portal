@@ -44,7 +44,12 @@ public class SampleTableFDSView extends BaseTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		fdsTableSchemaBuilder.addFDSTableSchemaField("id", "id");
-		fdsTableSchemaBuilder.addFDSTableSchemaField("title", "Title");
+
+		FDSTableSchemaField titleFDSTableSchemaField =
+			fdsTableSchemaBuilder.addFDSTableSchemaField("title", "Title");
+
+		titleFDSTableSchemaField.setSortable(true);
+
 		fdsTableSchemaBuilder.addFDSTableSchemaField(
 			"description", "Description");
 		fdsTableSchemaBuilder.addFDSTableSchemaField("date", "Date");
