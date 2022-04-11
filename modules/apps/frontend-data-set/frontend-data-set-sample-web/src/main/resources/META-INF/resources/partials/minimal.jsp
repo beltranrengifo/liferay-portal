@@ -19,7 +19,6 @@
 <frontend-data-set:headless-display
 	apiURL="<%= fdsSampleDisplayContext.getAPIURL() %>"
 	id="<%= FDSSampleFDSNames.FDS_SAMPLES_MINIMAL %>"
-	itemsPerPage="<%= 20 %>"
 	pageNumber="<%= 1 %>"
 	portletURL="<%= liferayPortletResponse.createRenderURL() %>"
 />

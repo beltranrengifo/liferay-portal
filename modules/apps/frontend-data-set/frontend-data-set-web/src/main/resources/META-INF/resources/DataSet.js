@@ -58,6 +58,8 @@ import getJsModule from './utils/modules';
 import ViewsContext from './views/ViewsContext';
 import {getViewContentRenderer} from './views/index';
 
+const PAGINATION_DEFAULT_DELTA = 20;
+
 const DataSet = ({
 	actionParameterName,
 	bulkActions,
@@ -98,8 +100,7 @@ const DataSet = ({
 		sidePanelId || `support-side-panel-${getRandomId()}`
 	);
 	const [delta, setDelta] = useState(
-		showPagination &&
-			(pagination.initialDelta || pagination.deltas[0].label)
+		showPagination && (pagination.initialDelta || PAGINATION_DEFAULT_DELTA)
 	);
 
 	const [filters, setFilters] = useState(() => {
@@ -744,7 +745,7 @@ DataSet.propTypes = {
 				label: PropTypes.number.isRequired,
 			}).isRequired
 		),
-		initialDelta: PropTypes.number.isRequired,
+		initialDelta: PropTypes.number,
 	}),
 	selectedItems: PropTypes.array,
 	selectedItemsKey: PropTypes.string,
@@ -768,9 +769,6 @@ DataSet.defaultProps = {
 	inlineEditingSettings: null,
 	items: null,
 	itemsActions: null,
-	pagination: {
-		initialDelta: 10,
-	},
 	selectedItemsKey: 'id',
 	selectionType: 'multiple',
 	showManagementBar: true,
