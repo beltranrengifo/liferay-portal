@@ -94,7 +94,7 @@
 		</attribute>
 		<attribute>
 			<name>pageNumber</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>int</type>
 		</attribute>
@@ -232,7 +232,7 @@
 		</attribute>
 		<attribute>
 			<name>pageNumber</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>int</type>
 		</attribute>

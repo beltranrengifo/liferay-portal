@@ -122,7 +122,9 @@ const DataSet = ({
 	const [highlightedItemsValue, setHighlightedItemsValue] = useState([]);
 	const [items, setItems] = useState(itemsProp);
 	const [itemsChanges, setItemsChanges] = useState({});
-	const [pageNumber, setPageNumber] = useState(1);
+	const [pageNumber, setPageNumber] = useState(
+		pagination.initialPageNumber || 1
+	);
 	const [searchParam, setSearchParam] = useState('');
 	const [selectedItemsValue, setSelectedItemsValue] = useState(
 		selectedItems || []
@@ -746,6 +748,7 @@ DataSet.propTypes = {
 			}).isRequired
 		),
 		initialDelta: PropTypes.number,
+		initialPageNumber: PropTypes.number,
 	}),
 	selectedItems: PropTypes.array,
 	selectedItemsKey: PropTypes.string,
