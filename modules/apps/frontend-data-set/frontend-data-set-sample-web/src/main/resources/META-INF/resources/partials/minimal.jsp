@@ -16,28 +16,11 @@
 
 <%@ include file="/init.jsp" %>
 
-<form action="<%= fdsSampleDisplayContext.getPortletURL() %>" method="post" name="fm">
-	<input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
-	<input name="redirect" type="hidden" value="<%= String.valueOf(fdsSampleDisplayContext.getPortletURL()) %>" />
-
-	<frontend-data-set:headless-display
-		additionalProps='<%=
-			HashMapBuilder.<String, Object>put(
-				"greeting", "Hello"
-			).build()
-		%>'
-		apiURL="<%= fdsSampleDisplayContext.getAPIURL() %>"
-		customViewsEnabled="<%= true %>"
-		fdsActionDropdownItems="<%= fdsSampleDisplayContext.getFDSActionDropdownItems() %>"
-		formId="fm"
-		id="<%= FDSSampleFDSNames.FDS_SAMPLES %>"
-		itemsPerPage="<%= 20 %>"
-		namespace="<%= liferayPortletResponse.getNamespace() %>"
-		pageNumber="<%= 1 %>"
-		portletURL="<%= liferayPortletResponse.createRenderURL() %>"
-		propsTransformer="js/SampleFDSPropsTransformer"
-		showManagementBar="<%= false %>"
-		showPagination="<%= false %>"
-		style="fluid"
-	/>
-</form>
+<frontend-data-set:headless-display
+	apiURL="<%= fdsSampleDisplayContext.getAPIURL() %>"
+	id="<%= FDSSampleFDSNames.FDS_SAMPLES_MINIMAL %>"
+	itemsPerPage="<%= 20 %>"
+	namespace="<%= liferayPortletResponse.getNamespace() %>"
+	pageNumber="<%= 1 %>"
+	portletURL="<%= liferayPortletResponse.createRenderURL() %>"
+/>

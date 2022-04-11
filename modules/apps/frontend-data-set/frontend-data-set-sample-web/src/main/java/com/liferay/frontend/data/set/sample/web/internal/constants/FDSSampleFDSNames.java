@@ -21,4 +21,6 @@ public class FDSSampleFDSNames {
 
 	public static final String FDS_SAMPLES = "fdsSamples";
 
+	public static final String FDS_SAMPLES_MINIMAL = "fdsSamplesMinimal";
+
 }
