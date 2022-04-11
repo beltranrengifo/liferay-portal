@@ -118,6 +118,8 @@ public class BaseDisplayTag extends AttributesTagSupport {
 			props.put("additionalProps", _additionalProps);
 		}
 
+		props.put("namespace", _randomNamespace);
+
 		return props;
 	}
 

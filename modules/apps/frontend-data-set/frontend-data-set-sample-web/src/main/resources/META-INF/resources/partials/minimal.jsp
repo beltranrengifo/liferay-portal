@@ -20,7 +20,6 @@
 	apiURL="<%= fdsSampleDisplayContext.getAPIURL() %>"
 	id="<%= FDSSampleFDSNames.FDS_SAMPLES_MINIMAL %>"
 	itemsPerPage="<%= 20 %>"
-	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"
 	portletURL="<%= liferayPortletResponse.createRenderURL() %>"
 />
