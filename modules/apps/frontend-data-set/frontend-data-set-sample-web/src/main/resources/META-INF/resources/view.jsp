@@ -18,6 +18,7 @@
 
 <section id="<portlet:namespace />fdsSample">
 	<liferay-ui:tabs
+		cssClass="justify-content-center"
 		names="Basic, Minimal, Multiple selection"
 		refresh="<%= false %>"
 	>
