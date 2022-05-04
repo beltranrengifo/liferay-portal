@@ -63,7 +63,12 @@ public class FDSSampleDisplayContext {
 			new FDSActionDropdownItem(
 				"#", "view", "sampleMessage",
 				LanguageUtil.get(_fdsRequestHelper.getRequest(), "view"), null,
-				null, null));
+				null, null),
+			new FDSActionDropdownItem(
+				"#", "pencil", "sampleEditMessage",
+				LanguageUtil.get(_fdsRequestHelper.getRequest(), "edit"), null,
+				null, null)
+		);
 	}
 
 	public PortletURL getPortletURL() throws PortletException {
