@@ -58,6 +58,8 @@ public class FDSViewSerializerImpl implements FDSViewSerializer {
 						"content.Language", locale, getClass()),
 					fdsView.getLabel())
 			).put(
+				"options", fdsView.getOptions()
+			).put(
 				"name", fdsView.getName()
 			).put(
 				"thumbnail", fdsView.getThumbnail()
