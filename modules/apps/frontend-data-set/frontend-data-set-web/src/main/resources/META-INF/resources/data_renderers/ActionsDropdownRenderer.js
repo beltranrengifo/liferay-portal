@@ -128,6 +128,7 @@ function ActionItem({
 	itemId,
 	method,
 	onClick,
+	quickActionItem,
 	setLoading,
 	size,
 	title,
@@ -164,23 +165,51 @@ function ActionItem({
 
 	const onActionDropdownItemClick = context.onActionDropdownItemClick;
 
-	return (
-		<ClayDropDown.Item
-			href={link ? url : null}
-			onClick={(event) => {
-				if (onActionDropdownItemClick) {
-					onActionDropdownItemClick({
-						action,
-						event,
-						itemData,
-					});
-				}
+	const handleClick = (event) => {
+		if (onActionDropdownItemClick) {
+			onActionDropdownItemClick({
+				action,
+				event,
+				itemData,
+			});
+		}
 
-				if (!link) {
-					handleClickOnLink(event);
-				}
-			}}
-		>
+		if (!link) {
+			handleClickOnLink(event);
+		}
+	};
+
+	const getQuickActionItem = () => {
+		const commonProps = {
+			'aria-label': icon,
+			'className': 'component-action quick-action-item',
+			'title': label,
+		};
+
+		if (link) {
+			return (
+				<ClayLink {...commonProps} href={url} onClick={handleClick}>
+					<ClayIcon symbol={icon} />
+				</ClayLink>
+			);
+		}
+		else {
+			return (
+				<ClayButtonWithIcon
+					{...commonProps}
+					displayType="unstyled"
+					monospaced={false}
+					onClick={handleClick}
+					symbol={icon}
+				/>
+			);
+		}
+	};
+
+	return quickActionItem ? (
+		getQuickActionItem()
+	) : (
+		<ClayDropDown.Item href={link ? url : null} onClick={handleClick}>
 			{icon && (
 				<span className="pr-2">
 					<ClayIcon symbol={icon} />
@@ -192,7 +221,12 @@ function ActionItem({
 	);
 }
 
-function ActionsDropdownRenderer({actions, itemData, itemId}) {
+function ActionsDropdownRenderer({
+	actions,
+	itemData,
+	itemId,
+	quickActionsEnabled,
+}) {
 	const context = useContext(DataSetContext);
 	const [menuActive, setMenuActive] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -359,36 +393,51 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 		return <ClayLoadingIndicator small />;
 	}
 
-	const renderItems = (items) =>
-		items.map(({items: nestedItems = [], separator, type, ...item}, i) => {
-			if (type === 'group') {
-				return (
-					<ClayDropDown.Group {...item}>
-						{separator && <ClayDropDown.Divider />}
+	const renderItems = ({actions, quickActionItems = false}) =>
+		actions.map(
+			({items: nestedItems = [], separator, type, ...item}, i) => {
+				if (type === 'group') {
+					return (
+						<ClayDropDown.Group {...item}>
+							{separator && <ClayDropDown.Divider />}
 
-						{renderItems(nestedItems)}
-					</ClayDropDown.Group>
+							{renderItems({
+								actions: nestedItems,
+								quickActionItems,
+							})}
+						</ClayDropDown.Group>
+					);
+				}
+
+				return (
+					<ActionItem
+						action={item}
+						closeMenu={() => setMenuActive(false)}
+						handleAction={handleAction}
+						itemData={itemData}
+						itemId={itemId}
+						key={i}
+						method={item.method ?? item.data?.method}
+						quickActionItem={quickActionItems}
+						setLoading={setLoading}
+						url={item.href && formatActionURL(item.href, itemData)}
+					/>
 				);
 			}
-
-			return (
-				<ActionItem
-					action={item}
-					closeMenu={() => setMenuActive(false)}
-					handleAction={handleAction}
-					itemData={itemData}
-					itemId={itemId}
-					key={i}
-					method={item.method ?? item.data?.method}
-					setLoading={setLoading}
-					url={item.href && formatActionURL(item.href, itemData)}
-				/>
-			);
-		});
+		);
 
 	return (
 		<div className="d-flex justify-content-end ml-auto">
 			{inlineEditingAlwaysOn && inlineEditingActions}
+
+			{quickActionsEnabled && formattedActions.length > 1 && (
+				<div className="quick-action-menu">
+					{renderItems({
+						actions: formattedActions,
+						quickActionItems: true,
+					})}
+				</div>
+			)}
 
 			<ClayDropDown
 				active={menuActive}
@@ -408,12 +457,18 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 				}
 			>
 				<ClayDropDown.ItemList>
-					{renderItems(formattedActions)}
+					{renderItems({
+						actions: formattedActions,
+					})}
 				</ClayDropDown.ItemList>
 			</ClayDropDown>
 		</div>
 	);
 }
+
+ActionsDropdownRenderer.defaultProps = {
+	quickActionsEnabled: false,
+};
 
 ActionsDropdownRenderer.propTypes = {
 	actions: PropTypes.arrayOf(
@@ -445,6 +500,7 @@ ActionsDropdownRenderer.propTypes = {
 	),
 	itemData: PropTypes.object,
 	itemId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	quickActionsEnabled: PropTypes.bool,
 };
 
 export default ActionsDropdownRenderer;

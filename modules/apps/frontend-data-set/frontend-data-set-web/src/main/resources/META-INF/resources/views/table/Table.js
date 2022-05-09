@@ -35,7 +35,7 @@ function getItemFields(
 	itemsActions,
 	itemInlineChanges = null
 ) {
-	return fields.map((field) => {
+	return fields.map((field, index) => {
 		const {actionDropdownItems} = item;
 		const {rootPropertyName, value, valuePath} = field.fieldName
 			? getValueDetailsFromItem(item, field.fieldName)
@@ -45,6 +45,7 @@ function getItemFields(
 			<TableCell
 				actions={itemsActions || actionDropdownItems}
 				inlineEditSettings={field.inlineEditSettings}
+				isLastCell={index === fields.length - 1}
 				itemData={item}
 				itemId={itemId}
 				itemInlineChanges={itemInlineChanges}
@@ -120,7 +121,7 @@ function Table({dataLoading, items, itemsActions, schema, style}) {
 					<DndTable.Table
 						borderless
 						className={classNames(`table-style-${style}`, {
-							'show-quick-actions-on-hover': quickActionsEnabled,
+							'with-quick-actions': quickActionsEnabled,
 						})}
 						hover={false}
 						responsive
@@ -214,6 +215,9 @@ function Table({dataLoading, items, itemsActions, schema, style}) {
 															}
 															itemData={item}
 															itemId={itemId}
+															quickActionsEnabled={
+																quickActionsEnabled
+															}
 														/>
 													)}
 												</DndTable.Cell>

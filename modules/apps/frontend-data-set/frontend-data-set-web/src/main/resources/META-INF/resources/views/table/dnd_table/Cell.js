@@ -19,7 +19,15 @@ import React, {useContext, useLayoutEffect, useMemo, useRef} from 'react';
 
 import Context from './TableContext';
 
-function Cell({children, className, columnName, expand, heading, resizable}) {
+function Cell({
+	children,
+	className,
+	columnName,
+	expand,
+	heading,
+	isLastCell,
+	resizable,
+}) {
 	const cellRef = useRef();
 	const clientXRef = useRef({current: null});
 	const {
@@ -97,6 +105,7 @@ function Cell({children, className, columnName, expand, heading, resizable}) {
 			className={classNames(
 				heading ? 'dnd-th' : 'dnd-td',
 				expand && 'expand',
+				isLastCell && 'hide-on-hover',
 				className
 			)}
 			ref={cellRef}

@@ -158,6 +158,25 @@
 	.content-renderer-image {
 		width: 1%;
 	}
+
+	&.with-quick-actions {
+		.dnd-tr:hover {
+			.item-actions {
+				overflow: visible;
+				position: relative;
+			}
+
+			.quick-action-menu {
+				background-color: inherit;
+				display: flex;
+				right: 48px;
+			}
+
+			.dnd-td.hide-on-hover {
+				visibility: hidden;
+			}
+		}
+	}
 }
 
 .dnd-th-resizer {

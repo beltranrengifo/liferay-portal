@@ -66,6 +66,7 @@ function InlineEditInputRenderer({
 function TableCell({
 	actions,
 	inlineEditSettings,
+	isLastCell,
 	itemData,
 	itemId,
 	itemInlineChanges,
@@ -123,7 +124,10 @@ function TableCell({
 		(itemInlineChanges || inlineEditingSettings?.alwaysOn)
 	) {
 		return (
-			<DndTableCell columnName={String(options.fieldName)}>
+			<DndTableCell
+				columnName={String(options.fieldName)}
+				isLastCell={isLastCell}
+			>
 				<InlineEditInputRenderer
 					actions={actions}
 					itemData={itemData}
@@ -139,7 +143,10 @@ function TableCell({
 	}
 
 	return (
-		<DndTableCell columnName={String(options.fieldName)}>
+		<DndTableCell
+			columnName={String(options.fieldName)}
+			isLastCell={isLastCell}
+		>
 			{DataRenderer && !loading ? (
 				<DataRenderer
 					actions={actions}
