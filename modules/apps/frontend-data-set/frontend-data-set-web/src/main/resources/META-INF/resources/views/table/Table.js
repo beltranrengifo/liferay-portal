@@ -85,7 +85,15 @@ function Table({dataLoading, items, itemsActions, schema, style}) {
 		sorting,
 		updateSorting,
 	} = useContext(DataSetContext);
-	const [{visibleFieldNames}] = useContext(ViewsContext);
+
+	const [
+		{
+			activeView: {options},
+			visibleFieldNames,
+		},
+	] = useContext(ViewsContext);
+
+	const {quickActionsEnabled} = options || {};
 
 	const visibleFields = getVisibleFields(schema.fields, visibleFieldNames);
 
@@ -111,7 +119,9 @@ function Table({dataLoading, items, itemsActions, schema, style}) {
 					(!inlineAddingSettings && !!items.length)) && (
 					<DndTable.Table
 						borderless
-						className={`table-style-${style}`}
+						className={classNames(`table-style-${style}`, {
+							'show-quick-actions-on-hover': quickActionsEnabled,
+						})}
 						hover={false}
 						responsive
 						striped
