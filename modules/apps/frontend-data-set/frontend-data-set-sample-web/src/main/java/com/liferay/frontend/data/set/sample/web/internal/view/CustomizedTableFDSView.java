@@ -20,8 +20,10 @@ import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,6 +62,12 @@ public class CustomizedTableFDSView extends BaseTableFDSView {
 			"creator.name", "author",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"sampleCustomDataRenderer")
+		).build();
+	}
+
+	public Map<String, Object> getOptions() {
+		return HashMapBuilder.<String, Object>put(
+			"quickActionsEnabled", true
 		).build();
 	}
 
