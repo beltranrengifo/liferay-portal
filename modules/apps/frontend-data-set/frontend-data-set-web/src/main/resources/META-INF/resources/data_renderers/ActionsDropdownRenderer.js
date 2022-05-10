@@ -29,6 +29,8 @@ import {openPermissionsModal, resolveModalSize} from '../utils/modals/index';
 
 const {MODAL_PERMISSIONS} = ACTION_ITEM_TARGETS;
 
+const QUICK_ACTIONS_MAX_NUMBER = 3;
+
 export function isLink(target, onClick) {
 	return !(target && target !== 'link') && !onClick;
 }
@@ -433,7 +435,10 @@ function ActionsDropdownRenderer({
 			{quickActionsEnabled && formattedActions.length > 1 && (
 				<div className="quick-action-menu">
 					{renderItems({
-						actions: formattedActions,
+						actions: formattedActions.slice(
+							0,
+							QUICK_ACTIONS_MAX_NUMBER
+						),
 						quickActionItems: true,
 					})}
 				</div>
