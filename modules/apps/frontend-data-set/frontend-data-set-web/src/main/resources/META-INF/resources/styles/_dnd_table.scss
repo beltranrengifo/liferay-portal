@@ -160,7 +160,7 @@
 	}
 
 	&.with-quick-actions {
-		.dnd-tr:hover {
+		.dnd-tr:hover:not(.nested) {
 			.item-actions {
 				overflow: visible;
 				position: relative;
