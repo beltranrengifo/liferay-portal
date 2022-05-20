@@ -26,6 +26,7 @@ import DataSetContext from '../DataSetContext';
 import {ACTION_ITEM_TARGETS} from '../utils/actionItems/constants';
 import {formatActionURL} from '../utils/index';
 import {openPermissionsModal, resolveModalSize} from '../utils/modals/index';
+import ViewsContext from '../views/ViewsContext';
 
 const {MODAL_PERMISSIONS} = ACTION_ITEM_TARGETS;
 
@@ -223,13 +224,16 @@ function ActionItem({
 	);
 }
 
-function ActionsDropdownRenderer({
-	actions,
-	itemData,
-	itemId,
-	quickActionsEnabled,
-}) {
+function ActionsDropdownRenderer({actions, itemData, itemId}) {
+	const [
+		{
+			activeView: {options},
+		},
+	] = useContext(ViewsContext);
+	const {quickActionsEnabled} = options || {};
+
 	const context = useContext(DataSetContext);
+
 	const [menuActive, setMenuActive] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const inlineEditingAvailable =
@@ -471,10 +475,6 @@ function ActionsDropdownRenderer({
 	);
 }
 
-ActionsDropdownRenderer.defaultProps = {
-	quickActionsEnabled: false,
-};
-
 ActionsDropdownRenderer.propTypes = {
 	actions: PropTypes.arrayOf(
 		PropTypes.shape({
@@ -505,7 +505,6 @@ ActionsDropdownRenderer.propTypes = {
 	),
 	itemData: PropTypes.object,
 	itemId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	quickActionsEnabled: PropTypes.bool,
 };
 
 export default ActionsDropdownRenderer;
