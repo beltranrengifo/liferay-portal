@@ -35,7 +35,7 @@ function getItemFields(
 	itemsActions,
 	itemInlineChanges = null
 ) {
-	return fields.map((field, index) => {
+	return fields.map((field) => {
 		const {actionDropdownItems} = item;
 		const {rootPropertyName, value, valuePath} = field.fieldName
 			? getValueDetailsFromItem(item, field.fieldName)
@@ -45,7 +45,6 @@ function getItemFields(
 			<TableCell
 				actions={itemsActions || actionDropdownItems}
 				inlineEditSettings={field.inlineEditSettings}
-				isLastCell={index === fields.length - 1}
 				itemData={item}
 				itemId={itemId}
 				itemInlineChanges={itemInlineChanges}

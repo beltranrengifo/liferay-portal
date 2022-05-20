@@ -172,7 +172,7 @@
 				right: 48px;
 			}
 
-			.dnd-td.hide-on-hover {
+			.dnd-td:nth-last-child(2) {
 				visibility: hidden;
 			}
 		}
