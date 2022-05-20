@@ -17,6 +17,7 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {LinkOrButton} from '@clayui/shared';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -182,35 +183,19 @@ function ActionItem({
 		}
 	};
 
-	const getQuickActionItem = () => {
-		const commonProps = {
-			'aria-label': icon,
-			'className': 'component-action quick-action-item',
-			'title': label,
-		};
-
-		if (link) {
-			return (
-				<ClayLink {...commonProps} href={url} onClick={handleClick}>
-					<ClayIcon symbol={icon} />
-				</ClayLink>
-			);
-		}
-		else {
-			return (
-				<ClayButtonWithIcon
-					{...commonProps}
-					displayType="unstyled"
-					monospaced={false}
-					onClick={handleClick}
-					symbol={icon}
-				/>
-			);
-		}
-	};
-
 	return quickActionItem ? (
-		getQuickActionItem()
+		<LinkOrButton
+			aria-label={icon}
+			className="component-action quick-action-item"
+			displayType="unstyled"
+			href={url}
+			monospaced={false}
+			onClick={handleClick}
+			symbol={icon}
+			title={label}
+		>
+			<ClayIcon symbol={icon} />
+		</LinkOrButton>
 	) : (
 		<ClayDropDown.Item href={link ? url : null} onClick={handleClick}>
 			{icon && (

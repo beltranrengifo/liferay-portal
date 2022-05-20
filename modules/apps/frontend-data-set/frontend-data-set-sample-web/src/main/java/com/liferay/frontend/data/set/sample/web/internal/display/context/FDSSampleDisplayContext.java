@@ -61,7 +61,7 @@ public class FDSSampleDisplayContext {
 
 		return Arrays.asList(
 			new FDSActionDropdownItem(
-				"#", "view", "sampleMessage",
+				null, "view", "sampleMessage",
 				LanguageUtil.get(_fdsRequestHelper.getRequest(), "view"), null,
 				null, null),
 			new FDSActionDropdownItem(
