@@ -192,7 +192,7 @@ function ActionItem({
 	);
 }
 
-function ActionsDropdownRenderer({actions, itemData, itemId}) {
+function ItemActions({actions, itemData, itemId}) {
 	const context = useContext(DataSetContext);
 	const [menuActive, setMenuActive] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -415,7 +415,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 	);
 }
 
-ActionsDropdownRenderer.propTypes = {
+ItemActions.propTypes = {
 	actions: PropTypes.arrayOf(
 		PropTypes.shape({
 			data: PropTypes.shape({
@@ -447,4 +447,4 @@ ActionsDropdownRenderer.propTypes = {
 	itemId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
-export default ActionsDropdownRenderer;
+export default ItemActions;

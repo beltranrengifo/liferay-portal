@@ -20,7 +20,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useMemo} from 'react';
 
 import DataSetContext from '../../DataSetContext';
-import ActionsDropdownRenderer from '../../data_renderers/ActionsDropdownRenderer';
+import ItemActions from '../../item_actions/ItemActions';
 import {getValueDetailsFromItem} from '../../utils/index';
 import ViewsContext from '../ViewsContext';
 import TableCell from './TableCell';
@@ -196,7 +196,7 @@ function Table({dataLoading, items, itemsActions, schema, style}) {
 												>
 													{(showActionItems ||
 														item.actions) && (
-														<ActionsDropdownRenderer
+														<ItemActions
 															actions={
 																itemsActions ||
 																item.actions ||
