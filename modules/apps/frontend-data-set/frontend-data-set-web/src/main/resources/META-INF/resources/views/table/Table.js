@@ -89,7 +89,7 @@ function Table({dataLoading, items, itemsActions, schema, style}) {
 
 	const visibleFields = getVisibleFields(schema.fields, visibleFieldNames);
 
-	const showActionItems = useMemo(() => {
+	const showItemActions = useMemo(() => {
 		return Boolean(
 			itemsActions?.length ||
 				items?.find((item) => item.actions || item.actionDropdownItems)
@@ -194,7 +194,7 @@ function Table({dataLoading, items, itemsActions, schema, style}) {
 													className="item-actions"
 													columnName="item-actions"
 												>
-													{(showActionItems ||
+													{(showItemActions ||
 														item.actions) && (
 														<ItemActions
 															actions={
@@ -234,7 +234,7 @@ function Table({dataLoading, items, itemsActions, schema, style}) {
 																selectable && 1
 															}
 															paddingRightCells={
-																showActionItems &&
+																showItemActions &&
 																1
 															}
 														>
