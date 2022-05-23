@@ -128,11 +128,11 @@ function ActionItem({
 	action,
 	closeMenu,
 	handleAction,
+	isQuickActionItem,
 	itemData,
 	itemId,
 	method,
 	onClick,
-	quickActionItem,
 	setLoading,
 	size,
 	title,
@@ -183,7 +183,7 @@ function ActionItem({
 		}
 	};
 
-	return quickActionItem ? (
+	return isQuickActionItem ? (
 		<LinkOrButton
 			aria-label={icon}
 			className="component-action quick-action-item"
@@ -384,7 +384,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 		return <ClayLoadingIndicator small />;
 	}
 
-	const renderItems = ({actions, quickActionItems = false}) =>
+	const renderItems = ({actions, renderQuickActionItems = false}) =>
 		actions.map(
 			({items: nestedItems = [], separator, type, ...item}, i) => {
 				if (type === 'group') {
@@ -394,7 +394,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 
 							{renderItems({
 								actions: nestedItems,
-								quickActionItems,
+								renderQuickActionItems,
 							})}
 						</ClayDropDown.Group>
 					);
@@ -405,11 +405,11 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 						action={item}
 						closeMenu={() => setMenuActive(false)}
 						handleAction={handleAction}
+						isQuickActionItem={renderQuickActionItems}
 						itemData={itemData}
 						itemId={itemId}
 						key={i}
 						method={item.method ?? item.data?.method}
-						quickActionItem={quickActionItems}
 						setLoading={setLoading}
 						url={item.href && formatActionURL(item.href, itemData)}
 					/>
@@ -428,7 +428,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 							0,
 							QUICK_ACTIONS_MAX_NUMBER
 						),
-						quickActionItems: true,
+						renderQuickActionItems: true,
 					})}
 				</div>
 			)}
