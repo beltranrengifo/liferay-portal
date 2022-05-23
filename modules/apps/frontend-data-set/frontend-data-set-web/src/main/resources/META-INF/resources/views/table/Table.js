@@ -214,9 +214,6 @@ function Table({dataLoading, items, itemsActions, schema, style}) {
 															}
 															itemData={item}
 															itemId={itemId}
-															quickActionsEnabled={
-																quickActionsEnabled
-															}
 														/>
 													)}
 												</DndTable.Cell>
