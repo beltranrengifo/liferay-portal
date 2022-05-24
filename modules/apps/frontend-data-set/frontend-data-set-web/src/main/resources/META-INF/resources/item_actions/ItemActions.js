@@ -26,6 +26,8 @@ import {itemActionsBasePropTypes} from './types/index';
 
 const {MODAL_PERMISSIONS} = ACTION_ITEM_TARGETS;
 
+const QUICK_ACTIONS_MAX_NUMBER = 3;
+
 export function isLink(target, onClick) {
 	return !(target && target !== 'link') && !onClick;
 }
@@ -221,7 +223,10 @@ function ItemActions({actions, itemData, itemId}) {
 		<>
 			{quickActionsEnabled && formattedActions.length > 1 && (
 				<QuickActions
-					actions={formattedActions}
+					actions={formattedActions.slice(
+						0,
+						QUICK_ACTIONS_MAX_NUMBER
+					)}
 					itemData={itemData}
 					onClick={handleClick}
 				/>
