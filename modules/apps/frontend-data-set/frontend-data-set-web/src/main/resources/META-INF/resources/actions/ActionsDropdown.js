@@ -23,8 +23,7 @@ import React, {useContext, useState} from 'react';
 
 import DataSetContext from '../DataSetContext';
 import {formatActionURL} from '../utils/index';
-import {isLink} from './Actions';
-import {itemActionsBasePropTypes} from './types/index';
+import {actionsBasePropTypes, isLink} from './Actions';
 
 function DropdownItem({
 	action,
@@ -261,7 +260,7 @@ function ActionsDropdown({
 }
 
 ActionsDropdown.propTypes = {
-	...itemActionsBasePropTypes,
+	...actionsBasePropTypes,
 	handleAction: PropTypes.func.isRequired,
 	loading: PropTypes.bool.isRequired,
 	onClick: PropTypes.func.isRequired,

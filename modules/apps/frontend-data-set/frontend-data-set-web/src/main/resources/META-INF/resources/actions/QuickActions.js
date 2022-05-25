@@ -18,7 +18,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {formatActionURL} from '../utils/index';
-import {itemActionsBasePropTypes} from './types/index';
+import {actionsBasePropTypes} from './Actions';
 
 function QuickActions({actions, itemData, itemId, onClick}) {
 	return (
@@ -55,7 +55,7 @@ function QuickActions({actions, itemData, itemId, onClick}) {
 }
 
 QuickActions.propTypes = {
-	...itemActionsBasePropTypes,
+	...actionsBasePropTypes,
 	onClick: PropTypes.func.isRequired,
 };
 

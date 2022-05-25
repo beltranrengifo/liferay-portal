@@ -13,6 +13,7 @@
  */
 
 import {openToast} from 'frontend-js-web';
+import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
 import DataSetContext from '../DataSetContext';
@@ -22,7 +23,6 @@ import {openPermissionsModal, resolveModalSize} from '../utils/modals/index';
 import ViewsContext from '../views/ViewsContext';
 import ActionsDropdown from './ActionsDropdown';
 import QuickActions from './QuickActions';
-import {itemActionsBasePropTypes} from './types/index';
 
 const {MODAL_PERMISSIONS} = ACTION_ITEM_TARGETS;
 
@@ -244,6 +244,38 @@ function Actions({actions, itemData, itemId}) {
 	);
 }
 
-Actions.propTypes = itemActionsBasePropTypes;
+const actionType = PropTypes.shape({
+	data: PropTypes.shape({
+		confirmationMessage: PropTypes.string,
+		method: PropTypes.oneOf(['delete', 'get', 'patch', 'post']),
+		permissionKey: PropTypes.string,
+		successMessage: PropTypes.string,
+	}),
+	href: PropTypes.string,
+	icon: PropTypes.string,
+	label: PropTypes.string.isRequired,
+	method: PropTypes.oneOf(['delete', 'get', 'patch', 'post']),
+	onClick: PropTypes.string,
+	target: PropTypes.oneOf([
+		'async',
+		'headless',
+		'inlineEdit',
+		'link',
+		'modal',
+		'modal-full-screen',
+		'modal-lg',
+		'modal-permissions',
+		'modal-sm',
+		'sidePanel',
+	]),
+});
+
+export const actionsBasePropTypes = {
+	actions: PropTypes.arrayOf(actionType),
+	itemData: PropTypes.object,
+	itemId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+};
+
+Actions.propTypes = actionsBasePropTypes;
 
 export default Actions;
