@@ -18,7 +18,8 @@ import React, {useReducer} from 'react';
 
 import {AppContext} from './AppContext';
 import DataSet from './DataSet';
-import ViewsContext, {viewsReducer} from './views/ViewsContext';
+import ViewsContext from './views/ViewsContext';
+import {viewsReducer} from './views/viewsReducer';
 
 const FrontendDataSet = ({
 	activeViewSettings,

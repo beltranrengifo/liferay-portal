@@ -30,7 +30,6 @@ import ClayEmptyState from '@clayui/empty-state';
 
 import {AppContext} from './AppContext';
 import DataSetContext from './DataSetContext';
-import {updateViewComponent} from './actions/updateViewComponent';
 import ManagementBar from './management_bar/ManagementBar';
 import {
 	getFilterSelectedItemsLabel,
@@ -57,6 +56,7 @@ import {logError} from './utils/logError';
 import getJsModule from './utils/modules';
 import ViewsContext from './views/ViewsContext';
 import {getViewContentRenderer} from './views/index';
+import {updateViewComponent} from './views/viewsReducer';
 
 const DEFAULT_PAGINATION_DELTA = 20;
 const DEFAULT_PAGINATION_PAGE_NUMBER = 1;
