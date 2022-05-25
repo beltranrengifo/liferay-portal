@@ -195,14 +195,14 @@ function ItemActions({actions, itemData, itemId}) {
 		if (!isLink(action.target, action.onClick)) {
 			event.preventDefault();
 
-			const {data, method, onClick, target} = action;
+			const {data, onClick, target} = action;
 
 			handleAction(
 				{
 					confirmationMessage: data?.confirmationMessage,
 					event,
 					itemId,
-					method,
+					method: action.method ?? action.data?.method,
 					onClick,
 					setLoading,
 					size,

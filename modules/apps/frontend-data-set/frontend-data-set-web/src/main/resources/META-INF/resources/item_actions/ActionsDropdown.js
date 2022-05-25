@@ -225,7 +225,6 @@ function ActionsDropdown({
 					itemData={itemData}
 					itemId={itemId}
 					key={i}
-					method={item.method ?? item.data?.method}
 					onActionClick={onActionClick}
 					setLoading={setLoading}
 					url={item.href && formatActionURL(item.href, itemData)}
