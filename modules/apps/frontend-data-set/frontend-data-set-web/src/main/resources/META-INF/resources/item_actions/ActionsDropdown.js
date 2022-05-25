@@ -31,18 +31,17 @@ function DropdownItem({
 	closeMenu,
 	itemData,
 	itemId,
-	onActionClick,
 	onClick,
 	size,
 	url,
 }) {
-	const {icon, label, target} = action;
+	const {icon, label} = action;
 
 	return (
 		<ClayDropDown.Item
-			href={isLink(target, onClick) ? url : null}
+			href={url}
 			onClick={(event) =>
-				onActionClick({
+				onClick({
 					action,
 					closeMenu,
 					event,
@@ -69,7 +68,7 @@ function ActionsDropdown({
 	itemData,
 	itemId,
 	loading,
-	onClick: onActionClick,
+	onClick,
 	setLoading,
 }) {
 	const context = useContext(DataSetContext);
@@ -124,7 +123,7 @@ function ActionsDropdown({
 		return inlineEditingActions;
 	}
 
-	if (!actions || !actions.length) {
+	if (!actions.length) {
 		return null;
 	}
 
@@ -225,7 +224,7 @@ function ActionsDropdown({
 					itemData={itemData}
 					itemId={itemId}
 					key={i}
-					onActionClick={onActionClick}
+					onClick={onClick}
 					setLoading={setLoading}
 					url={item.href && formatActionURL(item.href, itemData)}
 				/>
