@@ -19,10 +19,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import {
-	handleAction,
-	isLink,
-} from '../../data_renderers/ActionsDropdownRenderer';
+import {handleAction, isLink} from '../../item_actions/ItemActions';
 
 function Cards({dataLoading, dataSetContext, items, schema}) {
 	const {
