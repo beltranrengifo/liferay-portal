@@ -23,7 +23,7 @@ import {itemActionsBasePropTypes} from './types/index';
 function QuickActions({actions, itemData, itemId, onClick}) {
 	return (
 		<div className="quick-action-menu">
-			{actions.map((action, i) => {
+			{actions.map((action) => {
 				return (
 					<LinkOrButton
 						aria-label={action.icon}
@@ -33,10 +33,15 @@ function QuickActions({actions, itemData, itemId, onClick}) {
 							action.href &&
 							formatActionURL(action.href, itemData)
 						}
-						key={i}
+						key={action.data?.id || action.label}
 						monospaced={false}
 						onClick={(event) =>
-							onClick({action, event, itemData, itemId})
+							onClick({
+								action,
+								event,
+								itemData,
+								itemId,
+							})
 						}
 						symbol={action.icon}
 						title={action.label}
