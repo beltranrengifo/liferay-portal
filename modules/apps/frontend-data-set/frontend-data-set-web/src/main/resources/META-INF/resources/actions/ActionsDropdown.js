@@ -23,7 +23,7 @@ import React, {useContext, useState} from 'react';
 
 import DataSetContext from '../DataSetContext';
 import {formatActionURL} from '../utils/index';
-import {isLink} from './ItemActions';
+import {isLink} from './Actions';
 import {itemActionsBasePropTypes} from './types/index';
 
 function DropdownItem({

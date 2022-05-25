@@ -147,7 +147,7 @@ export function handleAction(
 		event.target.removeAttribute('onClick');
 	}
 }
-function ItemActions({actions, itemData, itemId}) {
+function Actions({actions, itemData, itemId}) {
 	const context = useContext(DataSetContext);
 	const {inlineEditingSettings, onActionDropdownItemClick} = context;
 
@@ -244,6 +244,6 @@ function ItemActions({actions, itemData, itemId}) {
 	);
 }
 
-ItemActions.propTypes = itemActionsBasePropTypes;
+Actions.propTypes = itemActionsBasePropTypes;
 
-export default ItemActions;
+export default Actions;

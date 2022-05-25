@@ -21,7 +21,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import ItemActions from '../../item_actions/ItemActions';
+import Actions from '../../actions/Actions';
 
 function Email({
 	actionDropdownItems,
@@ -113,7 +113,7 @@ function Email({
 
 				{actionDropdownItems.length ? (
 					<div className="col-auto d-flex flex-column justify-content-center">
-						<ItemActions actions={actionDropdownItems} />
+						<Actions actions={actionDropdownItems} />
 					</div>
 				) : null}
 			</div>

@@ -22,8 +22,8 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
+import Actions from '../../actions/Actions';
 import ImageRenderer from '../../data_renderers/ImageRenderer';
-import ItemActions from '../../item_actions/ItemActions';
 
 function List({
 	dataLoading,
@@ -128,7 +128,7 @@ function List({
 
 					<ClayList.ItemField>
 						{(itemActions || item.actionDropdownItems) && (
-							<ItemActions
+							<Actions
 								actions={
 									itemActions || item.actionDropdownItems
 								}
