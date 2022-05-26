@@ -19,9 +19,12 @@ package com.liferay.frontend.data.set.sample.web.internal.model;
  */
 public class UserEntry {
 
-	public UserEntry(String emailAddress, String firstName, String lastName) {
+	public UserEntry(
+		String emailAddress, String firstName, Long id, String lastName) {
+
 		_emailAddress = emailAddress;
 		_firstName = firstName;
+		_id = id;
 		_lastName = lastName;
 	}
 
@@ -33,12 +36,17 @@ public class UserEntry {
 		return _firstName;
 	}
 
+	public Long getId() {
+		return _id;
+	}
+
 	public String getLastName() {
 		return _lastName;
 	}
 
 	private final String _emailAddress;
 	private final String _firstName;
+	private final Long _id;
 	private final String _lastName;
 
 }

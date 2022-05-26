@@ -65,7 +65,7 @@ public class ClassicFDSDataProvider implements FDSDataProvider<UserEntry> {
 					fdsPagination.getStartPosition(),
 					fdsPagination.getEndPosition(), sort)),
 			user -> new UserEntry(
-				user.getEmailAddress(), user.getFirstName(),
+				user.getEmailAddress(), user.getFirstName(), user.getUserId(),
 				user.getLastName()));
 	}
 
