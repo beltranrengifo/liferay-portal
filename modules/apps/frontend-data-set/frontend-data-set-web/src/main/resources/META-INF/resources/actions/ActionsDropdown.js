@@ -34,11 +34,11 @@ function DropdownItem({
 	size,
 	url,
 }) {
-	const {icon, label} = action;
+	const {icon, label, target} = action;
 
 	return (
 		<ClayDropDown.Item
-			href={url}
+			href={isLink(target, null) ? url : null}
 			onClick={(event) =>
 				onClick({
 					action,
