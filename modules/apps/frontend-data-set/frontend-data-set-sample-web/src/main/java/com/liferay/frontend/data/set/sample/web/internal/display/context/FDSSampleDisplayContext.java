@@ -61,12 +61,20 @@ public class FDSSampleDisplayContext {
 
 		return Arrays.asList(
 			new FDSActionDropdownItem(
-				"#", "view", "sampleMessage",
-				LanguageUtil.get(_fdsRequestHelper.getRequest(), "view"), null,
+				null, "view", "sampleMessage",
+				LanguageUtil.get(_fdsRequestHelper.getRequest(), "Sample View"), null,
 				null, null),
 			new FDSActionDropdownItem(
-				"#", "pencil", "sampleEditMessage",
-				LanguageUtil.get(_fdsRequestHelper.getRequest(), "edit"), null,
+				"#test-pencil", "pencil", "sampleEditMessage",
+				LanguageUtil.get(_fdsRequestHelper.getRequest(), "Sample Edit"), null,
+				null, null),
+			new FDSActionDropdownItem(
+				"#test-delete", "times-circle", "sampleDeleteMessage",
+				LanguageUtil.get(_fdsRequestHelper.getRequest(), "Sample Delete"), null,
+				null, null),
+			new FDSActionDropdownItem(
+				"#test-copy", "copy", "sampleMoveFolderMessage",
+				LanguageUtil.get(_fdsRequestHelper.getRequest(), "Sample Copy"), null,
 				null, null));
 	}
 
