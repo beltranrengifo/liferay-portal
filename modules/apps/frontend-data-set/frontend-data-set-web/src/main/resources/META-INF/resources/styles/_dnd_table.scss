@@ -6,11 +6,12 @@
 	display: table-row-group;
 
 	.dnd-tr {
-		&:hover {
+		&:hover,
+		&.selected {
 			background-color: $primary-l3;
 		}
 
-		&:nth-child(odd):not(:hover) {
+		&:nth-child(odd):not(:hover):not(.selected) {
 			background-color: $table-accent-bg;
 		}
 	}
@@ -160,7 +161,7 @@
 	}
 
 	&.with-quick-actions {
-		.dnd-tr:hover:not(.nested) {
+		.dnd-tr:hover:not(.nested):not(.selected) {
 			.item-actions {
 				overflow: visible;
 				position: relative;

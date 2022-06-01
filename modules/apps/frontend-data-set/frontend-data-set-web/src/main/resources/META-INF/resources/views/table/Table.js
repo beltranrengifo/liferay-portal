@@ -158,11 +158,14 @@ function Table({dataLoading, items, itemsActions, schema, style}) {
 									return (
 										<React.Fragment key={itemId}>
 											<DndTable.Row
-												className={classNames(
-													highlightedItemsValue.includes(
+												className={classNames({
+													active: highlightedItemsValue.includes(
 														itemId
-													) && 'active'
-												)}
+													),
+													selected: selectedItemsValue.includes(
+														itemId
+													),
+												})}
 											>
 												{selectable && (
 													<DndTable.Cell
