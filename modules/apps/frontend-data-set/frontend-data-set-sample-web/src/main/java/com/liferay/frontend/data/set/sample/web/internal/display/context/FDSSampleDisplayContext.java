@@ -61,21 +61,16 @@ public class FDSSampleDisplayContext {
 
 		return Arrays.asList(
 			new FDSActionDropdownItem(
-				null, "view", "sampleMessage",
-				LanguageUtil.get(_fdsRequestHelper.getRequest(), "Sample View"), null,
-				null, null),
+				null, "view", "sampleMessage", "Sample View", null, null, null),
 			new FDSActionDropdownItem(
-				"#test-pencil", "pencil", "sampleEditMessage",
-				LanguageUtil.get(_fdsRequestHelper.getRequest(), "Sample Edit"), null,
-				null, null),
+				"#test-pencil", "pencil", "sampleEditMessage", "Sample Edit",
+				null, null, null),
 			new FDSActionDropdownItem(
 				"#test-delete", "times-circle", "sampleDeleteMessage",
-				LanguageUtil.get(_fdsRequestHelper.getRequest(), "Sample Delete"), null,
-				null, null),
+				"Sample Delete", null, null, null),
 			new FDSActionDropdownItem(
-				"#test-copy", "copy", "sampleMoveFolderMessage",
-				LanguageUtil.get(_fdsRequestHelper.getRequest(), "Sample Copy"), null,
-				null, null));
+				"#test-copy", "copy", "sampleMoveFolderMessage", "Sample Copy",
+				null, null, null));
 	}
 
 	public PortletURL getPortletURL() throws PortletException {
