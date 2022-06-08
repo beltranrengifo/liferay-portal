@@ -99,6 +99,7 @@ class SegmentEdit extends Component {
 			disabledSave: this._isQueryEmpty(contributors),
 			editing: showInEditMode,
 			hasChanged: false,
+			isSegmentationDisabledAlertDismissed: false,
 			membersCount: initialMembersCount,
 			queryHasEmptyValues: false,
 			validTitle: !!values.name[props.defaultLanguageId],
@@ -267,6 +268,9 @@ class SegmentEdit extends Component {
 				contributors={contributors}
 				editing={editing}
 				emptyContributors={emptyContributors}
+				isSegmentationDisabledAlertDismissed={
+					this.state.isSegmentationDisabledAlertDismissed
+				}
 				isSegmentationEnabled={this.props.isSegmentationEnabled}
 				membersCount={membersCount}
 				membersCountLoading={membersCountLoading}
@@ -539,23 +543,29 @@ class SegmentEdit extends Component {
 				</div>
 
 				<div className="form-body">
-					{!this.props.isSegmentationEnabled && (
-						<ClayAlert
-							className="mx-0"
-							displayType="warning"
-							variant="stripe"
-						>
-							<strong className="lead">
-								{Liferay.Language.get(
-									'segmentation-is-disabled'
-								)}
-							</strong>
+					{!this.props.isSegmentationEnabled &&
+						!this.state.isSegmentationDisabledAlertDismissed && (
+							<ClayAlert
+								className="mx-0"
+								displayType="warning"
+								onClose={() =>
+									this.setState({
+										isSegmentationDisabledAlertDismissed: true,
+									})
+								}
+								variant="stripe"
+							>
+								<strong className="lead">
+									{Liferay.Language.get(
+										'segmentation-is-disabled'
+									)}
+								</strong>
 
-							{Liferay.Language.get(
-								'to-enable-segmentation-go-to-system-settings-segments-segments-service'
-							)}
-						</ClayAlert>
-					)}
+								{Liferay.Language.get(
+									'to-enable-segmentation-go-to-system-settings-segments-segments-service'
+								)}
+							</ClayAlert>
+						)}
 
 					<FieldArray
 						name="contributors"

@@ -43,6 +43,7 @@ request.setAttribute("view.jsp-eventName", eventName);
 
 <c:if test="<%= !segmentsDisplayContext.isSegmentationEnabled(themeDisplay.getCompanyId()) %>">
 	<clay:stripe
+		dismissible="<%= true %>"
 		displayType="warning"
 	>
 		<strong class="lead"><%= LanguageUtil.get(request, "segmentation-is-disabled") %></strong>
