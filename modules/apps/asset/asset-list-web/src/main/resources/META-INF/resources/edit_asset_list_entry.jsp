@@ -35,6 +35,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 
 <c:if test='<%= !(boolean)data.get("isSegmentationEnabled") %>'>
 	<clay:stripe
+		dismissible="<%= true %>"
 		displayType="warning"
 	>
 		<strong class="lead"><%= LanguageUtil.get(request, "personalized-variations-can-not-be-displayed-because-segmentation-is-disabled") %></strong>
