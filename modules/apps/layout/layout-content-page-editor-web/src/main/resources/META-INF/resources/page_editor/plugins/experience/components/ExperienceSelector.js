@@ -421,6 +421,8 @@ const ExperiencesSelectorHeader = ({
 	onNewExperience,
 	showEmptyStateMessage,
 }) => {
+	const [dismissAlert, setDismissAlert] = useState(false);
+
 	return (
 		<>
 			<ClayLayout.ContentRow className="mb-3" verticalAlign="center">
@@ -456,11 +458,15 @@ const ExperiencesSelectorHeader = ({
 				</p>
 			)}
 
-			{!config.isSegmentationEnabled ? (
-				<ClayAlert className="mx-0" displayType="warning">
+			{!config.isSegmentationEnabled && !dismissAlert ? (
+				<ClayAlert
+					className="mx-0"
+					displayType="warning"
+					onClose={() => setDismissAlert(true)}
+				>
 					<strong className="lead">
 						{Liferay.Language.get(
-							'experiences-cannot-be-displayed-because-segmentation-is-disabled'
+							'experiences-can-not-be-displayed-because-segmentation-is-disabled'
 						)}
 					</strong>
 
