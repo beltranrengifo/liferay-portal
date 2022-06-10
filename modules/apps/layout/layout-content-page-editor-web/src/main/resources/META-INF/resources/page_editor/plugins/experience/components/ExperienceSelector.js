@@ -460,11 +460,11 @@ const ExperiencesSelectorHeader = ({
 
 			{!config.isSegmentationEnabled && !dismissAlert ? (
 				<ClayAlert
-					className="mx-0"
+					className="mx-0 segmentation-disabled-alert"
 					displayType="warning"
 					onClose={() => setDismissAlert(true)}
 				>
-					<strong className="lead">
+					<strong className="d-block lead">
 						{Liferay.Language.get(
 							'experiences-can-not-be-displayed-because-segmentation-is-disabled'
 						)}
