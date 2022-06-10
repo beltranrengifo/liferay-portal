@@ -235,7 +235,7 @@ describe('ExperienceToolbarSection', () => {
 
 		const icons = getAllByRole('presentation');
 
-		const lockIcon = icons[1];
+		const lockIcon = icons[2];
 
 		// Hackily work around:
 		//
