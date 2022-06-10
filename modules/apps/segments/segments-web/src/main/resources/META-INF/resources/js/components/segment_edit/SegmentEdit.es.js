@@ -445,6 +445,7 @@ class SegmentEdit extends Component {
 			availableLocales,
 			defaultLanguageId,
 			hasUpdatePermission,
+			isSegmentationEnabled,
 			portletNamespace,
 			values,
 		} = this.props;
@@ -453,6 +454,7 @@ class SegmentEdit extends Component {
 			contributors,
 			disabledSave,
 			editing,
+			isSegmentationDisabledAlertDismissed,
 			queryHasEmptyValues,
 			validTitle,
 		} = this.state;
@@ -461,12 +463,14 @@ class SegmentEdit extends Component {
 
 		const placeholder = Liferay.Language.get('untitled-segment');
 
+		const showDisabledSegmentationAlert =
+			!isSegmentationEnabled && !isSegmentationDisabledAlertDismissed;
+
 		return (
 			<div
 				className={classNames('segment-edit-page-root', {
 					'segment-edit-page-root--has-alert': queryHasEmptyValues,
-					'segment-edit-page-root--with-warning': !this.props
-						.isSegmentationEnabled,
+					'segment-edit-page-root--with-warning': showDisabledSegmentationAlert,
 				})}
 			>
 				<input
@@ -543,29 +547,28 @@ class SegmentEdit extends Component {
 				</div>
 
 				<div className="form-body">
-					{!this.props.isSegmentationEnabled &&
-						!this.state.isSegmentationDisabledAlertDismissed && (
-							<ClayAlert
-								className="mx-0"
-								displayType="warning"
-								onClose={() =>
-									this.setState({
-										isSegmentationDisabledAlertDismissed: true,
-									})
-								}
-								variant="stripe"
-							>
-								<strong className="lead">
-									{Liferay.Language.get(
-										'segmentation-is-disabled'
-									)}
-								</strong>
-
+					{showDisabledSegmentationAlert && (
+						<ClayAlert
+							className="mx-0"
+							displayType="warning"
+							onClose={() =>
+								this.setState({
+									isSegmentationDisabledAlertDismissed: true,
+								})
+							}
+							variant="stripe"
+						>
+							<strong className="lead">
 								{Liferay.Language.get(
-									'to-enable-segmentation-go-to-system-settings-segments-segments-service'
+									'segmentation-is-disabled'
 								)}
-							</ClayAlert>
-						)}
+							</strong>
+
+							{Liferay.Language.get(
+								'to-enable-segmentation-go-to-system-settings-segments-segments-service'
+							)}
+						</ClayAlert>
+					)}
 
 					<FieldArray
 						name="contributors"
