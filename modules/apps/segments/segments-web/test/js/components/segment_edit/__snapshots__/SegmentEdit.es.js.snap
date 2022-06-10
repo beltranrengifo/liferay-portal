@@ -91,7 +91,7 @@ exports[`SegmentEdit renders 1`] = `
       class="form-body"
     >
       <div
-        class="mx-0 alert alert-fluid alert-warning"
+        class="mx-0 alert alert-dismissible alert-fluid alert-warning"
         role="alert"
       >
         <div
@@ -135,6 +135,20 @@ exports[`SegmentEdit renders 1`] = `
               </div>
             </div>
           </div>
+          <button
+            aria-label="Close"
+            class="close"
+            type="button"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-times"
+              role="presentation"
+            >
+              <use
+                xlink:href="#times"
+              />
+            </svg>
+          </button>
         </div>
       </div>
     </div>
@@ -313,7 +327,7 @@ exports[`SegmentEdit renders with edit buttons if the user has update permission
       class="form-body"
     >
       <div
-        class="mx-0 alert alert-fluid alert-warning"
+        class="mx-0 alert alert-dismissible alert-fluid alert-warning"
         role="alert"
       >
         <div
@@ -357,6 +371,20 @@ exports[`SegmentEdit renders with edit buttons if the user has update permission
               </div>
             </div>
           </div>
+          <button
+            aria-label="Close"
+            class="close"
+            type="button"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-times"
+              role="presentation"
+            >
+              <use
+                xlink:href="#times"
+              />
+            </svg>
+          </button>
         </div>
       </div>
     </div>
@@ -534,7 +562,7 @@ exports[`SegmentEdit renders with given values 1`] = `
       class="form-body"
     >
       <div
-        class="mx-0 alert alert-fluid alert-warning"
+        class="mx-0 alert alert-dismissible alert-fluid alert-warning"
         role="alert"
       >
         <div
@@ -578,6 +606,20 @@ exports[`SegmentEdit renders with given values 1`] = `
               </div>
             </div>
           </div>
+          <button
+            aria-label="Close"
+            class="close"
+            type="button"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-times"
+              role="presentation"
+            >
+              <use
+                xlink:href="#times"
+              />
+            </svg>
+          </button>
         </div>
       </div>
       <div
@@ -992,7 +1034,7 @@ exports[`SegmentEdit renders without edit buttons if the user does not have upda
       class="form-body"
     >
       <div
-        class="mx-0 alert alert-fluid alert-warning"
+        class="mx-0 alert alert-dismissible alert-fluid alert-warning"
         role="alert"
       >
         <div
@@ -1036,6 +1078,20 @@ exports[`SegmentEdit renders without edit buttons if the user does not have upda
               </div>
             </div>
           </div>
+          <button
+            aria-label="Close"
+            class="close"
+            type="button"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-times"
+              role="presentation"
+            >
+              <use
+                xlink:href="#times"
+              />
+            </svg>
+          </button>
         </div>
       </div>
     </div>
