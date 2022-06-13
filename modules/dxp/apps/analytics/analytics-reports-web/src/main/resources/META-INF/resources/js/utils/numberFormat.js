@@ -14,6 +14,15 @@
  * en-US: `123456` => `123,456`
  * es-ES: `123456` => `123.456`
  */
-export function numberFormat(languageTag, number) {
-	return Intl.NumberFormat(languageTag).format(number);
+
+export function numberFormat(languageTag, number, options = {}) {
+	const {compactThreshold, useCompact} = options;
+
+	const formatOptions = {};
+
+	if (useCompact && number >= compactThreshold) {
+		formatOptions.notation = 'compact';
+	}
+
+	return Intl.NumberFormat(languageTag, formatOptions).format(number);
 }
