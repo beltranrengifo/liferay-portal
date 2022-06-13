@@ -466,7 +466,7 @@ const ExperiencesSelectorHeader = ({
 				>
 					<strong className="d-block lead">
 						{Liferay.Language.get(
-							'experiences-can-not-be-displayed-because-segmentation-is-disabled'
+							'experiences-cannot-be-displayed-because-segmentation-is-disabled'
 						)}
 					</strong>
 
