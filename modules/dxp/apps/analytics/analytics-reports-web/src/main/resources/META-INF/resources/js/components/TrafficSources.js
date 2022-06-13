@@ -258,7 +258,6 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 														languageTag,
 														entry.value,
 														{
-															compactThreshold: 10000,
 															useCompact: true,
 														}
 												  )
