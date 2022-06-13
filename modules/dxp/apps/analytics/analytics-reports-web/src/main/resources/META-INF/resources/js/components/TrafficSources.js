@@ -83,7 +83,23 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 			dataProvider()
 				.then((trafficSources) => {
 					if (isMounted()) {
-						setTrafficSources(trafficSources);
+						const randomValues = [
+							983,
+							3634,
+							44539,
+							756823,
+							1657382,
+						];
+
+						setTrafficSources(
+							trafficSources.map((source, i) => {
+								return {
+									...source,
+									share: '96,2',
+									value: randomValues[i],
+								};
+							})
+						);
 					}
 				})
 				.catch(() => {
