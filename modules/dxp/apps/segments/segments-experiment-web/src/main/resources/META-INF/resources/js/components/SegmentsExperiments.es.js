@@ -237,8 +237,9 @@ function SegmentsExperiments({
 									'create-test-help-message'
 								)}
 								className="mb-3 mt-4 segments-experiments-empty-state__image"
+								height="185"
 								src={noExperimentIllustration}
-								width="120"
+								width="185"
 							/>
 
 							<h4 className="text-dark">

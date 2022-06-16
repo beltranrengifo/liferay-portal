@@ -67,7 +67,8 @@ html#{$cadmin-selector} {
 
 			.segments-experiments-empty-state {
 				&__image {
-					max-width: 185px;
+					height: auto;
+					width: 185px;
 				}
 			}
 		}
