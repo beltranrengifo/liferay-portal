@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
 const DEFAULT_RULE = {
+	queryAndOperator: true,
 	queryContains: true,
 	type: 'assetTags',
 };
@@ -64,17 +65,32 @@ const RULE_TYPE_OPTIONS = [
 	},
 ];
 
+const SELECTED_ITEMS_KEY_NAME = 'selectedItems';
+
 function AssetCategories({
 	categorySelectorURL,
 	groupIds,
 	index,
 	namespace,
+	onChange,
 	rule,
 	vocabularyIds,
 }) {
 	const [selectedItems, setSelectedItems] = useState(
 		rule.selectedItems || []
 	);
+
+	const handleSelectedItemsChange = (items) => {
+		setSelectedItems(items);
+
+		onChange({
+			itemSelectorValues: {
+				index,
+				property: SELECTED_ITEMS_KEY_NAME,
+				value: items,
+			},
+		});
+	};
 
 	return (
 		<ClayForm.Group>
@@ -83,11 +99,11 @@ function AssetCategories({
 			</label>
 
 			<AssetVocabularyCategoriesSelector
-				categoryIds={rule.queryValues ? rule.queryValues : ''}
+				categoryIds={rule.queryValues || ''}
 				eventName={`${namespace}selectCategory`}
 				groupIds={groupIds}
 				inputName={`${namespace}queryCategoryIds${index}`}
-				onSelectedItemsChange={setSelectedItems}
+				onSelectedItemsChange={handleSelectedItemsChange}
 				portletURL={categorySelectorURL}
 				selectedItems={selectedItems}
 				sourceItemsVocabularyIds={vocabularyIds}
@@ -96,9 +112,28 @@ function AssetCategories({
 	);
 }
 
-function AssetTags({groupIds, index, namespace, rule, tagSelectorURL}) {
+function AssetTags({
+	groupIds,
+	index,
+	namespace,
+	onChange,
+	rule,
+	tagSelectorURL,
+}) {
 	const [inputValue, setInputValue] = useState('');
 	const [selectedItems, setSelectedItems] = useState(rule.selectedItems);
+
+	const handleSelectedItemsChange = (items) => {
+		setSelectedItems(items);
+
+		onChange({
+			itemSelectorValues: {
+				index,
+				property: SELECTED_ITEMS_KEY_NAME,
+				value: items,
+			},
+		});
+	};
 
 	return (
 		<ClayForm.Group>
@@ -108,11 +143,11 @@ function AssetTags({groupIds, index, namespace, rule, tagSelectorURL}) {
 				inputName={`${namespace}queryTagNames${index}`}
 				inputValue={inputValue}
 				onInputValueChange={setInputValue}
-				onSelectedItemsChange={setSelectedItems}
+				onSelectedItemsChange={handleSelectedItemsChange}
 				portletURL={tagSelectorURL}
 				selectedItems={selectedItems}
 				showSelectButton={true}
-				tagNames={rule.queryValues ? rule.queryValues : ''}
+				tagNames={rule.queryValues || ''}
 			/>
 		</ClayForm.Group>
 	);
@@ -132,7 +167,7 @@ function Keywords({index, namespace, onChange, rule}) {
 				data-property="queryValues"
 				id={`${namespace}keywords${index}`}
 				name={`${namespace}keywords${index}`}
-				onChange={onChange}
+				onChange={(event) => onChange({event})}
 				type="text"
 				value={rule.queryValues}
 			/>
@@ -162,7 +197,7 @@ function Rule({
 							data-property="queryContains"
 							id={`${namespace}queryContains${index}`}
 							name={`${namespace}queryContains${index}`}
-							onChange={onRuleChange}
+							onChange={(event) => onRuleChange({event})}
 							options={QUERY_CONTAINS_OPTIONS}
 							title={Liferay.Language.get('query-contains')}
 							value={rule.queryContains}
@@ -175,7 +210,7 @@ function Rule({
 							data-property="queryAndOperator"
 							id={`${namespace}queryAndOperator${index}`}
 							name={`${namespace}queryAndOperator${index}`}
-							onChange={onRuleChange}
+							onChange={(event) => onRuleChange({event})}
 							options={QUERY_AND_OPERATOR_OPTIONS}
 							title={Liferay.Language.get('and-operator')}
 							value={rule.queryAndOperator}
@@ -197,7 +232,7 @@ function Rule({
 							data-property="type"
 							id={`${namespace}queryName${index}`}
 							name={`${namespace}queryName${index}`}
-							onChange={onRuleChange}
+							onChange={(event) => onRuleChange({event})}
 							options={RULE_TYPE_OPTIONS}
 							value={rule.type}
 						/>
@@ -209,6 +244,7 @@ function Rule({
 							groupIds={groupIds}
 							index={index}
 							namespace={namespace}
+							onChange={onRuleChange}
 							rule={rule}
 							vocabularyIds={vocabularyIds}
 						/>
@@ -219,6 +255,7 @@ function Rule({
 							groupIds={groupIds}
 							index={index}
 							namespace={namespace}
+							onChange={onRuleChange}
 							rule={rule}
 							tagSelectorURL={tagSelectorURL}
 						/>
@@ -285,9 +322,14 @@ function AssetFilterBuilder({
 	);
 
 	const handleRuleChange = useCallback(
-		(event) => {
-			const index = parseInt(event.currentTarget.dataset.index, 10);
-			const property = event.currentTarget.dataset.property;
+		({event, itemSelectorValues}) => {
+			const index = parseInt(
+				event?.currentTarget.dataset.index || itemSelectorValues.index,
+				10
+			);
+			const property =
+				event?.currentTarget.dataset.property ||
+				itemSelectorValues.property;
 
 			const rule =
 				property === 'type'
@@ -298,7 +340,8 @@ function AssetFilterBuilder({
 				...currentRules.slice(0, index),
 				{
 					...rule,
-					[property]: event.currentTarget.value,
+					[property]:
+						event?.currentTarget.value || itemSelectorValues.value,
 				},
 				...currentRules.slice(index + 1, currentRules.length),
 			]);
