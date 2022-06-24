@@ -20,11 +20,12 @@ import {
 	AssetVocabularyCategoriesSelector,
 } from 'asset-taglib';
 import PropTypes from 'prop-types';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 const DEFAULT_RULE = {
 	queryAndOperator: true,
 	queryContains: true,
+	selectedItems: [],
 	type: 'assetTags',
 };
 
@@ -66,6 +67,88 @@ const RULE_TYPE_OPTIONS = [
 ];
 
 const SELECTED_ITEMS_KEY_NAME = 'selectedItems';
+
+const DEFAULT_RULE_CONJUNCTION = 'and';
+
+const _getRuleQueryFromItemSelector = ({
+	selectedItems,
+	type,
+	useAndOperator,
+	useNotOperator,
+}) => {
+	if (useAndOperator) {
+		const operator = useNotOperator ? 'ne' : 'eq';
+
+		const DEFAULT_AND_QUERY = `${type} ${operator} ''`;
+
+		return (
+			selectedItems
+				.map((item) => {
+					return `(${type} ${operator} '${item?.value || item}')`;
+				})
+				.join(` ${DEFAULT_RULE_CONJUNCTION} `) || DEFAULT_AND_QUERY
+		);
+	}
+	else {
+		const query = `${type} in (${selectedItems
+			.map((item) => item.value)
+			.join(', ')})`;
+
+		return useNotOperator ? `not(${query})` : query;
+	}
+};
+
+const _getRuleQueryFromTextInput = ({
+	queryValues,
+	type,
+	useAndOperator,
+	useNotOperator,
+}) => {
+	const keywords = queryValues
+		.split(/\s?[, ]\s?/)
+		.filter(Boolean)
+		.map((keyword) => keyword.replace(/'/g, "''"))
+		.join(', ');
+
+	const andAnyOperator = useAndOperator ? 'all' : 'any';
+
+	const query = `${type}/${andAnyOperator}(k:contains(k, '${keywords}'))`;
+
+	return useNotOperator ? `not(${query})` : query;
+};
+
+const buildQueryString = ({rules, updateStateCallback}) => {
+	updateStateCallback(
+		rules
+			.map((rule) => {
+				const {
+					queryAndOperator,
+					queryContains,
+					queryValues,
+					selectedItems,
+					type,
+				} = rule;
+
+				const useAndOperator = queryAndOperator.toString() === 'true';
+				const useNotOperator = queryContains.toString() === 'false';
+
+				return Array.isArray(selectedItems)
+					? _getRuleQueryFromItemSelector({
+							selectedItems,
+							type,
+							useAndOperator,
+							useNotOperator,
+					  })
+					: _getRuleQueryFromTextInput({
+							queryValues,
+							type,
+							useAndOperator,
+							useNotOperator,
+					  });
+			})
+			.join(` ${DEFAULT_RULE_CONJUNCTION} `)
+	);
+};
 
 function AssetCategories({
 	categorySelectorURL,
@@ -169,7 +252,7 @@ function Keywords({index, namespace, onChange, rule}) {
 				name={`${namespace}keywords${index}`}
 				onChange={(event) => onChange({event})}
 				type="text"
-				value={rule.queryValues}
+				value={rule.queryValues ?? ''}
 			/>
 		</ClayForm.Group>
 	);
@@ -303,6 +386,7 @@ function AssetFilterBuilder({
 	vocabularyIds,
 }) {
 	const [currentRules, setCurrentRules] = useState(rules);
+	const [queryString, setQueryString] = useState('');
 
 	const handleAddRule = useCallback(() => {
 		setCurrentRules([...currentRules, DEFAULT_RULE]);
@@ -333,7 +417,10 @@ function AssetFilterBuilder({
 
 			const rule =
 				property === 'type'
-					? {queryContains: true}
+					? {
+							...currentRules[index],
+							selectedItems: [],
+					  }
 					: currentRules[index];
 
 			setCurrentRules([
@@ -341,7 +428,7 @@ function AssetFilterBuilder({
 				{
 					...rule,
 					[property]:
-						event?.currentTarget.value || itemSelectorValues.value,
+						event?.currentTarget.value ?? itemSelectorValues.value,
 				},
 				...currentRules.slice(index + 1, currentRules.length),
 			]);
@@ -349,12 +436,25 @@ function AssetFilterBuilder({
 		[currentRules]
 	);
 
+	useEffect(() => {
+		buildQueryString({
+			rules: currentRules,
+			updateStateCallback: setQueryString,
+		});
+	}, [currentRules]);
+
 	return (
 		<>
 			<ClayInput
 				name={`${namespace}queryLogicIndexes`}
 				type="hidden"
 				value={Object.keys(currentRules).toString()}
+			/>
+
+			<ClayInput
+				name={`${namespace}assetListFilter`}
+				type="hidden"
+				value={queryString}
 			/>
 
 			<ul className="timeline">
