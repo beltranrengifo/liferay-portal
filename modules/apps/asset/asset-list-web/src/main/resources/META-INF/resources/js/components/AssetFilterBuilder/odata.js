@@ -34,11 +34,11 @@ const _getRuleQueryFromItemSelector = ({
 		);
 	}
 	else {
-		const query = `${type} in (${selectedItems
-			.map((item) => item.value)
-			.join(', ')})`;
+		const query = `(${type} in (${selectedItems
+			.map((item) => `'${item.value}'`)
+			.join(', ')}))`;
 
-		return useNotOperator ? `not(${query})` : query;
+		return useNotOperator ? `(not${query})` : query;
 	}
 };
 
@@ -54,11 +54,11 @@ const _getRuleQueryFromTextInput = ({
 		.map((keyword) => keyword.replace(/'/g, "''"))
 		.join(', ');
 
-	const andAnyOperator = useAndOperator ? 'all' : 'any';
+	const operator = useAndOperator ? 'all' : 'any';
 
-	const query = `${type}/${andAnyOperator}(k:contains(k, '${keywords}'))`;
+	const query = `(${type}/${operator}(k:contains(k, '${keywords}')))`;
 
-	return useNotOperator ? `not(${query})` : query;
+	return useNotOperator ? `(not${query})` : query;
 };
 
 const buildQueryString = ({rules, updateStateCallback}) => {
