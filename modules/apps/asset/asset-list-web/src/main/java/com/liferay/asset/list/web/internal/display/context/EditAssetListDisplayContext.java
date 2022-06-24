@@ -370,6 +370,8 @@ public class EditAssetListDisplayContext {
 				).put(
 					"queryContains", true
 				).put(
+					"queryValues", StringPool.BLANK
+				).put(
 					"selectedItems", new ArrayList()
 				).put(
 					"type", "assetTags"

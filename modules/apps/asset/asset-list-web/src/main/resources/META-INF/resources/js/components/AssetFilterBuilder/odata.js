@@ -12,7 +12,7 @@
  * details.
  */
 
-import {DEFAULT_RULE_CONJUNCTION} from './constants';
+import {DEFAULT_RULE_CONJUNCTION, RULE_TYPE_KEYWORD} from './constants';
 
 const _getRuleQueryFromItemSelector = ({
 	selectedItems,
@@ -76,15 +76,15 @@ const buildQueryString = ({rules, updateStateCallback}) => {
 				const useAndOperator = queryAndOperator.toString() === 'true';
 				const useNotOperator = queryContains.toString() === 'false';
 
-				return Array.isArray(selectedItems)
-					? _getRuleQueryFromItemSelector({
-							selectedItems,
+				return type === RULE_TYPE_KEYWORD.value
+					? _getRuleQueryFromTextInput({
+							queryValues,
 							type,
 							useAndOperator,
 							useNotOperator,
 					  })
-					: _getRuleQueryFromTextInput({
-							queryValues,
+					: _getRuleQueryFromItemSelector({
+							selectedItems,
 							type,
 							useAndOperator,
 							useNotOperator,

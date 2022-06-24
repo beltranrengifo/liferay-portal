@@ -15,6 +15,7 @@
 export const DEFAULT_RULE = {
 	queryAndOperator: true,
 	queryContains: true,
+	queryValues: '',
 	selectedItems: [],
 	type: 'assetTags',
 };
@@ -41,19 +42,25 @@ export const QUERY_CONTAINS_OPTIONS = [
 	},
 ];
 
+const RULE_TYPE_CATEGORY = {
+	label: Liferay.Language.get('categories'),
+	value: 'assetCategories',
+};
+
+export const RULE_TYPE_KEYWORD = {
+	label: Liferay.Language.get('keywords'),
+	value: 'keywords',
+};
+
+const RULE_TYPE_TAG = {
+	label: Liferay.Language.get('tags'),
+	value: 'assetTags',
+};
+
 export const RULE_TYPE_OPTIONS = [
-	{
-		label: Liferay.Language.get('categories'),
-		value: 'assetCategories',
-	},
-	{
-		label: Liferay.Language.get('keywords'),
-		value: 'keywords',
-	},
-	{
-		label: Liferay.Language.get('tags'),
-		value: 'assetTags',
-	},
+	RULE_TYPE_CATEGORY,
+	RULE_TYPE_KEYWORD,
+	RULE_TYPE_TAG,
 ];
 
 export const SELECTED_ITEMS_KEY_NAME = 'selectedItems';
