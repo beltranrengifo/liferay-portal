@@ -61,37 +61,35 @@ const _getRuleQueryFromTextInput = ({
 	return useNotOperator ? `(not${query})` : query;
 };
 
-const buildQueryString = ({rules, updateStateCallback}) => {
-	updateStateCallback(
-		rules
-			.map((rule) => {
-				const {
-					queryAndOperator,
-					queryContains,
-					queryValues,
-					selectedItems,
-					type,
-				} = rule;
+const buildQueryString = ({rules}) => {
+	return rules
+		.map((rule) => {
+			const {
+				queryAndOperator,
+				queryContains,
+				queryValues,
+				selectedItems,
+				type,
+			} = rule;
 
-				const useAndOperator = queryAndOperator.toString() === 'true';
-				const useNotOperator = queryContains.toString() === 'false';
+			const useAndOperator = queryAndOperator.toString() === 'true';
+			const useNotOperator = queryContains.toString() === 'false';
 
-				return type === RULE_TYPE_KEYWORD.value
-					? _getRuleQueryFromTextInput({
-							queryValues,
-							type,
-							useAndOperator,
-							useNotOperator,
-					  })
-					: _getRuleQueryFromItemSelector({
-							selectedItems,
-							type,
-							useAndOperator,
-							useNotOperator,
-					  });
-			})
-			.join(` ${DEFAULT_RULE_CONJUNCTION} `)
-	);
+			return type === RULE_TYPE_KEYWORD.value
+				? _getRuleQueryFromTextInput({
+						queryValues,
+						type,
+						useAndOperator,
+						useNotOperator,
+				  })
+				: _getRuleQueryFromItemSelector({
+						selectedItems,
+						type,
+						useAndOperator,
+						useNotOperator,
+				  });
+		})
+		.join(` ${DEFAULT_RULE_CONJUNCTION} `);
 };
 
 export {buildQueryString};
