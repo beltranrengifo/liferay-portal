@@ -22,133 +22,14 @@ import {
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
-const DEFAULT_RULE = {
-	queryAndOperator: true,
-	queryContains: true,
-	selectedItems: [],
-	type: 'assetTags',
-};
-
-const QUERY_AND_OPERATOR_OPTIONS = [
-	{
-		label: Liferay.Language.get('all'),
-		value: true,
-	},
-	{
-		label: Liferay.Language.get('any'),
-		value: false,
-	},
-];
-
-const QUERY_CONTAINS_OPTIONS = [
-	{
-		label: Liferay.Language.get('contains'),
-		value: true,
-	},
-	{
-		label: Liferay.Language.get('does-not-contain'),
-		value: false,
-	},
-];
-
-const RULE_TYPE_OPTIONS = [
-	{
-		label: Liferay.Language.get('categories'),
-		value: 'assetCategories',
-	},
-	{
-		label: Liferay.Language.get('keywords'),
-		value: 'keywords',
-	},
-	{
-		label: Liferay.Language.get('tags'),
-		value: 'assetTags',
-	},
-];
-
-const SELECTED_ITEMS_KEY_NAME = 'selectedItems';
-
-const DEFAULT_RULE_CONJUNCTION = 'and';
-
-const _getRuleQueryFromItemSelector = ({
-	selectedItems,
-	type,
-	useAndOperator,
-	useNotOperator,
-}) => {
-	if (useAndOperator) {
-		const operator = useNotOperator ? 'ne' : 'eq';
-
-		const DEFAULT_AND_QUERY = `${type} ${operator} ''`;
-
-		return (
-			selectedItems
-				.map((item) => {
-					return `(${type} ${operator} '${item?.value || item}')`;
-				})
-				.join(` ${DEFAULT_RULE_CONJUNCTION} `) || DEFAULT_AND_QUERY
-		);
-	}
-	else {
-		const query = `${type} in (${selectedItems
-			.map((item) => item.value)
-			.join(', ')})`;
-
-		return useNotOperator ? `not(${query})` : query;
-	}
-};
-
-const _getRuleQueryFromTextInput = ({
-	queryValues,
-	type,
-	useAndOperator,
-	useNotOperator,
-}) => {
-	const keywords = queryValues
-		.split(/\s?[, ]\s?/)
-		.filter(Boolean)
-		.map((keyword) => keyword.replace(/'/g, "''"))
-		.join(', ');
-
-	const andAnyOperator = useAndOperator ? 'all' : 'any';
-
-	const query = `${type}/${andAnyOperator}(k:contains(k, '${keywords}'))`;
-
-	return useNotOperator ? `not(${query})` : query;
-};
-
-const buildQueryString = ({rules, updateStateCallback}) => {
-	updateStateCallback(
-		rules
-			.map((rule) => {
-				const {
-					queryAndOperator,
-					queryContains,
-					queryValues,
-					selectedItems,
-					type,
-				} = rule;
-
-				const useAndOperator = queryAndOperator.toString() === 'true';
-				const useNotOperator = queryContains.toString() === 'false';
-
-				return Array.isArray(selectedItems)
-					? _getRuleQueryFromItemSelector({
-							selectedItems,
-							type,
-							useAndOperator,
-							useNotOperator,
-					  })
-					: _getRuleQueryFromTextInput({
-							queryValues,
-							type,
-							useAndOperator,
-							useNotOperator,
-					  });
-			})
-			.join(` ${DEFAULT_RULE_CONJUNCTION} `)
-	);
-};
+import {
+	DEFAULT_RULE,
+	QUERY_AND_OPERATOR_OPTIONS,
+	QUERY_CONTAINS_OPTIONS,
+	RULE_TYPE_OPTIONS,
+	SELECTED_ITEMS_KEY_NAME,
+} from './constants';
+import {buildQueryString} from './odata';
 
 function AssetCategories({
 	categorySelectorURL,
