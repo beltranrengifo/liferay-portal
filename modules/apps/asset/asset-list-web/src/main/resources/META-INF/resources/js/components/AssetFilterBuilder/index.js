@@ -20,7 +20,7 @@ import {
 	AssetVocabularyCategoriesSelector,
 } from 'asset-taglib';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
 import {
 	DEFAULT_RULE,
@@ -29,7 +29,7 @@ import {
 	RULE_TYPE_OPTIONS,
 	SELECTED_ITEMS_KEY_NAME,
 } from './constants';
-import {buildQueryString} from './odata';
+import {useBuildQueryString} from './useBuildQueryString';
 
 function AssetCategories({
 	categorySelectorURL,
@@ -267,7 +267,8 @@ function AssetFilterBuilder({
 	vocabularyIds,
 }) {
 	const [currentRules, setCurrentRules] = useState(rules);
-	const [queryString, setQueryString] = useState('');
+
+	const queryString = useBuildQueryString({rules: currentRules});
 
 	const handleAddRule = useCallback(() => {
 		setCurrentRules([...currentRules, DEFAULT_RULE]);
@@ -316,13 +317,6 @@ function AssetFilterBuilder({
 		},
 		[currentRules]
 	);
-
-	useEffect(() => {
-		buildQueryString({
-			rules: currentRules,
-			updateStateCallback: setQueryString,
-		});
-	}, [currentRules]);
 
 	return (
 		<>
