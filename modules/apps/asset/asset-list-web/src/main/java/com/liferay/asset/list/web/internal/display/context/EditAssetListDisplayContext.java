@@ -366,7 +366,11 @@ public class EditAssetListDisplayContext {
 		if (rulesJSONArray.length() == 0) {
 			rulesJSONArray.put(
 				JSONUtil.put(
+					"queryAndOperator", true
+				).put(
 					"queryContains", true
+				).put(
+					"selectedItems", new ArrayList()
 				).put(
 					"type", "assetTags"
 				));
