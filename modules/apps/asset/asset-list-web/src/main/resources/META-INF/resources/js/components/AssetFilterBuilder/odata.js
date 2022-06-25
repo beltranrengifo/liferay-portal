@@ -51,12 +51,13 @@ const _getRuleQueryFromTextInput = ({
 	const keywords = queryValues
 		.split(/\s?[, ]\s?/)
 		.filter(Boolean)
-		.map((keyword) => keyword.replace(/'/g, "''"))
-		.join(', ');
+		.map((keyword) => keyword.replace(/'/g, "''"));
 
 	const operator = useAndOperator ? 'all' : 'any';
 
-	const query = `(${type}/${operator}(k:contains(k, '${keywords}')))`;
+	const query = `(${type}/${operator}(k:${keywords
+		.map((keyword) => `contains(k, '${keyword}')`)
+		.join(` ${DEFAULT_RULE_CONJUNCTION} `)}))`;
 
 	return useNotOperator ? `(not${query})` : query;
 };
