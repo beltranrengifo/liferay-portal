@@ -85,7 +85,9 @@ function AssetTags({
 	tagSelectorURL,
 }) {
 	const [inputValue, setInputValue] = useState('');
-	const [selectedItems, setSelectedItems] = useState(rule.selectedItems);
+	const [selectedItems, setSelectedItems] = useState(
+		rule.selectedItems || []
+	);
 
 	const handleSelectedItemsChange = (items) => {
 		setSelectedItems(items);
