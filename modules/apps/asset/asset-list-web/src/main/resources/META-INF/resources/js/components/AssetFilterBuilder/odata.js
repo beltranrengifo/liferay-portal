@@ -28,7 +28,7 @@ const _getRuleQueryFromItemSelector = ({
 		return (
 			selectedItems
 				.map((item) => {
-					return `(${type} ${operator} '${item?.value || item}')`;
+					return `(${type} ${operator} '${item?.value}')`;
 				})
 				.join(` ${DEFAULT_RULE_CONJUNCTION} `) || DEFAULT_AND_QUERY
 		);
