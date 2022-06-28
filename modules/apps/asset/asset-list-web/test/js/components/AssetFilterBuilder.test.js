@@ -17,15 +17,15 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import AssetListFilter from '../../../src/main/resources/META-INF/resources/js/components/AssetListFilter/index';
-import {buildQueryString} from '../../../src/main/resources/META-INF/resources/js/components/AssetListFilter/odata';
-import {defaultComponentProps} from '../mocks/assetListFilterProps';
+import AssetFilterBuilder from '../../../src/main/resources/META-INF/resources/js/components/AssetFilterBuilder/index';
+import {buildQueryString} from '../../../src/main/resources/META-INF/resources/js/components/AssetFilterBuilder/odata';
+import {defaultComponentProps} from '../mocks/assetFilterBuilderProps';
 
 const _getComponent = (props) => {
-	return render(<AssetListFilter {...defaultComponentProps} {...props} />);
+	return render(<AssetFilterBuilder {...defaultComponentProps} {...props} />);
 };
 
-describe('AssetListFilter', () => {
+describe('AssetFilterBuilder', () => {
 	beforeEach(() => {
 		window.fetch = jest.fn().mockReturnValue({
 			then(data = {}) {
