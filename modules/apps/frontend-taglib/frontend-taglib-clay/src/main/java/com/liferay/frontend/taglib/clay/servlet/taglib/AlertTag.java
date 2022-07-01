@@ -25,8 +25,6 @@ import java.util.Set;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
-import static com.liferay.petra.string.StringPool.BLANK;
-
 /**
  * @author Chema Balsas
  */
@@ -45,12 +43,12 @@ public class AlertTag extends BaseContainerTag {
 		return _autoClose;
 	}
 
-	public boolean getDismissible() {
-		return _dismissible;
-	}
-
 	public boolean getDefaultTitleDisabled() {
 		return _defaultTitleDisabled;
+	}
+
+	public boolean getDismissible() {
+		return _dismissible;
 	}
 
 	public String getDisplayType() {
@@ -186,11 +184,14 @@ public class AlertTag extends BaseContainerTag {
 		if (_defaultTitleDisabled) {
 			if (Validator.isNotNull(_title)) {
 				jspWriter.write("<strong class=\"lead\">");
-				jspWriter.write(LanguageUtil.get(
-					TagResourceBundleUtil.getResourceBundle(pageContext), _title));
+				jspWriter.write(
+					LanguageUtil.get(
+						TagResourceBundleUtil.getResourceBundle(pageContext),
+						_title));
 				jspWriter.write("</strong>");
 			}
-		} else {
+		}
+		else {
 			jspWriter.write("<strong class=\"lead\">");
 			jspWriter.write(_getTitle(_title, _displayType));
 			jspWriter.write(":</strong>");
