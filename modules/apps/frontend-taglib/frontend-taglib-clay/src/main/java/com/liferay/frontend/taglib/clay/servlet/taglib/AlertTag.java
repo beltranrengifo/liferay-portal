@@ -158,7 +158,7 @@ public class AlertTag extends BaseContainerTag {
 			jspWriter.write("container-fluid-max-xl\">");
 		}
 
-		jspWriter.write("<div class=\"alert-autofit-row autofit-row\"><div ");
+		jspWriter.write("<div class=\"alert-autofit-row align-items-baseline autofit-row\"><div ");
 		jspWriter.write("class=\"autofit-col\"><div ");
 		jspWriter.write("class=\"autofit-section\"><span ");
 		jspWriter.write("class=\"alert-indicator\">");
