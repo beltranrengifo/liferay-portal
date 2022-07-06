@@ -2669,6 +2669,12 @@
 		<body-content>JSP</body-content>
 		<attribute>
 			<description></description>
+			<name>defaultTitleDisabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>autoClose</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
