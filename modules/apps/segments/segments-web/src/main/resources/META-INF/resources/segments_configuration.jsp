@@ -67,9 +67,10 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 		<c:if test="<%= !segmentsCompanyConfigurationDisplayContext.isSegmentationEnabled() %>">
 			<clay:alert
 				cssClass="c-my-4"
+				defaultTitleDisabled="<%= true %>"
 				displayType="warning"
 			>
-				<strong class="lead"><%= LanguageUtil.get(request, "segmentation-is-disabled-in-system-settings") %></strong>
+				<strong class="lead mr-0"><%= LanguageUtil.get(request, "segmentation-is-disabled-in-system-settings") %></strong>
 
 				<%
 				String segmentsConfigurationURL = segmentsCompanyConfigurationDisplayContext.getSegmentsCompanyConfigurationURL();
@@ -92,9 +93,10 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 		<c:if test="<%= !segmentsCompanyConfigurationDisplayContext.isRoleSegmentationEnabled() %>">
 			<clay:alert
 				cssClass="c-my-4"
+				defaultTitleDisabled="<%= true %>"
 				displayType="warning"
 			>
-				<strong class="lead"><%= LanguageUtil.get(request, "assign-roles-by-segment-is-disabled-in-system-settings") %></strong>
+				<strong class="lead mr-0"><%= LanguageUtil.get(request, "assign-roles-by-segment-is-disabled-in-system-settings") %></strong>
 
 				<%
 				String segmentsConfigurationURL = segmentsCompanyConfigurationDisplayContext.getSegmentsCompanyConfigurationURL();
