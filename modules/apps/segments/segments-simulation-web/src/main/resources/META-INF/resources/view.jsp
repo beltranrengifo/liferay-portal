@@ -35,10 +35,11 @@ SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = (SegmentsSim
 				<ul class="list-unstyled">
 					<c:if test="<%= !segmentsSimulationDisplayContext.isSegmentationEnabled() %>">
 						<clay:alert
+							defaultTitleDisabled="<%= true %>"
 							dismissible="<%= true %>"
 							displayType="warning"
 						>
-							<strong class="lead"><%= LanguageUtil.get(request, "experiences-cannot-be-displayed-because-segmentation-is-disabled") %></strong>
+							<strong class="lead mr-0"><%= LanguageUtil.get(request, "experiences-cannot-be-displayed-because-segmentation-is-disabled") %></strong>
 
 							<c:choose>
 								<c:when test="<%= segmentsSimulationDisplayContext.getSegmentsCompanyConfigurationURL() != null %>">
