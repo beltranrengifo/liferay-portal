@@ -35,10 +35,11 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 
 <c:if test='<%= !(boolean)data.get("isSegmentationEnabled") %>'>
 	<clay:stripe
+		defaultTitleDisabled="<%= true %>"
 		dismissible="<%= true %>"
 		displayType="warning"
 	>
-		<strong class="lead"><%= LanguageUtil.get(request, "personalized-variations-cannot-be-displayed-because-segmentation-is-disabled") %></strong>
+		<strong class="lead mr-0"><%= LanguageUtil.get(request, "personalized-variations-cannot-be-displayed-because-segmentation-is-disabled") %></strong>
 
 		<%
 		String segmentsConfigurationURL = editAssetListDisplayContext.getSegmentsCompanyConfigurationURL();
