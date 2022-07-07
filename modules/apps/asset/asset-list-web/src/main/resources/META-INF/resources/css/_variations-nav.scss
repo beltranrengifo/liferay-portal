@@ -4,6 +4,7 @@
 	$self: &;
 
 	border: 2px solid transparent;
+	margin-bottom: 4px;
 	padding-left: 0.25rem;
 
 	&.list-group-item {
@@ -23,6 +24,7 @@
 
 	&__label {
 		&.autofit-col {
+			flex: auto;
 			padding-left: 0.25rem;
 		}
 
