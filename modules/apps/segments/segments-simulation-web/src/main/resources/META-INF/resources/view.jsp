@@ -39,7 +39,7 @@ SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = (SegmentsSim
 							dismissible="<%= true %>"
 							displayType="warning"
 						>
-							<strong class="lead mr-0"><%= LanguageUtil.get(request, "experiences-cannot-be-displayed-because-segmentation-is-disabled") %></strong>
+							<strong><%= LanguageUtil.get(request, "experiences-cannot-be-displayed-because-segmentation-is-disabled") %></strong>
 
 							<c:choose>
 								<c:when test="<%= segmentsSimulationDisplayContext.getSegmentsCompanyConfigurationURL() != null %>">

@@ -47,7 +47,7 @@ request.setAttribute("view.jsp-eventName", eventName);
 		dismissible="<%= true %>"
 		displayType="warning"
 	>
-		<strong class="lead mr-0"><%= LanguageUtil.get(request, "segmentation-is-disabled") %></strong>
+		<strong><%= LanguageUtil.get(request, "segmentation-is-disabled") %></strong>
 
 		<%
 		String segmentsConfigurationURL = segmentsDisplayContext.getSegmentsCompanyConfigurationURL(request);
