@@ -261,6 +261,8 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 		}
 		else if (Objects.equals(entityField.getType(), EntityField.Type.ID) ||
 				 Objects.equals(
+					 entityField.getType(), EntityField.Type.KEYWORD) ||
+				 Objects.equals(
 					 entityField.getType(), EntityField.Type.STRING)) {
 
 			return EdmPrimitiveTypeKind.String.getFullQualifiedName();

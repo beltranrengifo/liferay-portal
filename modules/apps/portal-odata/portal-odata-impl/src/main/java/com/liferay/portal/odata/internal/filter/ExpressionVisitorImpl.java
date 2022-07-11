@@ -21,11 +21,13 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.generic.StringQuery;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.search.generic.TermRangeQueryImpl;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
@@ -305,11 +307,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			return booleanFilter;
 		}
 
-		return new QueryFilter(
-			_nestedFieldQueryHelper.getQuery(
-				entityField.getFilterableName(locale),
-				fieldName -> new TermQueryImpl(
-					fieldName, entityField.getFilterableValue(fieldValue))));
+		return new QueryFilter(_getEQQuery(entityField, fieldValue, locale));
 	}
 
 	private Optional<Filter> _getFilterOptional(
@@ -403,6 +401,21 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 				entityField.getType());
 	}
 
+
+
+	private Query _getEQQuery(
+		EntityField entityField, Object fieldValue, Locale locale) {
+
+		if (entityField.getType().equals(EntityField.Type.KEYWORD)) {
+			return new StringQuery(entityField.getFilterableValue(fieldValue));
+		}
+
+		return _nestedFieldQueryHelper.getQuery(
+				entityField.getFilterableName(locale),
+				fieldName -> new TermQueryImpl(
+					fieldName, entityField.getFilterableValue(fieldValue)));
+
+	}
 	private Filter _getINFilter(
 		EntityField entityField, List<Object> fieldValues, Locale locale) {
 
@@ -411,11 +424,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		try {
 			for (Object fieldValue : fieldValues) {
 				booleanQuery.add(
-					_nestedFieldQueryHelper.getQuery(
-						entityField.getFilterableName(locale),
-						fieldName -> new TermQueryImpl(
-							fieldName,
-							entityField.getFilterableValue(fieldValue))),
+					_getEQQuery(entityField, fieldValue, locale),
 					BooleanClauseOccur.SHOULD);
 			}
 		}
