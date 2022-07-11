@@ -63,7 +63,7 @@
 					).put(
 						"namespace", liferayPortletResponse.getNamespace()
 					).put(
-						"rules", editAssetListDisplayContext.getAutoFieldRulesJSONArray()
+						"assetListFilter", editAssetListDisplayContext.getAssetListFilter()
 					).put(
 						"tagSelectorURL", editAssetListDisplayContext.getTagSelectorURL()
 					).put(

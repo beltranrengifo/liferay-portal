@@ -86,13 +86,13 @@ public class UpdateAssetListEntryDynamicMVCActionCommand
 					assetListEntry.getTypeSettings(segmentsEntryId)
 				).build();
 
-			_updateQueryLogic(actionRequest, unicodeProperties);
+			unicodeProperties.put(
+				"assetListFilter",
+				ParamUtil.getString(actionRequest, "assetListFilter"));
 
-			UnicodeProperties typeSettingsUnicodeProperties =
+			unicodeProperties.putAll(
 				PropertiesParamUtil.getProperties(
-					actionRequest, "TypeSettingsProperties--");
-
-			unicodeProperties.putAll(typeSettingsUnicodeProperties);
+					actionRequest, "TypeSettingsProperties--"));
 
 			_assetListEntryService.updateAssetListEntryTypeSettings(
 				assetListEntryId, segmentsEntryId,
@@ -106,112 +106,6 @@ public class UpdateAssetListEntryDynamicMVCActionCommand
 			SessionErrors.add(
 				actionRequest, duplicateQueryRuleException.getClass(),
 				duplicateQueryRuleException);
-		}
-	}
-
-	private AssetQueryRule _getQueryRule(
-		ActionRequest actionRequest, int index) {
-
-		boolean contains = ParamUtil.getBoolean(
-			actionRequest, "queryContains" + index);
-		boolean andOperator = ParamUtil.getBoolean(
-			actionRequest, "queryAndOperator" + index);
-
-		String name = ParamUtil.getString(actionRequest, "queryName" + index);
-
-		String[] values = null;
-
-		if (name.equals("assetTags")) {
-			values = ParamUtil.getStringValues(
-				actionRequest, "queryTagNames" + index);
-		}
-		else if (name.equals("keywords")) {
-			StrTokenizer strTokenizer = new StrTokenizer(
-				ParamUtil.getString(actionRequest, "keywords" + index));
-
-			strTokenizer.setQuoteMatcher(StrMatcher.quoteMatcher());
-
-			List<String> valuesList = (List<String>)strTokenizer.getTokenList();
-
-			values = valuesList.toArray(new String[0]);
-		}
-		else {
-			values = ParamUtil.getStringValues(
-				actionRequest, "queryCategoryIds" + index);
-		}
-
-		return new AssetQueryRule(contains, andOperator, name, values);
-	}
-
-	private void _updateQueryLogic(
-			ActionRequest actionRequest, UnicodeProperties unicodeProperties)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long userId = themeDisplay.getUserId();
-		long groupId = themeDisplay.getSiteGroupId();
-
-		int[] queryRulesIndexes = StringUtil.split(
-			ParamUtil.getString(actionRequest, "queryLogicIndexes"), 0);
-
-		int i = 0;
-
-		List<AssetQueryRule> queryRules = new ArrayList<>();
-
-		for (int queryRulesIndex : queryRulesIndexes) {
-			AssetQueryRule queryRule = _getQueryRule(
-				actionRequest, queryRulesIndex);
-
-			_validateQueryRule(userId, groupId, queryRules, queryRule);
-
-			queryRules.add(queryRule);
-
-			unicodeProperties.put(
-				"queryContains" + i, String.valueOf(queryRule.isContains()));
-			unicodeProperties.put(
-				"queryAndOperator" + i,
-				String.valueOf(queryRule.isAndOperator()));
-			unicodeProperties.put("queryName" + i, queryRule.getName());
-			unicodeProperties.put(
-				"queryValues" + i, StringUtil.merge(queryRule.getValues()));
-
-			i++;
-		}
-
-		// Clear previous preferences that are now blank
-
-		String value = unicodeProperties.getProperty("queryValues" + i);
-
-		while (Validator.isNotNull(value)) {
-			unicodeProperties.remove("queryContains" + i);
-			unicodeProperties.remove("queryAndOperator" + i);
-			unicodeProperties.remove("queryName" + i);
-			unicodeProperties.remove("queryValues" + i);
-
-			i++;
-
-			value = unicodeProperties.getProperty("queryValues" + i);
-		}
-	}
-
-	private void _validateQueryRule(
-			long userId, long groupId, List<AssetQueryRule> queryRules,
-			AssetQueryRule queryRule)
-		throws Exception {
-
-		String name = queryRule.getName();
-
-		if (name.equals("assetTags")) {
-			_assetTagLocalService.checkTags(
-				userId, groupId, queryRule.getValues());
-		}
-
-		if (queryRules.contains(queryRule)) {
-			throw new DuplicateQueryRuleException(
-				queryRule.isContains(), queryRule.isAndOperator(),
-				queryRule.getName());
 		}
 	}
 

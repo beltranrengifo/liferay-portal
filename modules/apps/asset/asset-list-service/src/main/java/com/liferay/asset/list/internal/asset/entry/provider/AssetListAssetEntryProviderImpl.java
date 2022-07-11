@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
@@ -50,12 +51,21 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.generic.MatchAllQuery;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -65,6 +75,17 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.entity.IntegerEntityField;
+import com.liferay.portal.odata.entity.KeywordEntityField;
+import com.liferay.portal.odata.entity.StringEntityField;
+import com.liferay.portal.odata.filter.ExpressionConvert;
+import com.liferay.portal.odata.filter.FilterParser;
+import com.liferay.portal.odata.filter.FilterParserProvider;
+import com.liferay.portal.odata.filter.InvalidFilterException;
+import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 
 import java.io.Serializable;
@@ -74,8 +95,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
@@ -414,24 +437,51 @@ public class AssetListAssetEntryProviderImpl
 		return assetEntryQuery;
 	}
 
-	private List<AssetEntry> _dynamicSearch(
-		long companyId, long[][] assetCategoryIds,
-		AssetEntryQuery assetEntryQuery, String keywords) {
+	private SearchContext _createSearchContext(
+		long[][] assetCategoryIds, AssetListEntry assetListEntry,
+		String keywords, int end, int start) {
 
-		try {
-			Hits hits = _assetHelper.search(
-				_getDynamicSearchContext(
-					companyId, assetCategoryIds, assetEntryQuery, keywords),
-				assetEntryQuery, assetEntryQuery.getStart(),
-				assetEntryQuery.getEnd());
+		SearchContext searchContext = new SearchContext();
 
-			return _assetHelper.getAssetEntries(hits);
+		searchContext.setBooleanClauses(
+			_getAssetCategoryIdsBooleanClauses(assetCategoryIds));
+
+		searchContext.setCompanyId(assetListEntry.getCompanyId());
+		searchContext.setGroupIds(new long[] {-1L});
+
+		if (Validator.isNotNull(assetListEntry.getAssetEntryType()) &&
+			!Objects.equals(
+				assetListEntry.getAssetEntryType(),
+				AssetEntry.class.getName())) {
+
+			searchContext.setEntryClassNames(new String[] {assetListEntry.getAssetEntryType()});
+
+			long classTypeId = GetterUtil.getLong(
+				assetListEntry.getAssetEntrySubtype());
+
+			if (classTypeId > 0) {
+				searchContext.setClassTypeIds(new long[] {classTypeId});
+			}
 		}
-		catch (Exception exception) {
-			_log.error("Unable to get asset entries", exception);
+
+		searchContext.setEnd(end);
+		searchContext.setStart(start);
+
+		searchContext.setKeywords(keywords);
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker != null) {
+			searchContext.setUserId(permissionChecker.getUserId());
 		}
 
-		return Collections.emptyList();
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		return searchContext;
 	}
 
 	private int _dynamicSearchCount(
@@ -508,6 +558,20 @@ public class AssetListAssetEntryProviderImpl
 			return new BooleanClause[0];
 		}
 
+		return new BooleanClause[] {
+			BooleanClauseFactoryUtil.create(
+				_getAssetCategoryIdsBooleanQuery(assetCategoryIds),
+				BooleanClauseOccur.MUST.getName())
+		};
+	}
+
+	private BooleanQuery _getAssetCategoryIdsBooleanQuery(
+		long[][] assetCategoryIds) {
+
+		if (ArrayUtil.isEmpty(assetCategoryIds)) {
+			return null;
+		}
+
 		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
 
 		BooleanFilter assetCategoryIdsBooleanFilter = new BooleanFilter();
@@ -525,10 +589,21 @@ public class AssetListAssetEntryProviderImpl
 
 		booleanQueryImpl.setPreBooleanFilter(assetCategoryIdsBooleanFilter);
 
-		return new BooleanClause[] {
-			BooleanClauseFactoryUtil.create(
-				booleanQueryImpl, BooleanClauseOccur.MUST.getName())
-		};
+		return booleanQueryImpl;
+	}
+
+	private List<AssetEntry> _getAssetEntries(List<Document> documents) {
+		Stream<Document> stream = documents.stream();
+
+		return stream.map(
+			this::_toAssetEntryOptional
+		).filter(
+			Optional::isPresent
+		).map(
+			Optional::get
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private List<AssetListEntryAssetEntryRel> _getAssetListEntryAssetEntryRels(
@@ -595,6 +670,29 @@ public class AssetListAssetEntryProviderImpl
 		}
 
 		return allAssetTagNames.toArray(new String[0]);
+	}
+
+	private BooleanQuery _getBooleanQuery(
+			String filterString, EntityModel entityModel,
+			FilterParser filterParser, Locale locale)
+		throws Exception {
+
+		BooleanQuery booleanQuery = new BooleanQueryImpl();
+
+		booleanQuery.add(new MatchAllQuery(), BooleanClauseOccur.MUST);
+
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		Filter filter = _getSearchFilter(
+			filterString, entityModel, filterParser, locale);
+
+		if (filter != null) {
+			booleanFilter.add(filter, BooleanClauseOccur.MUST);
+		}
+
+		booleanQuery.setPreBooleanFilter(booleanFilter);
+
+		return booleanQuery;
 	}
 
 	private long[] _getClassNameIds(
@@ -739,27 +837,79 @@ public class AssetListAssetEntryProviderImpl
 		int end) {
 
 		if (!_assetListConfiguration.combineAssetsFromAllSegmentsDynamic()) {
-			AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-				assetListEntry,
-				_getFirstSegmentsEntryId(assetListEntry, segmentsEntryIds),
-				userId);
+			String typeSettings = assetListEntry.getTypeSettings(
+				_getFirstSegmentsEntryId(assetListEntry, segmentsEntryIds));
 
-			assetEntryQuery.setEnd(end);
-			assetEntryQuery.setStart(start);
+			UnicodeProperties unicodeProperties =
+				UnicodePropertiesBuilder.create(
+					true
+				).fastLoad(
+					typeSettings
+				).build();
 
-			return _dynamicSearch(
-				assetListEntry.getCompanyId(), assetCategoryIds,
-				assetEntryQuery, keywords);
+			String assetListFilter = unicodeProperties.getProperty(
+				"assetListFilter");
+
+			try {
+				SearchContext searchContext = _createSearchContext(
+					assetCategoryIds, assetListEntry, keywords, end, start);
+
+				EntityModel entityModel = () -> EntityModel.toEntityFieldsMap(
+					new IntegerEntityField(
+						"assetTagIds", locale -> Field.ASSET_TAG_IDS),
+					new IntegerEntityField(
+						"assetCategoryIds", locale -> Field.CATEGORY_ID),
+					new KeywordEntityField(
+						"keywords", locale -> "keywords"
+					));
+
+				BooleanClause<Query>[] booleanClauses =
+					searchContext.getBooleanClauses();
+
+				BooleanClause<Query> booleanClause =
+					BooleanClauseFactoryUtil.create(
+						_getBooleanQuery(
+							assetListFilter, entityModel,
+							_filterParserProvider.provide(entityModel),
+							LocaleUtil.ENGLISH),
+						BooleanClauseOccur.MUST.getName());
+
+				if (booleanClauses != null) {
+					booleanClauses = ArrayUtil.append(
+						booleanClauses, booleanClause);
+				}
+				else {
+					booleanClauses = new BooleanClause[] {booleanClause};
+				}
+
+				searchContext.setBooleanClauses(booleanClauses);
+
+				SearchResponse searchResponse = _searcher.search(
+					_searchRequestBuilderFactory.builder(
+						searchContext
+					).emptySearchEnabled(
+						true
+					).entryClassNames(
+						searchContext.getEntryClassNames()
+					).fields(
+						Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.UID
+					).highlightEnabled(
+						false
+					).build());
+
+				return _getAssetEntries(searchResponse.getDocuments71());
+			}
+			catch (Exception exception) {
+				_log.error(
+					"Unable to get asset entries with filter " +
+						assetListFilter,
+					exception);
+			}
 		}
 
-		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-			assetListEntry,
-			_getCombinedSegmentsEntryIds(assetListEntry, segmentsEntryIds),
-			userId, end, start);
+		// Unir los segmentos con ors
 
-		return _dynamicSearch(
-			assetListEntry.getCompanyId(), assetCategoryIds, assetEntryQuery,
-			keywords);
+		return null;
 	}
 
 	private int _getDynamicAssetEntriesCount(
@@ -1013,6 +1163,29 @@ public class AssetListAssetEntryProviderImpl
 		return searchContext;
 	}
 
+	private Filter _getSearchFilter(
+			String filterString, EntityModel entityModel,
+			FilterParser filterParser, Locale locale)
+		throws Exception {
+
+		com.liferay.portal.odata.filter.Filter filter =
+			new com.liferay.portal.odata.filter.Filter(
+				filterParser.parse(filterString));
+
+		if (filter == com.liferay.portal.odata.filter.Filter.emptyFilter()) {
+			return null;
+		}
+
+		try {
+			return _expressionConvert.convert(
+				filter.getExpression(), locale, entityModel);
+		}
+		catch (Exception exception) {
+			throw new PortalException(
+				"Invalid filter: " + exception.getMessage(), exception);
+		}
+	}
+
 	private void _processAssetEntryQuery(
 		long companyId, String userId, UnicodeProperties unicodeProperties,
 		AssetEntryQuery assetEntryQuery) {
@@ -1189,11 +1362,23 @@ public class AssetListAssetEntryProviderImpl
 		).toArray();
 	}
 
+	private Optional<AssetEntry> _toAssetEntryOptional(Document document) {
+		String className = GetterUtil.getString(
+			document.get(Field.ENTRY_CLASS_NAME));
+		long classPK = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
+
+		return Optional.ofNullable(
+			_assetEntryLocalService.fetchEntry(className, classPK));
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetListAssetEntryProviderImpl.class);
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private AssetHelper _assetHelper;
@@ -1220,7 +1405,24 @@ public class AssetListAssetEntryProviderImpl
 	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
+	@Reference(
+		target = "(result.class.name=com.liferay.portal.kernel.search.filter.Filter)"
+	)
+	private ExpressionConvert<Filter> _expressionConvert;
+
+	@Reference
+	private FilterParserProvider _filterParserProvider;
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
+
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Searcher _searcher;
+
+	@Reference
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 }

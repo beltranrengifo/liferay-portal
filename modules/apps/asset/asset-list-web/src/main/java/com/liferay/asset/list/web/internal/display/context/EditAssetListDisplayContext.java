@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONObjectWrapper;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -217,168 +218,18 @@ public class EditAssetListDisplayContext {
 		).build();
 	}
 
-	public JSONArray getAutoFieldRulesJSONArray() {
-		String queryLogicIndexesParam = ParamUtil.getString(
-			_httpServletRequest, "queryLogicIndexes");
+	public String getAssetListFilter() {
+		String assetListFilter = ParamUtil.getString(
+			_httpServletRequest, "assetListFilter");
 
-		int[] queryLogicIndexes = null;
-
-		if (Validator.isNotNull(queryLogicIndexesParam)) {
-			queryLogicIndexes = StringUtil.split(queryLogicIndexesParam, 0);
-		}
-		else {
-			queryLogicIndexes = new int[0];
-
-			for (int i = 0; true; i++) {
-				String queryValues = PropertiesParamUtil.getString(
-					_unicodeProperties, _httpServletRequest, "queryValues" + i);
-
-				if (Validator.isNull(queryValues)) {
-					break;
-				}
-
-				queryLogicIndexes = ArrayUtil.append(queryLogicIndexes, i);
-			}
-
-			if (queryLogicIndexes.length == 0) {
-				queryLogicIndexes = ArrayUtil.append(queryLogicIndexes, -1);
-			}
-		}
-
-		JSONArray rulesJSONArray = JSONFactoryUtil.createJSONArray();
-
-		for (int queryLogicIndex : queryLogicIndexes) {
-			JSONObject ruleJSONObject = JSONUtil.put(
-				"queryAndOperator",
-				PropertiesParamUtil.getBoolean(
+		if (Validator.isNull(assetListFilter)) {
+			return PropertiesParamUtil.getString(
 					_unicodeProperties, _httpServletRequest,
-					"queryAndOperator" + queryLogicIndex)
-			).put(
-				"queryContains",
-				PropertiesParamUtil.getBoolean(
-					_unicodeProperties, _httpServletRequest,
-					"queryContains" + queryLogicIndex, true)
-			);
-
-			String queryValues = _unicodeProperties.getProperty(
-				"queryValues" + queryLogicIndex, StringPool.BLANK);
-
-			String queryName = PropertiesParamUtil.getString(
-				_unicodeProperties, _httpServletRequest,
-				"queryName" + queryLogicIndex, "assetTags");
-
-			if (Objects.equals(queryName, "assetTags")) {
-				queryValues = ParamUtil.getString(
-					_httpServletRequest, "queryTagNames" + queryLogicIndex,
-					queryValues);
-
-				queryValues = _filterAssetTagNames(
-					_themeDisplay.getScopeGroupId(), queryValues);
-
-				String[] tagNames = StringUtil.split(
-					queryValues, StringPool.COMMA);
-
-				if (ArrayUtil.isEmpty(tagNames)) {
-					continue;
-				}
-
-				List<Map<String, String>> selectedItems = new ArrayList<>();
-
-				for (String tagName : tagNames) {
-					selectedItems.add(
-						HashMapBuilder.put(
-							"label", tagName
-						).put(
-							"value", tagName
-						).build());
-				}
-
-				ruleJSONObject.put("selectedItems", selectedItems);
-			}
-			else if (Objects.equals(queryName, "keywords")) {
-				queryValues = ParamUtil.getString(
-					_httpServletRequest, "keywords" + queryLogicIndex,
-					queryValues);
-
-				String[] keywords = StringUtil.split(queryValues, ",");
-
-				if (ArrayUtil.isEmpty(keywords)) {
-					continue;
-				}
-
-				List<String> items = new ArrayList<>();
-
-				for (String keyword : keywords) {
-					if (keyword.contains(" ")) {
-						keyword = StringUtil.quote(keyword, CharPool.QUOTE);
-					}
-
-					items.add(keyword);
-				}
-
-				Stream<String> stream = items.stream();
-
-				queryValues = stream.collect(
-					Collectors.joining(StringPool.SPACE));
-
-				ruleJSONObject.put("selectedItems", queryValues);
-			}
-			else {
-				queryValues = ParamUtil.getString(
-					_httpServletRequest, "queryCategoryIds" + queryLogicIndex,
-					queryValues);
-
-				List<AssetCategory> categories = _filterAssetCategories(
-					GetterUtil.getLongValues(queryValues.split(",")));
-
-				if (ListUtil.isEmpty(categories)) {
-					continue;
-				}
-
-				List<HashMap<String, Object>> selectedItems = new ArrayList<>();
-
-				for (AssetCategory category : categories) {
-					selectedItems.add(
-						HashMapBuilder.<String, Object>put(
-							"label",
-							category.getTitle(_themeDisplay.getLocale())
-						).put(
-							"value", category.getCategoryId()
-						).build());
-				}
-
-				ruleJSONObject.put("selectedItems", selectedItems);
-			}
-
-			if (Validator.isNull(queryValues)) {
-				continue;
-			}
-
-			ruleJSONObject.put(
-				"queryValues", queryValues
-			).put(
-				"type", queryName
-			);
-
-			rulesJSONArray.put(ruleJSONObject);
+				"assetListFilter");
 		}
 
-		if (rulesJSONArray.length() == 0) {
-			rulesJSONArray.put(
-				JSONUtil.put(
-					"queryAndOperator", true
-				).put(
-					"queryContains", true
-				).put(
-					"queryValues", StringPool.BLANK
-				).put(
-					"selectedItems", new ArrayList()
-				).put(
-					"type", "assetTags"
-				));
-		}
 
-		return rulesJSONArray;
+		return assetListFilter;
 	}
 
 	public List<Long> getAvailableClassNameIds() {
