@@ -107,10 +107,10 @@ const SortableListItem = ({
 				{showDragIcon && <ClayIcon symbol="drag" />}
 			</ClayList.ItemField>
 
-			<ClayList.ItemField className="flex-grow-1 sortable-list-item__label">
+			<ClayList.ItemField className="sortable-list-item__label">
 				<ClayList.ItemTitle className="align-items-stretch">
 					<ClayLink
-						className="align-items-center d-flex flex-grow-1 w-100"
+						className="align-items-center d-flex w-100"
 						href={sortableListItem.editAssetListEntryURL}
 					>
 						<span className="c-inner flex-grow-1" tabIndex="-1">
