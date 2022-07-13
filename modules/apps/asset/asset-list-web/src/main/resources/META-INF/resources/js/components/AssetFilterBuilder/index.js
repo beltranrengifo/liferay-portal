@@ -342,7 +342,7 @@ function AssetFilterBuilder({
 			</ul>
 
 			{!disabled && (
-				<div className="addbutton-timeline-item demo">
+				<div className="addbutton-timeline-item">
 					<div className="add-condition timeline-increment-icon">
 						<ClayButton
 							className="form-builder-rule-add-condition form-builder-timeline-add-item"
