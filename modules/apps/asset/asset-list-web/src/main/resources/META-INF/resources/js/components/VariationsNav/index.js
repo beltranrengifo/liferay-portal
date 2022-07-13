@@ -57,7 +57,7 @@ const VariationsNav = ({
 
 	return (
 		<>
-			<div className="align-items-center d-flex justify-content-between mb-3">
+			<div className="align-items-center d-flex demo justify-content-between mb-3">
 				<p className="font-weight-semi-bold h5 mb-0 text-uppercase">
 					{Liferay.Language.get('personalized-variations')}
 				</p>
