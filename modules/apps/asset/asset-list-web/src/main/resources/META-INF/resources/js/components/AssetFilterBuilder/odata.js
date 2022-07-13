@@ -14,10 +14,23 @@
 
 import {DEFAULT_RULE_CONJUNCTION, RULE_TYPE_KEYWORD} from './constants';
 
-const _getRuleQueryFromItemSelector = ({
+const _escapeSingleQuotes = (value) => value.replace(/'/g, "''");
+
+const _normalizeQueryValues = (queryValues) => {
+	return queryValues
+		.split(/\s?[, ]\s?/)
+		.filter(Boolean)
+		.map((keyword) => ({
+			value: _escapeSingleQuotes(keyword),
+		}));
+};
+
+const _getQueryString = ({
+	queryValues,
 	selectedItems,
 	type,
 	useAndOperator,
+	useKeywordsType,
 	useNotOperator,
 }) => {
 	if (useAndOperator) {
@@ -25,8 +38,12 @@ const _getRuleQueryFromItemSelector = ({
 
 		const DEFAULT_AND_QUERY = `${type} ${operator} ''`;
 
+		const normalizedSelectedItems = useKeywordsType
+			? _normalizeQueryValues(queryValues)
+			: selectedItems;
+
 		return (
-			selectedItems
+			normalizedSelectedItems
 				.map((item) => {
 					return `(${type} ${operator} '${item?.value}')`;
 				})
@@ -34,32 +51,14 @@ const _getRuleQueryFromItemSelector = ({
 		);
 	}
 	else {
-		const query = `(${type} in (${selectedItems
-			.map((item) => `'${item.value}'`)
-			.join(', ')}))`;
+		const query = useKeywordsType
+			? `(${type} in ('${_escapeSingleQuotes(queryValues)}'))`
+			: `(${type} in (${selectedItems
+					.map((item) => `'${item.value}'`)
+					.join(', ')}))`;
 
 		return useNotOperator ? `(not${query})` : query;
 	}
-};
-
-const _getRuleQueryFromTextInput = ({
-	queryValues,
-	type,
-	useAndOperator,
-	useNotOperator,
-}) => {
-	const keywords = queryValues
-		.split(/\s?[, ]\s?/)
-		.filter(Boolean)
-		.map((keyword) => keyword.replace(/'/g, "''"));
-
-	const operator = useAndOperator ? 'all' : 'any';
-
-	const query = `(${type}/${operator}(k:${keywords
-		.map((keyword) => `contains(k, '${keyword}')`)
-		.join(` ${DEFAULT_RULE_CONJUNCTION} `)}))`;
-
-	return useNotOperator ? `(not${query})` : query;
 };
 
 const buildQueryString = ({rules}) => {
@@ -76,19 +75,14 @@ const buildQueryString = ({rules}) => {
 			const useAndOperator = queryAndOperator.toString() === 'true';
 			const useNotOperator = queryContains.toString() === 'false';
 
-			return type === RULE_TYPE_KEYWORD.value
-				? _getRuleQueryFromTextInput({
-						queryValues,
-						type,
-						useAndOperator,
-						useNotOperator,
-				  })
-				: _getRuleQueryFromItemSelector({
-						selectedItems,
-						type,
-						useAndOperator,
-						useNotOperator,
-				  });
+			return _getQueryString({
+				queryValues,
+				selectedItems,
+				type,
+				useAndOperator,
+				useKeywordsType: type === RULE_TYPE_KEYWORD.value,
+				useNotOperator,
+			});
 		})
 		.join(` ${DEFAULT_RULE_CONJUNCTION} `);
 };
