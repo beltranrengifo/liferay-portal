@@ -30,6 +30,11 @@ interface AppendFunction {
 }
 
 /**
+ * Add URLSearchParams recursively to a given string representing an URL
+ */
+export function addParams(params: String | Object, baseUrl: String): string;
+
+/**
  * Aligns the element with the best region around alignElement. The best
  * region is defined by clockwise rotation starting from the specified
  * `position`. The element is always aligned in the middle of alignElement
@@ -198,6 +203,13 @@ export function minimizePortlet(
 	trigger: HTMLElement,
 	options?: object
 ): void;
+
+/**
+ * Performs navigation to the given url. If SPA is enabled, it will route the
+ * request through the SPA engine. If not, it will simple change the document
+ * location.
+ */
+export function navigate(url: string | URL, listeners?: Object): void;
 
 export function openAlertModal({message}: {message: string}): void;
 
