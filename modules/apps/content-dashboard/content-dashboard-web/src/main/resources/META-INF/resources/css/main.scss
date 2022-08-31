@@ -26,6 +26,17 @@ html#{$cadmin-selector} {
 			}
 		}
 
+		.content-dashboard-search-container {
+			.table-list tbody td,
+			.table tbody td {
+				background-color: initial;
+			}
+
+			tr.active {
+				background-color: $cadmin-primary-l3;
+			}
+		}
+
 		.content-dashboard-checkbox-label {
 			line-height: 1.25rem;
 		}

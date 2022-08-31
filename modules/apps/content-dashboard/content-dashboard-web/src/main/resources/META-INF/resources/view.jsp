@@ -110,7 +110,7 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 			/>
 
 			<liferay-ui:search-container
-				cssClass="table-hover"
+				cssClass="content-dashboard-search-container table-hover"
 				id="content"
 				searchContainer="<%= contentDashboardAdminDisplayContext.getSearchContainer() %>"
 			>
@@ -231,7 +231,8 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 										displayType="secondary"
 										large="<%= true %>"
 									>
-										<clay:label-item-expand cssClass="text-truncate"><%= assetCategories.get(0) %></clay:label-item-expand>
+										<clay:label-item-expand cssClass="text-truncate"><%= assetCategories.get(0) %>
+										</clay:label-item-expand>
 									</clay:label>
 								</c:if>
 
