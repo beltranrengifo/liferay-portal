@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useRef} from 'react';
 
 const Share = ({fetchSharingButtonURL, onError}) => {
-	const elRef = useRef(null);
+	const elRef = useRef(document.createElement('span'));
 
 	useEffect(() => {
 		if (elRef.current) {
