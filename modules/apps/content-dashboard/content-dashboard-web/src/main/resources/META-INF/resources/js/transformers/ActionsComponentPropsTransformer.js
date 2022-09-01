@@ -74,6 +74,11 @@ const selectRow = (portletNamespace, rowId) => {
 	deselectAllRows(portletNamespace);
 
 	const currentRow = getRow(portletNamespace, rowId);
+
+	if (!currentRow) {
+		return;
+	}
+
 	currentRow.classList.add('active');
 };
 
