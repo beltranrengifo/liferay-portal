@@ -24,14 +24,19 @@ const handlePanelStateFromSession = async () => {
 	const _panelState = await Liferay.Util.Session.get(
 		'com.liferay.content.dashboard.web_panelState'
 	);
-
 	if (_panelState !== OPEN_PANEL_VALUE) {
 		return;
 	}
 
-	const {fetchURL, portletNamespace, rowId} = await Liferay.Util.Session.get(
+	const _itemData = await Liferay.Util.Session.get(
 		'com.liferay.content.dashboard.web_panelCurrentItemInfo'
 	);
+
+	if (typeof _itemData !== 'object') {
+		return;
+	}
+
+	const {fetchURL, portletNamespace, rowId} = _itemData;
 
 	showSidebar({
 		View: SidebarPanelInfoView,
@@ -138,13 +143,13 @@ const actions = {
 	},
 };
 
+handlePanelStateFromSession();
+
 export default function propsTransformer({
 	items,
 	portletNamespace,
 	...otherProps
 }) {
-	handlePanelStateFromSession();
-
 	return {
 		...otherProps,
 		items: items.map((item) => {
