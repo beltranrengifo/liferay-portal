@@ -28,7 +28,7 @@ const initialState = {
 	open: true,
 };
 
-const handleSessionOnSidebarClose = () => {
+const resetSessionPanelValues = () => {
 	Liferay.Util.Session.set(
 		'com.liferay.content.dashboard.web_panelState',
 		CLOSE_PANEL_VALUE
@@ -43,7 +43,7 @@ const handleSessionOnSidebarClose = () => {
 const dataReducer = (state, action) => {
 	switch (action.type) {
 		case 'CLOSE_SIDEBAR':
-			handleSessionOnSidebarClose();
+			resetSessionPanelValues();
 
 			return {
 				...state,
@@ -149,6 +149,16 @@ const SidebarPanel = React.forwardRef(
 		useEffect(() => {
 			CurrentViewRef.current = View;
 		}, [View]);
+
+		useEffect(() => {
+			const navigationEventHandler = Liferay.on('beforeNavigate', () => {
+				resetSessionPanelValues();
+			});
+
+			return () => {
+				navigationEventHandler.detach();
+			};
+		}, []);
 
 		useImperativeHandle(ref, () => ({
 			close: () => safeDispatch({type: 'CLOSE_SIDEBAR'}),
