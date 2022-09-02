@@ -20,28 +20,25 @@ import SidebarPanelInfoViewCollapsable from '../components/SidebarPanelInfoView/
 import SidebarPanelMetricsView from '../components/SidebarPanelMetricsView';
 import {OPEN_PANEL_VALUE} from '../utils/constants';
 
-const handlePanelStateFromSession = async () => {
-	const _panelState = await Liferay.Util.Session.get(
-		'com.liferay.content.dashboard.web_panelState'
-	);
-	if (_panelState !== OPEN_PANEL_VALUE) {
+const handlePanelStateFromSession = ({
+	currentRowId,
+	namespace,
+	panelState,
+	selectedItemFetchURL,
+	selectedItemRowId,
+}) => {
+	if (
+		!selectedItemRowId ||
+		panelState !== OPEN_PANEL_VALUE ||
+		selectedItemRowId !== currentRowId
+	) {
 		return;
 	}
 
-	const fetchURL = await Liferay.Util.Session.get(
-		'com.liferay.content.dashboard.web_panelCurrentItemFetchURL'
-	);
-	const portletNamespace = await Liferay.Util.Session.get(
-		'com.liferay.content.dashboard.web_panelCurrentItemPortletNamespace'
-	);
-	const rowId = await Liferay.Util.Session.get(
-		'com.liferay.content.dashboard.web_panelCurrentItemRowId'
-	);
-
 	const allRequestValuesArePositive = [
-		fetchURL,
-		portletNamespace,
-		rowId,
+		selectedItemFetchURL,
+		namespace,
+		selectedItemRowId,
 	].every(Boolean);
 
 	if (!allRequestValuesArePositive) {
@@ -50,28 +47,20 @@ const handlePanelStateFromSession = async () => {
 
 	showSidebar({
 		View: SidebarPanelInfoView,
-		fetchURL,
-		portletNamespace,
+		fetchURL: selectedItemFetchURL,
+		portletNamespace: namespace,
 	});
 
-	selectRow(portletNamespace, rowId);
+	selectRow(namespace, selectedItemRowId);
 };
 
-const handleSessionOnSidebarOpen = ({fetchURL, portletNamespace, rowId}) => {
+const handleSessionOnSidebarOpen = ({rowId}) => {
 	Liferay.Util.Session.set(
 		'com.liferay.content.dashboard.web_panelState',
 		OPEN_PANEL_VALUE
 	);
 	Liferay.Util.Session.set(
-		'com.liferay.content.dashboard.web_panelCurrentItemFetchURL',
-		fetchURL
-	);
-	Liferay.Util.Session.set(
-		'com.liferay.content.dashboard.web_panelCurrentItemPortletNamespace',
-		portletNamespace
-	);
-	Liferay.Util.Session.set(
-		'com.liferay.content.dashboard.web_panelCurrentItemRowId',
+		'com.liferay.content.dashboard.web_selectedItemRowId',
 		rowId
 	);
 };
@@ -157,13 +146,14 @@ const actions = {
 	},
 };
 
-handlePanelStateFromSession();
-
 export default function propsTransformer({
+	additionalProps,
 	items,
 	portletNamespace,
 	...otherProps
 }) {
+	handlePanelStateFromSession(additionalProps);
+
 	return {
 		...otherProps,
 		items: items.map((item) => {
