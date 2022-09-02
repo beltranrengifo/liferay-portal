@@ -35,8 +35,16 @@ const resetSessionPanelValues = () => {
 	);
 
 	Liferay.Util.Session.set(
-		'com.liferay.content.dashboard.web_panelCurrentItemInfo',
-		null
+		'com.liferay.content.dashboard.web_panelCurrentItemFetchURL',
+		''
+	);
+	Liferay.Util.Session.set(
+		'com.liferay.content.dashboard.web_panelCurrentItemPortletNamespace',
+		''
+	);
+	Liferay.Util.Session.set(
+		'com.liferay.content.dashboard.web_panelCurrentItemRowId',
+		''
 	);
 };
 

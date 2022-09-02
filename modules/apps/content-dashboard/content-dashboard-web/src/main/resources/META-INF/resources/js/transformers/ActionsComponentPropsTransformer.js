@@ -28,15 +28,25 @@ const handlePanelStateFromSession = async () => {
 		return;
 	}
 
-	const _itemData = await Liferay.Util.Session.get(
-		'com.liferay.content.dashboard.web_panelCurrentItemInfo'
+	const fetchURL = await Liferay.Util.Session.get(
+		'com.liferay.content.dashboard.web_panelCurrentItemFetchURL'
+	);
+	const portletNamespace = await Liferay.Util.Session.get(
+		'com.liferay.content.dashboard.web_panelCurrentItemPortletNamespace'
+	);
+	const rowId = await Liferay.Util.Session.get(
+		'com.liferay.content.dashboard.web_panelCurrentItemRowId'
 	);
 
-	if (typeof _itemData !== 'object') {
+	const allRequestValuesArePositive = [
+		fetchURL,
+		portletNamespace,
+		rowId,
+	].every(Boolean);
+
+	if (!allRequestValuesArePositive) {
 		return;
 	}
-
-	const {fetchURL, portletNamespace, rowId} = _itemData;
 
 	showSidebar({
 		View: SidebarPanelInfoView,
@@ -53,12 +63,16 @@ const handleSessionOnSidebarOpen = ({fetchURL, portletNamespace, rowId}) => {
 		OPEN_PANEL_VALUE
 	);
 	Liferay.Util.Session.set(
-		'com.liferay.content.dashboard.web_panelCurrentItemInfo',
-		{
-			fetchURL,
-			portletNamespace,
-			rowId,
-		}
+		'com.liferay.content.dashboard.web_panelCurrentItemFetchURL',
+		fetchURL
+	);
+	Liferay.Util.Session.set(
+		'com.liferay.content.dashboard.web_panelCurrentItemPortletNamespace',
+		portletNamespace
+	);
+	Liferay.Util.Session.set(
+		'com.liferay.content.dashboard.web_panelCurrentItemRowId',
+		rowId
 	);
 };
 
