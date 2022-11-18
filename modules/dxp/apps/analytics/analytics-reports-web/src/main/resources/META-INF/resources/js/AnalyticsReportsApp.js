@@ -38,6 +38,16 @@ const useInitialPanelState = () => {
 	return [isPanelStateOpen];
 };
 
+getSessionValue('demo-value-1').then((value) => {
+	console.log(value);
+});
+getSessionValue('demo-value-2').then((value) => {
+	console.log(value);
+});
+getSessionValue('demo-value-3').then((value) => {
+	console.log(value);
+});
+
 export default function AnalyticsReportsApp({context, portletNamespace}) {
 	const {analyticsReportsDataURL} = context;
 	const [
